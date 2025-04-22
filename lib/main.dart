@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context, ThemeNotifier themeNotifier, child) {
           print(themeNotifier.darkTheme);
           return MaterialApp(
-            title: 'aaaaaa',
+            title: 'MCDA_APP',
             theme: themeNotifier.darkTheme ? darkTheme : lightTheme,
             home: SplashScreen(),
           );

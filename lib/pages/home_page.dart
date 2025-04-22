@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage> {
               builder:
                   (context, ThemeNotifier themeNotifier, child) =>
                       SwitchListTile(
-                        title: Text("Modo escuro"),
+                        title: Text("Dark Mode"),
                         onChanged: (val) {
                           themeNotifier.toggleTheme();
                         },
