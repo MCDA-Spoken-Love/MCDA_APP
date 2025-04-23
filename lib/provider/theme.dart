@@ -7,6 +7,7 @@ class ThemeNotifier extends ChangeNotifier {
   late String _colorScheme = 'main';
 
   String get theme => _theme;
+
   String get colorScheme => _colorScheme;
 
   ThemeNotifier() {
@@ -27,9 +28,9 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   toggleColorScheme(String value) {
-      _colorScheme = value;
-      saveToPrefs('scheme');
-      notifyListeners();
+    _colorScheme = value;
+    saveToPrefs('scheme');
+    notifyListeners();
   }
 
   _initPrefs() async {

@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:mcda_app/pages/splash_screen.dart';
 import 'package:mcda_app/provider/theme.dart';
@@ -10,6 +11,7 @@ void main() {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -17,20 +19,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeNotifier(),
-      child: Consumer<ThemeNotifier>(
-        builder: (context, ThemeNotifier themeNotifier, child) {
-          return MaterialApp(
-            title: 'MCDA_APP',
-            theme: themeChanger(themeNotifier),
-            home: SplashScreen(),
-          );
-        },
-      ),
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return ChangeNotifierProvider(
+          create: (_) => ThemeNotifier(),
+          child: Consumer<ThemeNotifier>(
+            builder: (context, ThemeNotifier themeNotifier, child) {
+              return MaterialApp(
+                title: 'MCDA_APP',
+                theme: themeChanger(themeNotifier, lightDynamic, darkDynamic),
+                home: SplashScreen(),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

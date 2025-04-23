@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mcda_app/provider/theme.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/my_colors_extension.dart';
+import '../provider/theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,13 +15,17 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final MyColorsExtension myColors = Theme.of(context).extension<MyColorsExtension>()!;
     return Scaffold(
-      appBar: AppBar(title: Text('Theme Changer')),
-      backgroundColor: myColors.backgroundColor,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+      appBar: AppBar(title: Text('MCDA')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add), // *4
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 40, 30, 30),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Consumer(
               builder:
@@ -39,9 +42,8 @@ class HomePageState extends State<HomePage> {
               builder:
                   (context, ThemeNotifier themeNotifier, child) =>
                       FloatingActionButton(
-                        backgroundColor: myColors.accentColor,
                         onPressed: () {
-                          themeNotifier.toggleColorScheme('red');
+                          themeNotifier.toggleColorScheme('dynamic');
                         },
                         child: Icon(Icons.add),
                       ),
@@ -50,21 +52,51 @@ class HomePageState extends State<HomePage> {
               builder:
                   (context, ThemeNotifier themeNotifier, child) =>
                       FloatingActionButton(
-                        child: Icon(Icons.add),
-                        onPressed: () {
-                          themeNotifier.toggleColorScheme('blue');
-                        },
-                      ),
-            ),
-            Consumer(
-              builder:
-                  (context, ThemeNotifier themeNotifier, child) =>
-                      FloatingActionButton(
-                        child: Icon(Icons.add),
                         onPressed: () {
                           themeNotifier.toggleColorScheme('main');
                         },
+                        child: Icon(Icons.add),
                       ),
+            ),
+            Text(
+              'NAME',
+              style: TextStyle(
+                // *5
+                letterSpacing: 2,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Vinay :)',
+              style: TextStyle(
+                letterSpacing: 2,
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text('CURRENT AGE', style: TextStyle(letterSpacing: 2)),
+            const SizedBox(height: 10),
+            Text(
+              'ggg',
+              style: TextStyle(
+                letterSpacing: 2,
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text('CONTACT', style: TextStyle(letterSpacing: 2)),
+            const SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Icon(Icons.email),
+                const SizedBox(width: 10),
+                Text(
+                  'xyz@gmail.com',
+                  style: TextStyle(letterSpacing: 1, fontSize: 18),
+                ),
+              ],
             ),
           ],
         ),
