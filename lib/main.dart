@@ -17,7 +17,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +24,9 @@ class _MyHomePageState extends State<MyHomePage> {
       create: (_) => ThemeNotifier(),
       child: Consumer<ThemeNotifier>(
         builder: (context, ThemeNotifier themeNotifier, child) {
-          print(themeNotifier.darkTheme);
           return MaterialApp(
             title: 'MCDA_APP',
-            theme: themeNotifier.darkTheme ? darkTheme : lightTheme,
+            theme: themeChanger(themeNotifier),
             home: SplashScreen(),
           );
         },

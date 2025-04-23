@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mcda_app/provider/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../classes/my_colors_extension.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -14,8 +16,10 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final MyColorsExtension myColors = Theme.of(context).extension<MyColorsExtension>()!;
     return Scaffold(
       appBar: AppBar(title: Text('Theme Changer')),
+      backgroundColor: myColors.backgroundColor,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -28,42 +32,42 @@ class HomePageState extends State<HomePage> {
                         onChanged: (val) {
                           themeNotifier.toggleTheme();
                         },
-                        value: themeNotifier.darkTheme,
+                        value: themeNotifier.theme == 'dark' ? true : false,
                       ),
             ),
-            Card(child: ListTile(title: Text("Card Widget"))),
-            const SizedBox(height: 10.0),
-            Slider(
-              value: valueHolder.toDouble(),
-              min: 1,
-              max: 100,
-              divisions: 100,
-              label: '${valueHolder.round()}',
-              onChanged: (double newValue) {
-                setState(() {
-                  valueHolder = newValue.round();
-                });
-              },
-              semanticFormatterCallback: (double newValue) {
-                return '${newValue.round()}';
-              },
+            Consumer(
+              builder:
+                  (context, ThemeNotifier themeNotifier, child) =>
+                      FloatingActionButton(
+                        backgroundColor: myColors.accentColor,
+                        onPressed: () {
+                          themeNotifier.toggleColorScheme('red');
+                        },
+                        child: Icon(Icons.add),
+                      ),
             ),
-            SizedBox(height: 8.0),
-            Text('$valueHolder', style: TextStyle(fontSize: 22)),
-            SizedBox(height: 24.0),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {},
-              child: Text('TextButton'),
+            Consumer(
+              builder:
+                  (context, ThemeNotifier themeNotifier, child) =>
+                      FloatingActionButton(
+                        child: Icon(Icons.add),
+                        onPressed: () {
+                          themeNotifier.toggleColorScheme('blue');
+                        },
+                      ),
+            ),
+            Consumer(
+              builder:
+                  (context, ThemeNotifier themeNotifier, child) =>
+                      FloatingActionButton(
+                        child: Icon(Icons.add),
+                        onPressed: () {
+                          themeNotifier.toggleColorScheme('main');
+                        },
+                      ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {},
       ),
     );
   }

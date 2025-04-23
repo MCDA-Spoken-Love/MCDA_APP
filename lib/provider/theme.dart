@@ -2,36 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeNotifier extends ChangeNotifier {
-  final String key = 'theme';
   late SharedPreferences prefs;
-  late bool _darkTheme;
+  late String _theme = 'light';
+  late String _colorScheme = 'main';
 
-  bool get darkTheme => _darkTheme;
+  String get theme => _theme;
+  String get colorScheme => _colorScheme;
 
   ThemeNotifier() {
-    _darkTheme = false;
-    loadFromPrefs();
+    _theme = 'light';
+    _colorScheme = 'main';
+    loadFromPrefs('theme');
+    loadFromPrefs('scheme');
   }
 
   toggleTheme() {
-    _darkTheme = !_darkTheme;
-    saveToPrefs();
+    if (_theme == 'light') {
+      _theme = 'dark';
+    } else {
+      _theme = 'light';
+    }
+    saveToPrefs('theme');
     notifyListeners();
+  }
+
+  toggleColorScheme(String value) {
+      _colorScheme = value;
+      saveToPrefs('scheme');
+      notifyListeners();
   }
 
   _initPrefs() async {
     prefs = await SharedPreferences.getInstance();
   }
 
-  loadFromPrefs() async {
+  loadFromPrefs(String key) async {
     await _initPrefs();
-    _darkTheme = prefs.getBool(key) ?? false;
+    _theme = prefs.getString(key) ?? 'light';
     notifyListeners();
   }
 
-  saveToPrefs() async {
+  saveToPrefs(String key) async {
     await _initPrefs();
-    prefs.setBool(key, _darkTheme);
+    prefs.setString(key, _theme);
     notifyListeners();
   }
 }
