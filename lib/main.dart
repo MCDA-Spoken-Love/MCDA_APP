@@ -1,12 +1,19 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mcda_app/common/auth/auth_state.dart';
+import 'package:mcda_app/common/auth/auth_state_cubit.dart';
 import 'package:mcda_app/core/configs/theme/theme_changer.dart';
 import 'package:mcda_app/core/provider/theme.dart';
-import 'package:mcda_app/pages/splash_screen.dart';
+import 'package:mcda_app/presentation/auth/pages/signin.dart';
+import 'package:mcda_app/presentation/home/pages/home.dart';
+import 'package:mcda_app/presentation/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
 
   runApp(const MyHomePage(title: 'Flutter Demo Home Page'));
@@ -30,10 +37,25 @@ class _MyHomePageState extends State<MyHomePage> {
           create: (_) => ThemeNotifier(),
           child: Consumer<ThemeNotifier>(
             builder: (context, ThemeNotifier themeNotifier, child) {
-              return MaterialApp(
-                title: 'MCDA_APP',
-                theme: themeChanger(themeNotifier, lightDynamic, darkDynamic),
-                home: SplashScreen(),
+              return BlocProvider(
+                create: (context) => AuthStateCubit()..appStarted(),
+                child: MaterialApp(
+                  title: 'MCDA_APP',
+                  theme: themeChanger(themeNotifier, lightDynamic, darkDynamic),
+                  home: BlocBuilder<AuthStateCubit, AuthState>(
+                    builder: (context, state) {
+                      print(state);
+                      if (state is Authenticated) {
+                        return HomePage();
+                      }
+                      if (state is Unauthenticated) {
+                        return SigninPage();
+                      }
+
+                      return SplashScreen();
+                    },
+                  ),
+                ),
               );
             },
           ),

@@ -5,10 +5,12 @@ import 'package:mcda_app/core/network/dio_client.dart';
 import 'package:mcda_app/data/models/signup_req_params.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/signin_req_params.dart';
+
 abstract class AuthApiService {
   Future<Either> signup(SignupReqParams signupReq);
 
-  Future<Either> signin(SignupReqParams signinReq);
+  Future<Either> signin(SigninReqParams signinReq);
 
   Future<Either> getUser();
 }
@@ -49,7 +51,7 @@ class AuthApiServiceImpl extends AuthApiService {
   }
 
   @override
-  Future<Either> signin(SignupReqParams signinReq) async {
+  Future<Either> signin(SigninReqParams signinReq) async {
     try {
       var response = await DioClient().post(
         ApiUrls.signin,

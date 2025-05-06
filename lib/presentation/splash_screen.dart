@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mcda_app/pages/home_page.dart';
+
+import 'home/pages/home.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,7 +42,7 @@ class SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Splash Screen',
+              'MCDA',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
