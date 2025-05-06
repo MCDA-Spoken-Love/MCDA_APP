@@ -37,6 +37,12 @@ dependencies:
   dynamic_color: ^1.7.0
   shared_preferences: ^2.5.2
   provider: ^6.1.4
+  flutter_bloc: ^9.1.1
+  dio:
+  get_it:
+  logger:
+  dartz: ^0.10.1
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +54,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  bloc_lint: ^0.2.0-dev.0
+  bloc_test: ^10.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'my_colors_extension.dart';
 
-class AppConstants {
+class AppTheme {
   ThemeData mainLightTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Color(0xFF624E88),

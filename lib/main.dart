@@ -1,11 +1,14 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mcda_app/core/configs/theme/theme_changer.dart';
+import 'package:mcda_app/core/provider/theme.dart';
 import 'package:mcda_app/pages/splash_screen.dart';
-import 'package:mcda_app/provider/theme.dart';
-import 'package:mcda_app/utils/colors.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
+
   runApp(const MyHomePage(title: 'Flutter Demo Home Page'));
 }
 
