@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mcda_app/provider/theme.dart';
 import 'package:provider/provider.dart';
+
+import '../provider/theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,10 +16,16 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Theme Changer')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+      appBar: AppBar(title: Text('MCDA')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add), // *4
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 40, 30, 30),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Consumer(
               builder:
@@ -28,42 +35,71 @@ class HomePageState extends State<HomePage> {
                         onChanged: (val) {
                           themeNotifier.toggleTheme();
                         },
-                        value: themeNotifier.darkTheme,
+                        value: themeNotifier.theme == 'dark' ? true : false,
                       ),
             ),
-            Card(child: ListTile(title: Text("Card Widget"))),
-            const SizedBox(height: 10.0),
-            Slider(
-              value: valueHolder.toDouble(),
-              min: 1,
-              max: 100,
-              divisions: 100,
-              label: '${valueHolder.round()}',
-              onChanged: (double newValue) {
-                setState(() {
-                  valueHolder = newValue.round();
-                });
-              },
-              semanticFormatterCallback: (double newValue) {
-                return '${newValue.round()}';
-              },
+            Consumer(
+              builder:
+                  (context, ThemeNotifier themeNotifier, child) =>
+                      FloatingActionButton(
+                        onPressed: () {
+                          themeNotifier.toggleColorScheme('dynamic');
+                        },
+                        child: Icon(Icons.add),
+                      ),
             ),
-            SizedBox(height: 8.0),
-            Text('$valueHolder', style: TextStyle(fontSize: 22)),
-            SizedBox(height: 24.0),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+            Consumer(
+              builder:
+                  (context, ThemeNotifier themeNotifier, child) =>
+                      FloatingActionButton(
+                        onPressed: () {
+                          themeNotifier.toggleColorScheme('main');
+                        },
+                        child: Icon(Icons.add),
+                      ),
+            ),
+            Text(
+              'NAME',
+              style: TextStyle(
+                // *5
+                letterSpacing: 2,
               ),
-              onPressed: () {},
-              child: Text('TextButton'),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Vinay :)',
+              style: TextStyle(
+                letterSpacing: 2,
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text('CURRENT AGE', style: TextStyle(letterSpacing: 2)),
+            const SizedBox(height: 10),
+            Text(
+              'ggg',
+              style: TextStyle(
+                letterSpacing: 2,
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text('CONTACT', style: TextStyle(letterSpacing: 2)),
+            const SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Icon(Icons.email),
+                const SizedBox(width: 10),
+                Text(
+                  'xyz@gmail.com',
+                  style: TextStyle(letterSpacing: 1, fontSize: 18),
+                ),
+              ],
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {},
       ),
     );
   }
