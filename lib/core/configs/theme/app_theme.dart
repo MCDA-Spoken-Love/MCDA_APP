@@ -6,6 +6,8 @@ class AppTheme {
   ThemeData mainLightTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Color(0xFF624E88),
+    highlightColor: Color(0xFF9747FF),
+    disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
     canvasColor: Color(0xFFE5E7EB),
     brightness: Brightness.light,
@@ -38,6 +40,8 @@ class AppTheme {
   ThemeData mainDarkTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Color(0xFF624E88),
+    highlightColor: Color(0xFF9747FF),
+    disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
     canvasColor: Color(0xFFE5E7EB),
     brightness: Brightness.dark,

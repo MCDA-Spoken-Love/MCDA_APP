@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/button/button_state.dart';
 import 'package:mcda_app/common/button/button_state_cubit.dart';
+import 'package:mcda_app/common/widgets/text/besty_title.dart';
 
-class BasicAppButton extends StatelessWidget {
+class BestyButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String title;
   final double? height;
   final double? width;
+  final Color? backgroundColor;
+  final Color? titleColor;
+  final double? titleSize;
 
-  const BasicAppButton({
+  const BestyButton({
     super.key,
     required this.onPressed,
     required this.title,
     this.height,
     this.width,
+    this.backgroundColor,
+    this.titleColor,
+    this.titleSize,
   });
 
   @override
@@ -30,12 +37,15 @@ class BasicAppButton extends StatelessWidget {
   }
 
   Widget _loading(BuildContext context) {
+    ThemeData themeColors = Theme.of(context);
+
     return ElevatedButton(
       onPressed: null,
       style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: Colors.grey,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        disabledBackgroundColor: themeColors.disabledColor,
         minimumSize: Size(
-          width ?? MediaQuery.of(context).size.width * 0.5,
+          width ?? MediaQuery.of(context).size.width,
           height ?? 60,
         ),
       ),
@@ -44,23 +54,22 @@ class BasicAppButton extends StatelessWidget {
   }
 
   Widget _initial(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size(
-            width ?? MediaQuery.of(context).size.width,
-            height ?? 60,
-          ),
+    ThemeData themeColors = Theme.of(context);
+
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        backgroundColor: backgroundColor ?? themeColors.highlightColor,
+        minimumSize: Size(
+          width ?? MediaQuery.of(context).size.width,
+          height ?? 60,
         ),
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
+      ),
+      child: BestyTitle(
+        title: title,
+        color: titleColor ?? Colors.white,
+        fontSize: titleSize ?? 20,
       ),
     );
   }

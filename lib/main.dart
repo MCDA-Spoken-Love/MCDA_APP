@@ -44,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   theme: themeChanger(themeNotifier, lightDynamic, darkDynamic),
                   home: BlocBuilder<AuthStateCubit, AuthState>(
                     builder: (context, state) {
-                      print(state);
                       if (state is Authenticated) {
                         return HomePage();
                       }
