@@ -10,7 +10,7 @@ import '../../../common/button/button_state_cubit.dart';
 import '../../../data/models/signin_req_params.dart';
 import '../../../domain/usecases/signin.dart';
 import '../../home/pages/home.dart';
-import 'signup.dart';
+import 'signup/pages/signup.dart';
 
 class SigninPage extends StatelessWidget {
   SigninPage({super.key});
@@ -25,47 +25,51 @@ class SigninPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.primaryColor,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/hearts_bg.png"),
-            fit: BoxFit.cover,
+      body: SizedBox.expand(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/hearts_bg.png"),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: BlocProvider(
-          create: (context) => ButtonStateCubit(),
-          child: BlocListener<ButtonStateCubit, ButtonState>(
-            listener: (context, state) {
-              if (state is ButtonSuccessState) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              }
-              if (state is ButtonFailureState) {
-                var snackBar = SnackBar(content: Text(state.errorMessage));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
-            },
-            child: SafeArea(
-              minimum: const EdgeInsets.only(top: 100, right: 16, left: 16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Image(image: AssetImage('assets/full_logo.png')),
-                    _signin(),
-                    const SizedBox(height: 30),
-                    _emailField(),
-                    const SizedBox(height: 20),
-                    _password(),
-                    const SizedBox(height: 30),
-                    _createAccountButton(context),
-                    const SizedBox(height: 20),
-                    _signup(context, colors),
-                  ],
+          child: BlocProvider(
+            create: (context) => ButtonStateCubit(),
+            child: BlocListener<ButtonStateCubit, ButtonState>(
+              listener: (context, state) {
+                if (state is ButtonSuccessState) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                }
+                if (state is ButtonFailureState) {
+                  var snackBar = SnackBar(content: Text(state.errorMessage));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              },
+              child: SafeArea(
+                minimum: const EdgeInsets.only(top: 50, right: 16, left: 16),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Image(image: AssetImage('assets/full_logo.png')),
+                        _signin(),
+                        const SizedBox(height: 30),
+                        _emailField(),
+                        const SizedBox(height: 20),
+                        _password(),
+                        const SizedBox(height: 30),
+                        _createAccountButton(context),
+                        const SizedBox(height: 20),
+                        _signup(context, colors),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -155,7 +159,7 @@ class SigninPage extends StatelessWidget {
           MaterialPageRoute(builder: (context) => SignupPage()),
         );
       },
-      title: 'Don\' have an account? Sign up!',
+      title: 'Don\'t have an account? Sign up!',
       titleSize: 14,
       backgroundColor: Colors.white,
       titleColor: colors.highlightColor,

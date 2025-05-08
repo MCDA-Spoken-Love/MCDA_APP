@@ -43,6 +43,7 @@ class _BestyInputState extends State<BestyInput> {
           color: Colors.white,
           fontSize: 20,
         ),
+        SizedBox(height: 8),
         TextFormField(
           validator: widget.validator,
           obscureText: _obscureText && widget.inputType == 'password',
