@@ -11,18 +11,16 @@ import 'package:mcda_app/presentation/home/pages/home.dart';
 import 'package:mcda_app/presentation/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-Future main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
 
-  runApp(const MyHomePage(title: 'Flutter Demo Home Page'));
+  runApp(const MyHomePage());
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

@@ -59,11 +59,11 @@ class SigninPage extends StatelessWidget {
                       children: [
                         const Image(image: AssetImage('assets/full_logo.png')),
                         _signin(),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
                         _emailField(),
                         const SizedBox(height: 20),
                         _password(),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
                         _createAccountButton(context),
                         const SizedBox(height: 20),
                         _signup(context, colors),

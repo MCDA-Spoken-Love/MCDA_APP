@@ -10,7 +10,7 @@ class AuthStateCubit extends Cubit<AuthState> {
     var isLoggedIn = await IsLoggedInUseCase().call();
     if (isLoggedIn) {
       emit(Authenticated());
-    } else {
+    } else if (isLoggedIn == false) {
       emit(Unauthenticated());
     }
   }
