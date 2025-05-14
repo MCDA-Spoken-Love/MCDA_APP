@@ -64,7 +64,7 @@ class SigninPage extends StatelessWidget {
                         const SizedBox(height: 20),
                         _password(),
                         const SizedBox(height: 20),
-                        _createAccountButton(context),
+                        _loginButton(context),
                         const SizedBox(height: 20),
                         _signup(context, colors),
                       ],
@@ -125,15 +125,13 @@ class SigninPage extends StatelessWidget {
     );
   }
 
-  Widget _createAccountButton(BuildContext context) {
+  Widget _loginButton(BuildContext context) {
     return Builder(
       builder: (context) {
         return BestyButton(
           title: 'Login',
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              // If the form is valid, display a snack bar. In the real world,
-              // you'd often call a server or save the information in a database.
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(const SnackBar(content: Text('Processing Data')));

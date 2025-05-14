@@ -1,35 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:mcda_app/common/utils/constants.dart';
-import 'package:mcda_app/common/utils/is_valid_email.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
-import 'package:mcda_app/common/widgets/dropdown/besty_dropdown.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
-import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 
-class SignupStepTwo extends StatelessWidget {
-  final TextEditingController emailCon;
+class SignupStepThree extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
   final TextEditingController passwordCon;
   final TextEditingController confirmPasswordCon;
-  final TextEditingController usernameCon;
-  final TextEditingController sexualityCon;
-  final TextEditingController genderCon;
+  final VoidCallback submit;
   final VoidCallback previousStep;
-  final VoidCallback nextStep;
-  final GlobalKey<FormState> formKey;
 
-  const SignupStepTwo({
+  const SignupStepThree({
     super.key,
-    required this.emailCon,
+    required this.formKey,
     required this.passwordCon,
     required this.confirmPasswordCon,
-    required this.usernameCon,
-    required this.nextStep,
+    required this.submit,
     required this.previousStep,
-    required this.sexualityCon,
-    required this.genderCon,
-    required this.formKey,
   });
 
   @override
@@ -37,6 +25,7 @@ class SignupStepTwo extends StatelessWidget {
     final MyColorsExtension myColors =
         Theme.of(context).extension<MyColorsExtension>()!;
     final ThemeData colors = Theme.of(context);
+
     return SizedBox(
       height: MediaQuery.of(context).size.height * .95,
       child: Column(
@@ -45,51 +34,31 @@ class SignupStepTwo extends StatelessWidget {
           CustomContainer(
             position: 'top',
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BestyTitle(
-                  fontSize: 14,
-                  color: Colors.white,
-                  title: 'Basic info from you',
-                ),
-                SizedBox(height: 20),
-                BestyDropdown(
-                  list: genderList,
-                  isRequired: true,
-                  label: 'What is your gender identity? (Optional)',
-                ),
-                SizedBox(height: 20),
-                BestyDropdown(
-                  list: sexualityList,
-                  isRequired: true,
-                  label: 'What is your sexual orientation? (Optional)',
-                ),
-              ],
-            ),
-          ),
-          CustomContainer(
-            position: 'middle',
-            child: Column(
               children: [
                 BestyInput(
-                  controller: usernameCon,
-                  label: 'What is your username?',
+                  controller: passwordCon,
+                  label: 'Password',
                   validator: (value) {
-                    if (value == null || value.isEmpty || value.length <= 3) {
-                      return 'Please a valid name';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
                     }
                     return null;
                   },
+                  inputType: 'password',
                 ),
                 SizedBox(height: 20),
                 BestyInput(
-                  controller: emailCon,
-                  label: 'And your email address',
-                  validator:
-                      (value) =>
-                          value!.isValidEmail()
-                              ? null
-                              : "Please enter a valid e-mail address",
+                  controller: confirmPasswordCon,
+                  label: 'Password Confirmation',
+                  validator: (value) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        value != passwordCon.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                  inputType: 'password',
                 ),
               ],
             ),
@@ -103,12 +72,12 @@ class SignupStepTwo extends StatelessWidget {
                     return BestyButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          nextStep();
+                          submit();
                         } else {
                           return;
                         }
                       },
-                      title: 'Next',
+                      title: 'Create Account',
                       titleSize: 14,
                       backgroundColor: myColors.submitColor,
                       titleColor: Colors.white,

@@ -182,13 +182,10 @@ class SignupStepOne extends StatelessWidget {
               return BestyButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    // If the form is valid, display a snack bar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
+                    nextStep();
+                  } else {
+                    return;
                   }
-                  nextStep();
                 },
                 title: 'Next',
                 titleSize: 14,
@@ -205,7 +202,7 @@ class SignupStepOne extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => SigninPage()),
               );
             },
-            title: 'Or if you already have an account, sign in',
+            title: 'Sign in, instead',
             titleSize: 14,
             backgroundColor: Colors.white,
             titleColor: colors.highlightColor,

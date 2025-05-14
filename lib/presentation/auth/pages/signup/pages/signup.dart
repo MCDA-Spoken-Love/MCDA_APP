@@ -1,9 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/button/button_state_cubit.dart';
-import 'package:mcda_app/presentation/auth/pages/signin.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_one.dart';
+import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_three.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_two.dart';
 
 import '../../../../../common/button/button_state.dart';
@@ -26,6 +25,9 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailCon = TextEditingController();
   final TextEditingController _passwordCon = TextEditingController();
   final TextEditingController _confirmPasswordCon = TextEditingController();
+  final TextEditingController _sexualityCon = TextEditingController();
+  final TextEditingController _genderCon = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -35,9 +37,17 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void _nextStep() {
-    if (formStepper <= 2) {
+    if (formStepper <= 3) {
       setState(() {
         formStepper++;
+      });
+    }
+  }
+
+  void _previousStep() {
+    if (formStepper > 1) {
+      setState(() {
+        formStepper--;
       });
     }
   }
@@ -65,46 +75,27 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Widget _signinText(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          const TextSpan(
-            text: 'Do you have an account?',
-            style: TextStyle(
-              color: Color(0xff3B4054),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          TextSpan(
-            text: ' Sign In',
-            style: const TextStyle(
-              color: Color(0xff3461FD),
-              fontWeight: FontWeight.w500,
-            ),
-            recognizer:
-                TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SigninPage()),
-                    );
-                  },
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget stepSwitcher(BuildContext context) {
     switch (formStepper) {
+      case 3:
+        return SignupStepThree(
+          formKey: _formKey,
+          passwordCon: _passwordCon,
+          confirmPasswordCon: _confirmPasswordCon,
+          submit: _nextStep,
+          previousStep: _previousStep,
+        );
       case 2:
         return SignupStepTwo(
-          callback: _nextStep,
+          formKey: _formKey,
+          nextStep: _nextStep,
+          previousStep: _previousStep,
           emailCon: _emailCon,
           passwordCon: _passwordCon,
           confirmPasswordCon: _confirmPasswordCon,
           usernameCon: _usernameCon,
+          sexualityCon: _sexualityCon,
+          genderCon: _genderCon,
         );
       case 1:
       default:
