@@ -65,34 +65,32 @@ class SignupStepThree extends StatelessWidget {
           ),
           CustomContainer(
             position: 'bottom',
-            child: Column(
+            child: Row(
               children: [
-                Builder(
-                  builder: (context) {
-                    return BestyButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          submit();
-                        } else {
-                          return;
-                        }
-                      },
-                      title: 'Create Account',
-                      titleSize: 14,
-                      backgroundColor: myColors.submitColor,
-                      titleColor: Colors.white,
-                    );
-                  },
-                ),
-                SizedBox(height: 10),
                 BestyButton(
+                  width: MediaQuery.of(context).size.width * .4,
                   onPressed: () {
                     previousStep();
                   },
-                  title: 'Previous Step',
+                  title: 'Previous',
                   titleSize: 14,
                   backgroundColor: Colors.white,
                   titleColor: colors.highlightColor,
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * .02),
+                BestyButton(
+                  width: MediaQuery.of(context).size.width * .4,
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      submit();
+                    } else {
+                      return;
+                    }
+                  },
+                  title: 'Create Account',
+                  titleSize: 10,
+                  backgroundColor: myColors.submitColor,
+                  titleColor: Colors.white,
                 ),
               ],
             ),

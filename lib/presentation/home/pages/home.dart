@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/button/button_state.dart';
-import '../../../common/button/button_state_cubit.dart';
+import '../../../common/blocs/button/button_state.dart';
+import '../../../common/blocs/button/button_state_cubit.dart';
 import '../../../common/widgets/button/basic_app_button.dart';
 import '../../../core/provider/theme.dart';
 import '../../../domain/entities/user.dart';

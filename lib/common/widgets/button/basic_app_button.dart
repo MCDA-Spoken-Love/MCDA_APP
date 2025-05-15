@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/button/button_state.dart';
-import 'package:mcda_app/common/button/button_state_cubit.dart';
+import 'package:mcda_app/common/blocs/button/button_state.dart';
+import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
 
 class BasicAppButton extends StatelessWidget {
   final VoidCallback onPressed;

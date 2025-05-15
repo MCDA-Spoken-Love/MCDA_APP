@@ -2,8 +2,11 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mcda_app/common/auth/auth_state.dart';
-import 'package:mcda_app/common/auth/auth_state_cubit.dart';
+import 'package:mcda_app/common/blocs/auth/auth_state.dart';
+import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
+import 'package:mcda_app/common/blocs/valid_input/valid_input_state.dart';
+import 'package:mcda_app/common/blocs/valid_input/valid_input_state_cubit.dart'
+    show ValidInputStateCubit;
 import 'package:mcda_app/core/configs/theme/theme_changer.dart';
 import 'package:mcda_app/core/provider/theme.dart';
 import 'package:mcda_app/presentation/auth/pages/signin.dart';
@@ -43,10 +46,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   home: BlocBuilder<AuthStateCubit, AuthState>(
                     builder: (context, state) {
                       if (state is Authenticated) {
-                        return HomePage();
+                        return BlocProvider<ValidInputStateCubit>(
+                          create: (_) => ValidInputStateCubit(),
+                          child: BlocBuilder<
+                            ValidInputStateCubit,
+                            ValidInputState
+                          >(
+                            builder: (context, validInputState) {
+                              return HomePage();
+                            },
+                          ),
+                        );
                       }
                       if (state is Unauthenticated) {
-                        return SigninPage();
+                        return BlocProvider<ValidInputStateCubit>(
+                          create: (context) => ValidInputStateCubit(),
+                          child: BlocBuilder<
+                            ValidInputStateCubit,
+                            ValidInputState
+                          >(
+                            builder: (context, validInputState) {
+                              return SigninPage();
+                            },
+                          ),
+                        );
                       }
 
                       return SplashScreen();

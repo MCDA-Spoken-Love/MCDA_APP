@@ -12,7 +12,10 @@ class CustomContainer extends StatelessWidget {
     super.key,
     required this.child,
     required this.position,
-  });
+  }) : assert(
+         position == 'top' || position == 'middle' || position == 'bottom',
+         'position must be top, bottom or middle',
+       );
 
   BorderRadius handleBorderRadius() {
     switch (position) {

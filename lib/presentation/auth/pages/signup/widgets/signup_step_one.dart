@@ -176,10 +176,25 @@ class SignupStepOne extends StatelessWidget {
               return null;
             },
           ),
-          SizedBox(height: 20),
-          Builder(
-            builder: (context) {
-              return BestyButton(
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              BestyButton(
+                width: MediaQuery.of(context).size.width * .4,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SigninPage()),
+                  );
+                },
+                title: 'Sign in, instead',
+                titleSize: 10,
+                backgroundColor: Colors.white,
+                titleColor: colors.highlightColor,
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * .02),
+              BestyButton(
+                width: MediaQuery.of(context).size.width * .4,
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     nextStep();
@@ -191,21 +206,8 @@ class SignupStepOne extends StatelessWidget {
                 titleSize: 14,
                 backgroundColor: myColors.submitColor,
                 titleColor: Colors.white,
-              );
-            },
-          ),
-          SizedBox(height: 10),
-          BestyButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SigninPage()),
-              );
-            },
-            title: 'Sign in, instead',
-            titleSize: 14,
-            backgroundColor: Colors.white,
-            titleColor: colors.highlightColor,
+              ),
+            ],
           ),
         ],
       ),

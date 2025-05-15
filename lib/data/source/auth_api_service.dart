@@ -13,6 +13,8 @@ abstract class AuthApiService {
   Future<Either> signin(SigninReqParams signinReq);
 
   Future<Either> getUser();
+
+  Future<Either> getUserByFilter(String filter, String type);
 }
 
 class AuthApiServiceImpl extends AuthApiService {
@@ -24,6 +26,25 @@ class AuthApiServiceImpl extends AuthApiService {
         data: signupReq.toMap(),
       );
       return Right(response);
+    } on DioException catch (e) {
+      return Left(e.response);
+    }
+  }
+
+  @override
+  Future<Either> getUserByFilter(String filter, String type) async {
+    try {
+      if (type != 'username' && type != 'email') {
+        return Right({"error": "Data provided should be username or email"});
+      } else {
+        var response = await DioClient().get(
+          '${ApiUrls.getUserByFilter}?$type=$filter',
+        );
+        if (response.data['user_count'] > 0) {
+          throw Exception('User found with $type $filter');
+        }
+        return Right(response);
+      }
     } on DioException catch (e) {
       return Left(e.response);
     }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mcda_app/common/blocs/valid_input/valid_input_state.dart';
+import 'package:mcda_app/common/blocs/valid_input/valid_input_state_cubit.dart';
 import 'package:mcda_app/common/utils/is_valid_email.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
+import 'package:mcda_app/presentation/auth/pages/signup/pages/signup.dart';
+import 'package:mcda_app/presentation/home/pages/home.dart';
 
-import '../../../common/button/button_state.dart';
-import '../../../common/button/button_state_cubit.dart';
+import '../../../common/blocs/button/button_state.dart';
+import '../../../common/blocs/button/button_state_cubit.dart';
 import '../../../data/models/signin_req_params.dart';
 import '../../../domain/usecases/signin.dart';
-import '../../home/pages/home.dart';
-import 'signup/pages/signup.dart';
 
 class SigninPage extends StatelessWidget {
   SigninPage({super.key});
@@ -40,7 +42,20 @@ class SigninPage extends StatelessWidget {
                 if (state is ButtonSuccessState) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    MaterialPageRoute(
+                      builder:
+                          (context) => BlocProvider<ValidInputStateCubit>(
+                            create: (context) => ValidInputStateCubit(),
+                            child: BlocBuilder<
+                              ValidInputStateCubit,
+                              ValidInputState
+                            >(
+                              builder: (context, validInputState) {
+                                return HomePage();
+                              },
+                            ),
+                          ),
+                    ),
                   );
                 }
                 if (state is ButtonFailureState) {
@@ -154,7 +169,17 @@ class SigninPage extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SignupPage()),
+          MaterialPageRoute(
+            builder:
+                (context) => BlocProvider<ValidInputStateCubit>(
+                  create: (context) => ValidInputStateCubit(),
+                  child: BlocBuilder<ValidInputStateCubit, ValidInputState>(
+                    builder: (context, validInputState) {
+                      return SignupPage();
+                    },
+                  ),
+                ),
+          ),
         );
       },
       title: 'Don\'t have an account? Sign up!',
