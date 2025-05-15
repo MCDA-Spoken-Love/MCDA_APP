@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:mcda_app/data/models/get_user_by_filter_params.dart';
+import 'package:logger/logger.dart';
 import 'package:mcda_app/data/models/signin_req_params.dart';
 import 'package:mcda_app/data/models/signup_req_params.dart';
 import 'package:mcda_app/data/source/auth_api_service.dart';
@@ -9,6 +9,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/repository/auth.dart';
 import '../models/user.dart';
+
+Logger logger = Logger(
+  printer: PrettyPrinter(methodCount: 0, colors: true, printEmojis: true),
+);
 
 class AuthRepositoryImpl extends AuthRepository {
   @override
@@ -40,23 +44,6 @@ class AuthRepositoryImpl extends AuthRepository {
         var userModel = UserModel.fromMap(response.data);
         var userEntity = userModel.toEntity();
         return Right(userEntity);
-      },
-    );
-  }
-
-  @override
-  Future<Either> getUserByFilter(GetUserByFilterParams filterReq) async {
-    Either result = await AuthApiServiceImpl().getUserByFilter(
-      filterReq.filter,
-      filterReq.type,
-    );
-    return result.fold(
-      (error) {
-        return Left(error);
-      },
-      (data) async {
-        Response response = data;
-        return Right(response);
       },
     );
   }

@@ -45,7 +45,7 @@ class AppTheme {
     hintColor: Color(0xFFCB80AB),
     canvasColor: Color(0xFFE5E7EB),
     brightness: Brightness.dark,
-    textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.white)),
+    textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.black)),
     colorScheme: ColorScheme(
       surface: Color(0xFF1f1c27),
       brightness: Brightness.dark,

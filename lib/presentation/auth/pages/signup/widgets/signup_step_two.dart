@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/valid_input/valid_input_state_cubit.dart';
 import 'package:mcda_app/common/utils/constants.dart';
 import 'package:mcda_app/common/utils/debounce.dart';
 import 'package:mcda_app/common/utils/is_valid_email.dart';
@@ -10,8 +8,7 @@ import 'package:mcda_app/common/widgets/dropdown/besty_dropdown.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
-import 'package:mcda_app/data/models/get_user_by_filter_params.dart';
-import 'package:mcda_app/domain/usecases/get_user_by_filter.dart';
+import 'package:mcda_app/data/source/auth_api_service.dart';
 
 class SignupStepTwo extends StatefulWidget {
   final TextEditingController emailCon;
@@ -42,23 +39,58 @@ class SignupStepTwo extends StatefulWidget {
 }
 
 class _SignupStepTwoState extends State<SignupStepTwo> {
-  String? username;
-  String? email;
+  String usernameInputError = '';
+  String emailInputError = '';
 
   final debounce = Debounce(milliseconds: 1000);
 
   @override
   initState() {
     super.initState();
-    username = '';
-    email = '';
+    usernameInputError = '';
+    emailInputError = '';
   }
 
   @override
   void dispose() {
     debounce.cancel();
-
     super.dispose();
+  }
+
+  void onChangedUsername(String value) async {
+    debounce.call(() async {
+      late String errorMessage = '';
+      dynamic result = await AuthApiServiceImpl().getUserByFilter(
+        value,
+        'username',
+      );
+      if (result['user_count'] >= 1) {
+        errorMessage = 'username already exists';
+      } else {
+        errorMessage = '';
+      }
+      setState(() {
+        usernameInputError = errorMessage;
+      });
+    });
+  }
+
+  void onChangedEmail(String value) {
+    debounce.call(() async {
+      late String errorMessage = '';
+      dynamic result = await AuthApiServiceImpl().getUserByFilter(
+        value,
+        'email',
+      );
+      if (result['user_count'] >= 1) {
+        errorMessage = 'Email already exists';
+      } else {
+        errorMessage = '';
+      }
+      setState(() {
+        emailInputError = errorMessage;
+      });
+    });
   }
 
   @override
@@ -67,29 +99,8 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
         Theme.of(context).extension<MyColorsExtension>()!;
     final ThemeData colors = Theme.of(context);
 
-    void onChangedUsername(String value) {
-      debounce.call(() {
-        setState(() {
-          username = value;
-        });
-        context.read<ValidInputStateCubit>().execute(
-          usecase: GetUserByFilter(),
-          params: GetUserByFilterParams(filter: value, type: 'username'),
-        );
-      });
-    }
-
-    void onChangedEmail(String value) {
-      debounce.call(() {
-        setState(() {
-          email = value;
-        });
-        context.read<ValidInputStateCubit>().execute(
-          usecase: GetUserByFilter(),
-          params: GetUserByFilterParams(filter: value, type: 'email'),
-        );
-      });
-    }
+    print('usernameInputError: $usernameInputError');
+    print('emailInputError: $emailInputError');
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * .95,
@@ -131,6 +142,8 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
                   },
                   controller: widget.usernameCon,
                   label: 'What is your username?',
+                  error: usernameInputError.isNotEmpty,
+                  errorMessage: usernameInputError,
                   validator: (value) {
                     if (value == null || value.isEmpty || value.length <= 3) {
                       return 'Please a valid name';
@@ -143,9 +156,10 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
                   onChanged: (value) {
                     onChangedEmail(value);
                   },
-
                   controller: widget.emailCon,
                   label: 'And your email address',
+                  error: emailInputError.isNotEmpty,
+                  errorMessage: emailInputError,
                   validator:
                       (value) =>
                           value!.isValidEmail()

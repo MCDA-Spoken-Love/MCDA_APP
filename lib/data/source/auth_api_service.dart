@@ -14,7 +14,7 @@ abstract class AuthApiService {
 
   Future<Either> getUser();
 
-  Future<Either> getUserByFilter(String filter, String type);
+  dynamic getUserByFilter(String filter, String type);
 }
 
 class AuthApiServiceImpl extends AuthApiService {
@@ -32,21 +32,19 @@ class AuthApiServiceImpl extends AuthApiService {
   }
 
   @override
-  Future<Either> getUserByFilter(String filter, String type) async {
+  Future getUserByFilter(String filter, String type) async {
     try {
       if (type != 'username' && type != 'email') {
-        return Right({"error": "Data provided should be username or email"});
+        return {"error": "Data provided should be username or email"};
       } else {
         var response = await DioClient().get(
           '${ApiUrls.getUserByFilter}?$type=$filter',
         );
-        if (response.data['user_count'] > 0) {
-          throw Exception('User found with $type $filter');
-        }
-        return Right(response);
+
+        return response.data;
       }
     } on DioException catch (e) {
-      return Left(e.response);
+      return e.response;
     }
   }
 

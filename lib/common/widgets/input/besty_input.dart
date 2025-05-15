@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/valid_input/valid_input_state.dart';
-import 'package:mcda_app/common/blocs/valid_input/valid_input_state_cubit.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 
 class BestyInput extends StatefulWidget {
@@ -12,6 +9,9 @@ class BestyInput extends StatefulWidget {
   final Widget? suffixIcon;
   final void Function(dynamic)? onChanged;
   final void onTapOutside;
+  final bool? error;
+  final bool? isLoading;
+  final String? errorMessage;
 
   const BestyInput({
     super.key,
@@ -22,6 +22,9 @@ class BestyInput extends StatefulWidget {
     this.suffixIcon,
     this.onChanged,
     this.onTapOutside,
+    this.error,
+    this.isLoading,
+    this.errorMessage,
   }) : assert(
          inputType == 'text' ||
              inputType == 'email' ||
@@ -69,6 +72,38 @@ class _BestyInputState extends State<BestyInput> {
             context,
             CircularProgressIndicator(),
             themeColors.disabledColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _error(BuildContext context) {
+    ThemeData themeColors = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BestyTitle(
+          title: widget.label,
+          textAlign: TextAlign.start,
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        SizedBox(height: 8),
+        TextFormField(
+          forceErrorText: widget.errorMessage,
+          onChanged: widget.onChanged,
+          onTapOutside: (event) {
+            widget.onTapOutside;
+          },
+          validator: widget.validator,
+          obscureText: _obscureText && widget.inputType == 'password',
+          controller: widget.controller,
+          decoration: _decorator(
+            context,
+            Icon(Icons.error, color: themeColors.colorScheme.error),
+            themeColors.colorScheme.tertiary,
           ),
         ),
       ],
@@ -159,13 +194,13 @@ class _BestyInputState extends State<BestyInput> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ValidInputStateCubit, ValidInputState>(
-      builder: (context, state) {
-        if (state is ValidInputLoadingState) {
-          return _loading(context);
-        }
-        return _initial(context);
-      },
-    );
+    if (widget.isLoading == true) {
+      return _loading(context);
+    }
+    if (widget.error == true) {
+      return _error(context);
+    }
+
+    return _initial(context);
   }
 }

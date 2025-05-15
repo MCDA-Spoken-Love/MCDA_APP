@@ -12,6 +12,7 @@ class BestyButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? titleColor;
   final double? titleSize;
+  final bool? disabled;
 
   const BestyButton({
     super.key,
@@ -22,6 +23,7 @@ class BestyButton extends StatelessWidget {
     this.backgroundColor,
     this.titleColor,
     this.titleSize,
+    this.disabled,
   });
 
   @override
@@ -57,7 +59,7 @@ class BestyButton extends StatelessWidget {
     ThemeData themeColors = Theme.of(context);
 
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: disabled == true ? null : onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         backgroundColor: backgroundColor ?? themeColors.highlightColor,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/valid_input/valid_input_state.dart';
-import 'package:mcda_app/common/blocs/valid_input/valid_input_state_cubit.dart';
 import 'package:mcda_app/common/utils/is_valid_email.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
@@ -42,20 +40,7 @@ class SigninPage extends StatelessWidget {
                 if (state is ButtonSuccessState) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => BlocProvider<ValidInputStateCubit>(
-                            create: (context) => ValidInputStateCubit(),
-                            child: BlocBuilder<
-                              ValidInputStateCubit,
-                              ValidInputState
-                            >(
-                              builder: (context, validInputState) {
-                                return HomePage();
-                              },
-                            ),
-                          ),
-                    ),
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 }
                 if (state is ButtonFailureState) {
@@ -169,17 +154,7 @@ class SigninPage extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder:
-                (context) => BlocProvider<ValidInputStateCubit>(
-                  create: (context) => ValidInputStateCubit(),
-                  child: BlocBuilder<ValidInputStateCubit, ValidInputState>(
-                    builder: (context, validInputState) {
-                      return SignupPage();
-                    },
-                  ),
-                ),
-          ),
+          MaterialPageRoute(builder: (context) => SignupPage()),
         );
       },
       title: 'Don\'t have an account? Sign up!',
