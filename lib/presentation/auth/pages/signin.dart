@@ -27,6 +27,7 @@ class SigninPage extends StatelessWidget {
       body: SizedBox.expand(
         child: Container(
           decoration: BoxDecoration(
+            color: colors.colorScheme.primary,
             image: DecorationImage(
               image: AssetImage("assets/hearts_bg.png"),
               fit: BoxFit.cover,

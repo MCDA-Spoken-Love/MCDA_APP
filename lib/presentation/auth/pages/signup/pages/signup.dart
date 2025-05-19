@@ -181,7 +181,10 @@ class _SignupPageState extends State<SignupPage> {
                 minimum: const EdgeInsets.only(top: 0, left: 16, right: 16),
                 child: Form(
                   key: _formKey,
-                  child: SingleChildScrollView(child: stepSwitcher(context)),
+                  child: SingleChildScrollView(
+                    reverse: true,
+                    child: stepSwitcher(context),
+                  ),
                 ),
               ),
             ),

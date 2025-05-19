@@ -78,7 +78,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either> signout() async {
+  Future<bool> signout() async {
     return await AuthLocalServiceImpl().signout();
   }
 }
