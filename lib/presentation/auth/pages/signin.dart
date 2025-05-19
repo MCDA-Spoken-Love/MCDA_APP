@@ -15,13 +15,18 @@ import '../../../domain/usecases/signin.dart';
 class SigninPage extends StatelessWidget {
   SigninPage({super.key});
 
-  final TextEditingController _emailCon = TextEditingController();
-  final TextEditingController _passwordCon = TextEditingController();
+  final TextEditingController _emailCon = TextEditingController(
+    text: 'msalles@g.co',
+  );
+  final TextEditingController _passwordCon = TextEditingController(
+    text: '123456',
+  );
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     ThemeData colors = Theme.of(context);
+
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
@@ -42,7 +47,10 @@ class SigninPage extends StatelessWidget {
                   );
                 }
                 if (state is ButtonFailureState) {
-                  var snackBar = SnackBar(content: Text(state.errorMessage));
+                  var snackBar = SnackBar(
+                    content: Text(state.errorMessage),
+                    backgroundColor: colors.colorScheme.error,
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
@@ -130,17 +138,14 @@ class SigninPage extends StatelessWidget {
           title: 'Login',
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Processing Data')));
+              context.read<ButtonStateCubit>().execute(
+                usecase: SigninUseCase(),
+                params: SigninReqParams(
+                  email: _emailCon.text,
+                  password: _passwordCon.text,
+                ),
+              );
             }
-            context.read<ButtonStateCubit>().execute(
-              usecase: SigninUseCase(),
-              params: SigninReqParams(
-                email: _emailCon.text,
-                password: _passwordCon.text,
-              ),
-            );
           },
         );
       },

@@ -148,6 +148,8 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData colors = Theme.of(context);
+
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
@@ -168,7 +170,10 @@ class _SignupPageState extends State<SignupPage> {
                   );
                 }
                 if (state is ButtonFailureState) {
-                  var snackBar = SnackBar(content: Text(state.errorMessage));
+                  var snackBar = SnackBar(
+                    backgroundColor: colors.colorScheme.error,
+                    content: Text(state.errorMessage),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },

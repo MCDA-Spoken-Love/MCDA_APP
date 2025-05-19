@@ -3,7 +3,6 @@ import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/checkbox/checkbox.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
-import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/privacy_policy.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/terms_and_conditions.dart';
 
@@ -33,8 +32,6 @@ class SignupStepThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MyColorsExtension myColors =
-        Theme.of(context).extension<MyColorsExtension>()!;
     final ThemeData colors = Theme.of(context);
     return SizedBox(
       height: MediaQuery.of(context).size.height * .95,
@@ -49,11 +46,16 @@ class SignupStepThree extends StatelessWidget {
                   controller: passwordCon,
                   label: 'Password',
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 8) {
-                      return 'Password must be at least 8 characters';
+                    RegExp regex = RegExp(
+                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
+                    );
+                    var passNonNullValue = value ?? "";
+                    if (passNonNullValue.isEmpty) {
+                      return ("Password is required");
+                    } else if (passNonNullValue.length < 8) {
+                      return ("Password Must be more than 8 characters");
+                    } else if (!regex.hasMatch(passNonNullValue)) {
+                      return ("Password should contain upper, lower and digit");
                     }
                     return null;
                   },

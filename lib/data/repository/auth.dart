@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+import 'package:mcda_app/common/utils/map_to_string.dart';
 import 'package:mcda_app/data/models/signin_req_params.dart';
 import 'package:mcda_app/data/models/signup_req_params.dart';
 import 'package:mcda_app/data/source/auth_api_service.dart';
@@ -20,7 +21,7 @@ class AuthRepositoryImpl extends AuthRepository {
     Either result = await AuthApiServiceImpl().signup(signupReq);
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
       (data) async {
         Response response = data;
@@ -64,7 +65,7 @@ class AuthRepositoryImpl extends AuthRepository {
     Either result = await AuthApiServiceImpl().signin(signinReq);
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
       (data) async {
         Response response = data;
