@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/presentation/auth/pages/signin.dart';
 
 import '../../../../../common/widgets/button/besty_button.dart';
@@ -8,14 +9,16 @@ import '../../../../../common/widgets/text/besty_title.dart';
 import '../../../../../core/configs/theme/my_colors_extension.dart';
 
 class SignupStepOne extends StatelessWidget {
-  final TextEditingController fullnameCon;
   final VoidCallback nextStep;
   final GlobalKey<FormState> formKey;
+  final TextEditingController firstNameCon;
+  final TextEditingController lastNameCon;
   const SignupStepOne({
     super.key,
     required this.nextStep,
-    required this.fullnameCon,
     required this.formKey,
+    required this.firstNameCon,
+    required this.lastNameCon,
   });
 
   Widget _signupWelcome(BuildContext context) {
@@ -167,11 +170,28 @@ class SignupStepOne extends StatelessWidget {
           ),
           SizedBox(height: 20),
           BestyInput(
-            controller: fullnameCon,
-            label: 'Tell us your full name',
+            controller: firstNameCon,
+            label: 'Your first name',
             validator: (value) {
-              if (value == null || value.isEmpty || value.length <= 3) {
-                return 'Please a valid name';
+              if (value == null ||
+                  value.isEmpty ||
+                  value.length <= 3 ||
+                  value.isValidFullName() == false) {
+                return 'Please enter a valid first name';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 20),
+          BestyInput(
+            controller: lastNameCon,
+            label: 'Your last name',
+            validator: (value) {
+              if (value == null ||
+                  value.isEmpty ||
+                  value.length <= 3 ||
+                  value.isValidFullName() == false) {
+                return 'Please enter a valid  last name';
               }
               return null;
             },

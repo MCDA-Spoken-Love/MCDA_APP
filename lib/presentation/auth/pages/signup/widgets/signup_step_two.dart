@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mcda_app/common/utils/constants.dart';
 import 'package:mcda_app/common/utils/debounce.dart';
-import 'package:mcda_app/common/utils/is_valid_email.dart';
+import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/dropdown/besty_dropdown.dart';
@@ -99,9 +99,6 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
         Theme.of(context).extension<MyColorsExtension>()!;
     final ThemeData colors = Theme.of(context);
 
-    print('usernameInputError: $usernameInputError');
-    print('emailInputError: $emailInputError');
-
     return SizedBox(
       height: MediaQuery.of(context).size.height * .95,
       child: Column(
@@ -121,12 +118,18 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
                 BestyDropdown(
                   list: genderList,
                   isRequired: true,
+                  onChangedCallback: (value) {
+                    widget.genderCon.text = value!;
+                  },
                   label: 'What is your gender identity? (Optional)',
                 ),
                 SizedBox(height: 20),
                 BestyDropdown(
                   list: sexualityList,
                   isRequired: true,
+                  onChangedCallback: (value) {
+                    widget.sexualityCon.text = value!;
+                  },
                   label: 'What is your sexual orientation? (Optional)',
                 ),
               ],

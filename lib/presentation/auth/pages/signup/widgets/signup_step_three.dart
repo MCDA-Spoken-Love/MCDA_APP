@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/common/widgets/checkbox/checkbox.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
+import 'package:mcda_app/presentation/auth/pages/signup/widgets/privacy_policy.dart';
+import 'package:mcda_app/presentation/auth/pages/signup/widgets/terms_and_conditions.dart';
 
 class SignupStepThree extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController passwordCon;
   final TextEditingController confirmPasswordCon;
-  final VoidCallback submit;
+  final Function(BuildContext) submit;
   final VoidCallback previousStep;
+  final void Function(bool?) acceptPrivacyPolicy;
+  final void Function(bool?) acceptTermsAndConditions;
+  final bool hasAcceptedPrivacyPolicy;
+  final bool hasAcceptedTermsAndConditions;
 
   const SignupStepThree({
     super.key,
@@ -18,6 +25,10 @@ class SignupStepThree extends StatelessWidget {
     required this.confirmPasswordCon,
     required this.submit,
     required this.previousStep,
+    required this.acceptPrivacyPolicy,
+    required this.acceptTermsAndConditions,
+    required this.hasAcceptedPrivacyPolicy,
+    required this.hasAcceptedTermsAndConditions,
   });
 
   @override
@@ -25,7 +36,6 @@ class SignupStepThree extends StatelessWidget {
     final MyColorsExtension myColors =
         Theme.of(context).extension<MyColorsExtension>()!;
     final ThemeData colors = Theme.of(context);
-
     return SizedBox(
       height: MediaQuery.of(context).size.height * .95,
       child: Column(
@@ -41,6 +51,9 @@ class SignupStepThree extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
+                    }
+                    if (value.length < 8) {
+                      return 'Password must be at least 8 characters';
                     }
                     return null;
                   },
@@ -65,32 +78,63 @@ class SignupStepThree extends StatelessWidget {
           ),
           CustomContainer(
             position: 'bottom',
-            child: Row(
+            child: Column(
               children: [
-                BestyButton(
-                  width: MediaQuery.of(context).size.width * .4,
-                  onPressed: () {
-                    previousStep();
-                  },
-                  title: 'Previous',
-                  titleSize: 14,
-                  backgroundColor: Colors.white,
-                  titleColor: colors.highlightColor,
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * .02),
-                BestyButton(
-                  width: MediaQuery.of(context).size.width * .4,
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      submit();
-                    } else {
-                      return;
+                FormField(
+                  validator: (value) {
+                    if (!hasAcceptedPrivacyPolicy) {
+                      return 'Please accept the terms and conditions';
                     }
+                    return null;
                   },
-                  title: 'Create Account',
-                  titleSize: 10,
-                  backgroundColor: myColors.submitColor,
-                  titleColor: Colors.white,
+                  builder: (FormFieldState<dynamic> field) {
+                    return CustomCheckBox(
+                      value: hasAcceptedTermsAndConditions,
+                      isError: field.hasError,
+                      label: TermsAndConditions(),
+                      onChanged: (value) {
+                        acceptTermsAndConditions(value);
+                      },
+                    );
+                  },
+                ),
+
+                SizedBox(height: 20),
+                FormField(
+                  validator: (value) {
+                    if (!hasAcceptedPrivacyPolicy) {
+                      return 'Please accept the privacy policy';
+                    }
+                    return null;
+                  },
+                  builder: (FormFieldState<dynamic> field) {
+                    return CustomCheckBox(
+                      value: hasAcceptedPrivacyPolicy,
+                      isError: field.hasError,
+                      label: PrivacyPolicy(),
+                      onChanged: (value) {
+                        acceptPrivacyPolicy(value);
+                      },
+                    );
+                  },
+                ),
+                SizedBox(height: 20),
+
+                Row(
+                  children: [
+                    BestyButton(
+                      width: MediaQuery.of(context).size.width * .4,
+                      onPressed: () {
+                        previousStep();
+                      },
+                      title: 'Previous',
+                      titleSize: 14,
+                      backgroundColor: Colors.white,
+                      titleColor: colors.highlightColor,
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * .02),
+                    submit(context),
+                  ],
                 ),
               ],
             ),

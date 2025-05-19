@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/utils/is_valid_email.dart';
+import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
@@ -22,9 +22,7 @@ class SigninPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData colors = Theme.of(context);
-
     return Scaffold(
-      backgroundColor: colors.primaryColor,
       body: SizedBox.expand(
         child: Container(
           decoration: BoxDecoration(

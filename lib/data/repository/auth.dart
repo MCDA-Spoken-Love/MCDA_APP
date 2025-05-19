@@ -26,7 +26,7 @@ class AuthRepositoryImpl extends AuthRepository {
         Response response = data;
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
-        sharedPreferences.setString('token', response.data['token']);
+        sharedPreferences.setString('token', response.data['access']);
         return Right(response);
       },
     );

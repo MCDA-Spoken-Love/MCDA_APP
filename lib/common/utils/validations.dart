@@ -5,3 +5,9 @@ extension EmailValidator on String {
     ).hasMatch(this);
   }
 }
+
+extension FullnameValidator on String {
+  bool isValidFullName() {
+    return RegExp(r'^[a-z A-Z,.\-]+$').hasMatch(this);
+  }
+}

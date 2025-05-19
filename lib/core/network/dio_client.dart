@@ -2,6 +2,22 @@ import 'package:dio/dio.dart';
 
 import 'interceptors.dart';
 
+class ErrorInterceptor extends Interceptor {
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    final status = response.statusCode;
+    final isValid = status != null && status >= 200 && status < 300;
+    if (!isValid) {
+      throw DioException.badResponse(
+        statusCode: status!,
+        requestOptions: response.requestOptions,
+        response: response,
+      );
+    }
+    super.onResponse(response, handler);
+  }
+}
+
 class DioClient {
   late final Dio _dio;
 
@@ -13,7 +29,7 @@ class DioClient {
           sendTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
         ),
-      )..interceptors.addAll([LoggerInterceptor()]);
+      )..interceptors.addAll([LoggerInterceptor(), ErrorInterceptor()]);
 
   // GET METHOD
   Future<Response> get(

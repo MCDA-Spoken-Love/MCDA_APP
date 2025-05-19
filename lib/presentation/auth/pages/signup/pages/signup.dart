@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
+import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_one.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_three.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_two.dart';
 
 import '../../../../../common/blocs/button/button_state.dart';
-import '../../../../../common/widgets/button/basic_app_button.dart';
 import '../../../../../data/models/signup_req_params.dart';
 import '../../../../../domain/usecases/signup.dart';
 import '../../../../home/pages/home.dart';
@@ -20,13 +21,18 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   late int formStepper;
-  final TextEditingController _fullnameCon = TextEditingController();
+  final TextEditingController _firstNameCon = TextEditingController();
+  final TextEditingController _lastNameCon = TextEditingController();
   final TextEditingController _usernameCon = TextEditingController();
   final TextEditingController _emailCon = TextEditingController();
   final TextEditingController _passwordCon = TextEditingController();
   final TextEditingController _confirmPasswordCon = TextEditingController();
-  final TextEditingController _sexualityCon = TextEditingController();
-  final TextEditingController _genderCon = TextEditingController();
+  final TextEditingController _sexualityCon = TextEditingController(
+    text: 'OTHER',
+  );
+  final TextEditingController _genderCon = TextEditingController(text: 'OTHER');
+  bool _hasAcceptedPrivacyPolicy = false;
+  bool _hasAcceptedTermsAndConditions = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -34,6 +40,18 @@ class _SignupPageState extends State<SignupPage> {
   initState() {
     super.initState();
     formStepper = 1;
+  }
+
+  void _acceptPrivacyPolicy(bool? value) {
+    setState(() {
+      _hasAcceptedPrivacyPolicy = value ?? false;
+    });
+  }
+
+  void _acceptTermsAndConditions(bool? value) {
+    setState(() {
+      _hasAcceptedTermsAndConditions = value ?? false;
+    });
   }
 
   void _nextStep() {
@@ -53,22 +71,38 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Widget _createAccountButton(BuildContext context) {
+    final MyColorsExtension myColors =
+        Theme.of(context).extension<MyColorsExtension>()!;
     return Builder(
       builder: (context) {
-        return BasicAppButton(
+        return BestyButton(
+          width: MediaQuery.of(context).size.width * .4,
+
           title: 'Create Account',
+          titleSize: 10,
+          backgroundColor: myColors.submitColor,
+          titleColor: Colors.white,
           onPressed: () {
-            context.read<ButtonStateCubit>().execute(
-              usecase: SignupUseCase(),
-              params: SignupReqParams(
-                email: _emailCon.text,
-                password: _passwordCon.text,
-                username: _usernameCon.text,
-                first_name: '',
-                last_name: '',
-                connection_code: '',
-              ),
-            );
+            if (_formKey.currentState!.validate()) {
+              context.read<ButtonStateCubit>().execute(
+                usecase: SignupUseCase(),
+                params: SignupReqParams(
+                  email: _emailCon.text,
+                  password1: _passwordCon.text,
+                  password2: _confirmPasswordCon.text,
+                  username: _usernameCon.text,
+                  first_name: _firstNameCon.text,
+                  last_name: _lastNameCon.text,
+                  gender: _genderCon.text,
+                  sexuality: _sexualityCon.text,
+                  has_accepted_privacy_policy: _hasAcceptedPrivacyPolicy,
+                  has_accepted_terms_and_conditions:
+                      _hasAcceptedTermsAndConditions,
+                ),
+              );
+            } else {
+              return;
+            }
           },
         );
       },
@@ -82,8 +116,12 @@ class _SignupPageState extends State<SignupPage> {
           formKey: _formKey,
           passwordCon: _passwordCon,
           confirmPasswordCon: _confirmPasswordCon,
-          submit: _nextStep,
+          submit: _createAccountButton,
           previousStep: _previousStep,
+          acceptPrivacyPolicy: _acceptPrivacyPolicy,
+          acceptTermsAndConditions: _acceptTermsAndConditions,
+          hasAcceptedPrivacyPolicy: _hasAcceptedPrivacyPolicy,
+          hasAcceptedTermsAndConditions: _hasAcceptedTermsAndConditions,
         );
       case 2:
         return SignupStepTwo(
@@ -101,7 +139,8 @@ class _SignupPageState extends State<SignupPage> {
       default:
         return SignupStepOne(
           nextStep: _nextStep,
-          fullnameCon: _fullnameCon,
+          firstNameCon: _firstNameCon,
+          lastNameCon: _lastNameCon,
           formKey: _formKey,
         );
     }
