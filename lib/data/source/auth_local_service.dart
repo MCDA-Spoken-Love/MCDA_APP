@@ -1,9 +1,10 @@
+import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthLocalService {
   Future<bool> isLoggedIn();
 
-  Future<bool> signout();
+  Future<Either> signout();
 }
 
 class AuthLocalServiceImpl extends AuthLocalService {
@@ -19,9 +20,9 @@ class AuthLocalServiceImpl extends AuthLocalService {
   }
 
   @override
-  Future<bool> signout() async {
+  Future<Either> signout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove('token');
-    return true;
+    return Right(true);
   }
 }

@@ -23,13 +23,19 @@ class ThemeNotifier extends ChangeNotifier {
     } else {
       _theme = 'light';
     }
-    saveToPrefs('theme');
+    saveToPrefs('theme', _theme);
+    notifyListeners();
+  }
+
+  toggleColorTheme(String value) {
+    _colorScheme = value;
+    saveToPrefs('theme', value);
     notifyListeners();
   }
 
   toggleColorScheme(String value) {
     _colorScheme = value;
-    saveToPrefs('scheme');
+    saveToPrefs('scheme', value);
     notifyListeners();
   }
 
@@ -43,9 +49,9 @@ class ThemeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  saveToPrefs(String key) async {
+  saveToPrefs(String key, String value) async {
     await _initPrefs();
-    prefs.setString(key, _theme);
+    prefs.setString(key, value);
     notifyListeners();
   }
 }

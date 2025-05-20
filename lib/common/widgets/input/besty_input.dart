@@ -46,7 +46,7 @@ class _BestyInputState extends State<BestyInput> {
     });
   }
 
-  Widget _loading(BuildContext context) {
+  Widget _title(BuildContext context) {
     ThemeData themeColors = Theme.of(context);
 
     return Column(
@@ -55,11 +55,23 @@ class _BestyInputState extends State<BestyInput> {
         BestyTitle(
           title: widget.label,
           textAlign: TextAlign.start,
-          color: Colors.white,
+          color: themeColors.canvasColor,
           fontSize: 20,
         ),
         SizedBox(height: 8),
+      ],
+    );
+  }
+
+  Widget _loading(BuildContext context) {
+    ThemeData themeColors = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _title(context),
         TextFormField(
+          style: TextStyle(color: themeColors.colorScheme.error),
           onChanged: widget.onChanged,
           enabled: false,
           onTapOutside: (event) {
@@ -71,7 +83,7 @@ class _BestyInputState extends State<BestyInput> {
           decoration: _decorator(
             context,
             CircularProgressIndicator(),
-            themeColors.disabledColor,
+            themeColors.colorScheme.tertiary,
           ),
         ),
       ],
@@ -84,14 +96,10 @@ class _BestyInputState extends State<BestyInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BestyTitle(
-          title: widget.label,
-          textAlign: TextAlign.start,
-          color: Colors.white,
-          fontSize: 20,
-        ),
-        SizedBox(height: 8),
+        _title(context),
+
         TextFormField(
+          style: TextStyle(color: themeColors.colorScheme.error),
           forceErrorText: widget.errorMessage,
           onChanged: widget.onChanged,
           onTapOutside: (event) {
@@ -116,14 +124,10 @@ class _BestyInputState extends State<BestyInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BestyTitle(
-          title: widget.label,
-          textAlign: TextAlign.start,
-          color: Colors.white,
-          fontSize: 20,
-        ),
-        SizedBox(height: 8),
+        _title(context),
         TextFormField(
+          style: TextStyle(color: themeColors.colorScheme.primary),
+
           onChanged: widget.onChanged,
           onTapOutside: (event) {
             widget.onTapOutside;
@@ -181,6 +185,7 @@ class _BestyInputState extends State<BestyInput> {
                 child: GestureDetector(
                   onTap: _toggle,
                   child: Icon(
+                    color: themeColors.colorScheme.primary,
                     _obscureText
                         ? Icons.visibility_rounded
                         : Icons.visibility_off_rounded,

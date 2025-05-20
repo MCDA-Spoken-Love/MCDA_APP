@@ -9,7 +9,7 @@ class UserEntity {
   final String? sexuality;
   final String connection_code;
   final int? partner_id;
-  final DateTime? relation_ship_start_date;
+  final String? relation_ship_start_date;
   final bool? has_accepted_terms_and_conditions;
   final bool? has_accepted_privacy_policy;
 

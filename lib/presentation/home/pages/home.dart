@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
+import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../common/blocs/button/button_state.dart';
 import '../../../common/blocs/button/button_state_cubit.dart';
-import '../../../common/widgets/button/basic_app_button.dart';
 import '../../../core/provider/theme.dart';
 import '../../../domain/entities/user.dart';
-import '../../../domain/usecases/signout.dart';
 import '../../auth/pages/signin.dart';
 import '../bloc/user_display_cubit.dart';
 import '../bloc/user_display_state.dart';
@@ -22,73 +22,64 @@ class HomePage extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => UserDisplayCubit()..displayUser()),
           BlocProvider(create: (context) => ButtonStateCubit()),
+          BlocProvider(create: (context) => AuthStateCubit()),
         ],
-        child: BlocListener<ButtonStateCubit, ButtonState>(
-          listener: (context, state) {
-            if (state is ButtonSuccessState) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SigninPage()),
-              );
-            }
-          },
-          child: Center(
-            child: BlocBuilder<UserDisplayCubit, UserDisplayState>(
-              builder: (context, state) {
-                if (state is UserLoading) {
-                  return const CircularProgressIndicator();
-                }
-                if (state is UserLoaded) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                SwitchListTile(
-                                  title: Text("Dark Mode"),
-                                  onChanged: (val) {
-                                    themeNotifier.toggleTheme();
-                                  },
-                                  value:
-                                      themeNotifier.theme == 'dark'
-                                          ? true
-                                          : false,
-                                ),
-                      ),
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                FloatingActionButton(
-                                  onPressed: () {
-                                    themeNotifier.toggleColorScheme('dynamic');
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                      ),
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                FloatingActionButton(
-                                  onPressed: () {
-                                    themeNotifier.toggleColorScheme('main');
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                      ),
-                      _username(state.userEntity),
-                      const SizedBox(height: 10),
-                      _email(state.userEntity),
-                      _logout(context),
-                    ],
-                  );
-                }
-                if (state is LoadUserFailure) {
-                  return Text(state.errorMessage);
-                }
-                return Container();
-              },
-            ),
+        child: Center(
+          child: BlocBuilder<UserDisplayCubit, UserDisplayState>(
+            builder: (context, state) {
+              if (state is UserLoading) {
+                return const CircularProgressIndicator();
+              }
+              if (state is UserLoaded) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Consumer(
+                      builder:
+                          (
+                            context,
+                            ThemeNotifier themeNotifier,
+                            child,
+                          ) => SwitchListTile(
+                            title: Text("Dark Mode"),
+                            onChanged: (val) {
+                              themeNotifier.toggleTheme();
+                            },
+                            value: themeNotifier.theme == 'dark' ? true : false,
+                          ),
+                    ),
+                    Consumer(
+                      builder:
+                          (context, ThemeNotifier themeNotifier, child) =>
+                              FloatingActionButton(
+                                onPressed: () {
+                                  themeNotifier.toggleColorScheme('dynamic');
+                                },
+                                child: Icon(Icons.add),
+                              ),
+                    ),
+                    Consumer(
+                      builder:
+                          (context, ThemeNotifier themeNotifier, child) =>
+                              FloatingActionButton(
+                                onPressed: () {
+                                  themeNotifier.toggleColorScheme('main');
+                                },
+                                child: Icon(Icons.add),
+                              ),
+                    ),
+                    _username(state.userEntity),
+                    const SizedBox(height: 10),
+                    _email(state.userEntity),
+                    _logout(context),
+                  ],
+                );
+              }
+              if (state is LoadUserFailure) {
+                return Text(state.errorMessage);
+              }
+              return Container();
+            },
           ),
         ),
       ),
@@ -112,10 +103,23 @@ class HomePage extends StatelessWidget {
   Widget _logout(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(32),
-      child: BasicAppButton(
-        title: 'Logout',
-        onPressed: () {
-          context.read<ButtonStateCubit>().execute(usecase: SignoutUseCase());
+      child: Consumer(
+        builder: (context, ThemeNotifier themeNotifier, child) {
+          return BestyButton(
+            title: 'Logout',
+            onPressed: () {
+              SharedPreferences.getInstance().then((prefs) {
+                prefs.remove('token');
+              });
+              themeNotifier.toggleColorScheme('main');
+              themeNotifier.toggleColorTheme('light');
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SigninPage()),
+              );
+            },
+          );
         },
       ),
     );

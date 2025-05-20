@@ -25,9 +25,6 @@ class _BestyDropdownState extends State<BestyDropdown> {
     if (widget.onChangedCallback != null) {
       widget.onChangedCallback!(value);
     }
-    // setState(() {
-    //   _selected = value!;
-    // });
   }
 
   @override
@@ -41,12 +38,14 @@ class _BestyDropdownState extends State<BestyDropdown> {
         BestyTitle(
           title: widget.label,
           textAlign: TextAlign.start,
-          color: Colors.white,
+          color: themeColors.canvasColor,
           fontSize: 18,
         ),
         SizedBox(height: 8),
 
         DropdownButtonFormField<String>(
+          style: TextStyle(color: themeColors.primaryColor, fontSize: 16),
+
           hint: Text('Select an option'),
           decoration: InputDecoration(
             filled: true,
