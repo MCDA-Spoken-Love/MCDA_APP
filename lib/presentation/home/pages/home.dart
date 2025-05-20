@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/domain/usecases/signout.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/blocs/button/button_state_cubit.dart';
 import '../../../core/provider/theme.dart';
@@ -52,6 +52,7 @@ class HomePage extends StatelessWidget {
                       builder:
                           (context, ThemeNotifier themeNotifier, child) =>
                               FloatingActionButton(
+                                heroTag: 'appColorSchemeDynamic',
                                 onPressed: () {
                                   themeNotifier.toggleColorScheme('dynamic');
                                 },
@@ -62,6 +63,7 @@ class HomePage extends StatelessWidget {
                       builder:
                           (context, ThemeNotifier themeNotifier, child) =>
                               FloatingActionButton(
+                                heroTag: 'appColorSchemeMain',
                                 onPressed: () {
                                   themeNotifier.toggleColorScheme('main');
                                 },
@@ -108,16 +110,14 @@ class HomePage extends StatelessWidget {
           return BestyButton(
             title: 'Logout',
             onPressed: () {
-              SharedPreferences.getInstance().then((prefs) {
-                prefs.remove('token');
-              });
               themeNotifier.toggleColorScheme('main');
               themeNotifier.toggleColorTheme('light');
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SigninPage()),
+              context.read<ButtonStateCubit>().execute(
+                usecase: SignoutUseCase(),
               );
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => SigninPage()));
             },
           );
         },
