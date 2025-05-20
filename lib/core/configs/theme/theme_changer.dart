@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mcda_app/classes/app_constants.dart';
+import 'package:mcda_app/core/configs/theme/app_theme.dart';
 
-import '../classes/my_colors_extension.dart';
-import '../provider/theme.dart';
+import '../../provider/theme.dart';
+import 'my_colors_extension.dart';
 
 ThemeData? themeChanger(
   ThemeNotifier themeNotifier,
@@ -15,11 +15,11 @@ ThemeData? themeChanger(
   if (theme == 'light') {
     switch (scheme) {
       case 'red':
-        return AppConstants().mainLightTheme;
+        return AppTheme().mainLightTheme;
       case 'blue':
-        return AppConstants().mainLightTheme;
+        return AppTheme().mainLightTheme;
       case 'main':
-        return AppConstants().mainLightTheme;
+        return AppTheme().mainLightTheme;
       case 'dynamic':
         return ThemeData(
           useMaterial3: true,
@@ -38,16 +38,16 @@ ThemeData? themeChanger(
           ],
         );
       default:
-        return AppConstants().mainLightTheme;
+        return AppTheme().mainLightTheme;
     }
   } else if (theme == 'dark') {
     switch (scheme) {
       case 'red':
-        return AppConstants().mainDarkTheme;
+        return AppTheme().mainDarkTheme;
       case 'blue':
-        return AppConstants().mainDarkTheme;
+        return AppTheme().mainDarkTheme;
       case 'main':
-        return AppConstants().mainDarkTheme;
+        return AppTheme().mainDarkTheme;
       case 'dynamic':
         return ThemeData(
           useMaterial3: true,
@@ -66,9 +66,9 @@ ThemeData? themeChanger(
           ],
         );
       default:
-        return AppConstants().mainDarkTheme;
+        return AppTheme().mainDarkTheme;
     }
   }
 
-  return AppConstants().mainLightTheme;
+  return AppTheme().mainLightTheme;
 }

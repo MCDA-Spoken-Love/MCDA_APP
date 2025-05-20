@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:mcda_app/pages/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,22 +11,6 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    startTime();
-  }
-
-  startTime() async {
-    var duration = Duration(seconds: 3);
-    return Timer(duration, navigate);
-  }
-
-  void navigate() async {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) {
-          return HomePage();
-        },
-      ),
-    );
   }
 
   @override
@@ -41,7 +22,7 @@ class SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Splash Screen',
+              'MCDA',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],

@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'my_colors_extension.dart';
 
-class AppConstants {
+class AppTheme {
   ThemeData mainLightTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Color(0xFF624E88),
+    highlightColor: Color(0xFF9747FF),
+    disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
     canvasColor: Color(0xFFE5E7EB),
     brightness: Brightness.light,
-    textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.black)),
+    textTheme: TextTheme().apply(
+      bodyColor: Colors.black,
+      displayColor: Colors.black,
+    ),
     colorScheme: ColorScheme(
       surface: Color(0xFFE5E7EB),
       brightness: Brightness.light,
@@ -38,10 +43,15 @@ class AppConstants {
   ThemeData mainDarkTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Color(0xFF624E88),
+    highlightColor: Color(0xFF9747FF),
+    disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
     canvasColor: Color(0xFFE5E7EB),
     brightness: Brightness.dark,
-    textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.white)),
+    textTheme: TextTheme().apply(
+      bodyColor: Colors.black,
+      displayColor: Colors.black,
+    ),
     colorScheme: ColorScheme(
       surface: Color(0xFF1f1c27),
       brightness: Brightness.dark,
