@@ -15,19 +15,20 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'MCDA',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
+    ThemeData colors = Theme.of(context);
+
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Container(
+          padding: const EdgeInsets.all(32),
+          color: colors.colorScheme.surface,
+          child: Image(
+            image: AssetImage("assets/full_logo.png"),
+            width: constraints.hasBoundedWidth ? constraints.maxWidth : null,
+            height: constraints.hasBoundedHeight ? constraints.maxHeight : null,
+          ),
+        );
+      },
     );
   }
 }

@@ -33,7 +33,7 @@ ThemeData? themeChanger(
               onlineColor: Color(0xff00FF9C),
               disabledColor: Color(0x50CB80AB),
               offlineColor: Color(0xFFFFE700),
-              translucentColor: Color(0x508967B3),
+              translucentColor: lightDynamic.primaryContainer,
             ),
           ],
         );
@@ -61,7 +61,7 @@ ThemeData? themeChanger(
               onlineColor: Color(0xff00FF9C),
               disabledColor: Color(0x50CB80AB),
               offlineColor: Color(0xFFFFE700),
-              translucentColor: Color(0x508967B3),
+              translucentColor: darkDynamic.primaryContainer,
             ),
           ],
         );

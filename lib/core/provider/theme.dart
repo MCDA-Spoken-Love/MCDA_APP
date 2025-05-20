@@ -28,7 +28,6 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   toggleColorTheme(String value) {
-    _colorScheme = value;
     saveToPrefs('theme', value);
     notifyListeners();
   }
