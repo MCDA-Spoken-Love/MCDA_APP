@@ -31,7 +31,7 @@ class Navbar extends StatelessWidget {
     return Container(
       color: myColors.translucentColor,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 1.0),
+        padding: const EdgeInsets.only(bottom: 6.0),
         child: CurvedNavigationBar(
           onTap: onItemTapped,
           index: currentPageIndex,
