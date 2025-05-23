@@ -1,64 +1,80 @@
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 
-class Navbar extends StatefulWidget {
+class Navbar extends StatelessWidget {
   const Navbar({
     super.key,
-    required this.buildScreens,
-    required this.navBarsItems,
+    required this.onItemTapped,
+    required this.currentPageIndex,
   });
-
-  final List<Widget> buildScreens;
-
-  final List<PersistentBottomNavBarItem> navBarsItems;
-
-  @override
-  State<Navbar> createState() => _NavbarState();
-}
-
-class _NavbarState extends State<Navbar> {
-  late PersistentTabController _controller;
-  final NavBarStyle _navBarStyle = NavBarStyle.style10;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
-  }
+  final int currentPageIndex;
+  final ValueChanged<int> onItemTapped;
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    ThemeData colors = Theme.of(context);
+    final MyColorsExtension myColors =
+        Theme.of(context).extension<MyColorsExtension>()!;
 
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      screens: widget.buildScreens,
-      items: widget.navBarsItems,
-      handleAndroidBackButtonPress: true, // Default is true.
-      resizeToAvoidBottomInset:
-          true, // This needs to be true if you want to move up the screen on a non-scrollable screen when keyboard appears. Default is true.
-      stateManagement: true, // Default is true.
-      hideNavigationBarWhenKeyboardAppears: true,
-      padding: const EdgeInsets.only(top: 8),
-      backgroundColor: theme.colorScheme.primary,
-      isVisible: true,
-      animationSettings: const NavBarAnimationSettings(
-        navBarItemAnimation: ItemAnimationSettings(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 400),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: ScreenTransitionAnimationSettings(
-          // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          duration: Duration(milliseconds: 200),
-          screenTransitionAnimationType: ScreenTransitionAnimationType.fadeIn,
+    Color colorSwitcher(int index) =>
+        currentPageIndex == index
+            ? colors.colorScheme.onPrimary
+            : colors.colorScheme.onSurface;
+
+    TextStyle fontStyleSwitcher(int index) =>
+        currentPageIndex == index
+            ? TextStyle(fontWeight: FontWeight.bold)
+            : TextStyle(fontWeight: FontWeight.normal);
+
+    return Container(
+      color: myColors.translucentColor,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 1.0),
+        child: CurvedNavigationBar(
+          onTap: onItemTapped,
+          index: currentPageIndex,
+          animationDuration: Duration(milliseconds: 300),
+          buttonBackgroundColor: colors.colorScheme.primary,
+          animationCurve: Curves.decelerate,
+          color: myColors.translucentColor as Color,
+          backgroundColor: colors.scaffoldBackgroundColor,
+          items: <CurvedNavigationBarItem>[
+            CurvedNavigationBarItem(
+              child: Icon(
+                currentPageIndex == 0
+                    ? Icons.settings
+                    : Icons.settings_outlined,
+                size: 30,
+                color: colorSwitcher(0),
+              ),
+              label: 'Settings',
+              labelStyle: fontStyleSwitcher(0),
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                currentPageIndex == 1 ? Icons.favorite : Icons.favorite_border,
+                size: 30,
+                color: colorSwitcher(1),
+              ),
+              label: 'Favorite',
+              labelStyle: fontStyleSwitcher(1),
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                currentPageIndex == 2
+                    ? Icons.account_circle
+                    : Icons.account_circle_outlined,
+                size: 30,
+                color: colorSwitcher(2),
+              ),
+              label: 'Account',
+              labelStyle: fontStyleSwitcher(2),
+            ),
+          ],
         ),
       ),
-      confineToSafeArea: true,
-      navBarHeight: kBottomNavigationBarHeight,
-      navBarStyle: _navBarStyle, // Choose the nav bar style with this property
     );
   }
 }

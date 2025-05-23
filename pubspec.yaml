@@ -43,7 +43,7 @@ dependencies:
   logger:
   dartz: ^0.10.1
   flutter_dotenv: ^5.2.1
-  persistent_bottom_nav_bar: ^6.2.1
+  curved_labeled_navigation_bar: ^2.0.6
 
 dev_dependencies:
   flutter_test:
