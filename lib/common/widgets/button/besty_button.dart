@@ -62,7 +62,7 @@ class BestyButton extends StatelessWidget {
       onPressed: disabled == true ? null : onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        backgroundColor: backgroundColor ?? themeColors.highlightColor,
+        backgroundColor: backgroundColor ?? themeColors.colorScheme.primary,
         minimumSize: Size(
           width ?? MediaQuery.of(context).size.width,
           height ?? 60,

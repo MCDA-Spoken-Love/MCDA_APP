@@ -133,6 +133,7 @@ class SigninPage extends StatelessWidget {
       builder: (context) {
         return BestyButton(
           title: 'Login',
+          backgroundColor: Theme.of(context).highlightColor,
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               context.read<ButtonStateCubit>().execute(
