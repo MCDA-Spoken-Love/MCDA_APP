@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
-import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/navbar/navbar.dart';
-import 'package:mcda_app/domain/usecases/signout.dart';
-import 'package:provider/provider.dart';
+import 'package:mcda_app/presentation/settings/settings.dart';
 
 import '../../../common/blocs/button/button_state_cubit.dart';
-import '../../../core/provider/theme.dart';
-import '../../auth/pages/signin.dart';
 import '../bloc/user_display_cubit.dart';
 import '../bloc/user_display_state.dart';
 
@@ -57,85 +53,7 @@ class _HomePageState extends State<HomePage> {
             }
             if (state is UserLoaded) {
               return [
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                SwitchListTile(
-                                  title: Text("Dark Mode"),
-                                  onChanged: (val) {
-                                    themeNotifier.toggleTheme();
-                                  },
-                                  value:
-                                      themeNotifier.theme == 'dark'
-                                          ? true
-                                          : false,
-                                ),
-                      ),
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                FloatingActionButton(
-                                  heroTag: 'appColorSchemeDynamic',
-                                  onPressed: () {
-                                    themeNotifier.toggleColorScheme('dynamic');
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                      ),
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                FloatingActionButton(
-                                  heroTag: 'appColorSchemeMain',
-                                  onPressed: () {
-                                    themeNotifier.toggleColorScheme('main');
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        state.userEntity.email,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(32),
-                        child: Consumer(
-                          builder: (
-                            context,
-                            ThemeNotifier themeNotifier,
-                            child,
-                          ) {
-                            return BestyButton(
-                              title: 'Logout',
-                              onPressed: () {
-                                themeNotifier.toggleColorScheme('main');
-                                if (themeNotifier.theme == 'dark') {
-                                  themeNotifier.toggleTheme();
-                                }
-                                context.read<ButtonStateCubit>().execute(
-                                  usecase: SignoutUseCase(),
-                                );
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => SigninPage(),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                Settings(),
                 const Text('Index 1: Business', style: optionStyle),
                 const Text('Index 2: School', style: optionStyle),
               ][currentPageIndex];

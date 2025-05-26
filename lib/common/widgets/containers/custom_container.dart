@@ -7,18 +7,30 @@ import '../../../core/configs/theme/my_colors_extension.dart';
 class CustomContainer extends StatelessWidget {
   final Widget child;
   final String position;
+  final EdgeInsetsGeometry? paddings;
 
   const CustomContainer({
     super.key,
     required this.child,
     required this.position,
+    this.paddings,
   }) : assert(
-         position == 'top' || position == 'middle' || position == 'bottom',
+         position == 'unique' ||
+             position == 'top' ||
+             position == 'middle' ||
+             position == 'bottom',
          'position must be top, bottom or middle',
        );
 
   BorderRadius handleBorderRadius() {
     switch (position) {
+      case 'lone':
+        return const BorderRadius.only(
+          topLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
+          bottomLeft: Radius.circular(24.0),
+          bottomRight: Radius.circular(24.0),
+        );
       case 'top':
         return const BorderRadius.only(
           topLeft: Radius.circular(24.0),
@@ -52,7 +64,7 @@ class CustomContainer extends StatelessWidget {
         child: Container(
           width: double.infinity,
           margin: const EdgeInsets.only(bottom: 2),
-          padding: const EdgeInsets.all(20.0),
+          padding: paddings ?? const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
             color: myColors.translucentColor,
             borderRadius: handleBorderRadius(),
