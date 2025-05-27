@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'my_colors_extension.dart';
 
 class AppTheme {
+  final ColorScheme? darkDynamic;
+  final ColorScheme? lightDynamic;
+  AppTheme({required this.darkDynamic, required this.lightDynamic});
+
   ThemeData mainLightTheme = ThemeData(
     useMaterial3: true,
     primaryColor: Color(0xFF624E88),
@@ -73,6 +77,40 @@ class AppTheme {
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
         translucentColor: Color(0x50624E88),
+      ),
+    ],
+  );
+
+  ThemeData get dynamicLight => ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    colorScheme: lightDynamic,
+    textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.black)),
+  ).copyWith(
+    extensions: <ThemeExtension<dynamic>>[
+      MyColorsExtension(
+        submitColor: Color(0xFF009A5E),
+        onlineColor: Color(0xff00FF9C),
+        disabledColor: Color(0x50CB80AB),
+        offlineColor: Color(0xFFFFE700),
+        translucentColor: lightDynamic?.primaryContainer,
+      ),
+    ],
+  );
+
+  ThemeData get dynamicDark => ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    colorScheme: darkDynamic,
+    textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.white)),
+  ).copyWith(
+    extensions: <ThemeExtension<dynamic>>[
+      MyColorsExtension(
+        submitColor: Color(0xFF009A5E),
+        onlineColor: Color(0xff00FF9C),
+        disabledColor: Color(0x50CB80AB),
+        offlineColor: Color(0xFFFFE700),
+        translucentColor: darkDynamic?.primaryContainer,
       ),
     ],
   );
