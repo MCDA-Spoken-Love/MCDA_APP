@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mcda_app/common/widgets/button/elevated_custom_redirect.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
+import 'package:mcda_app/presentation/settings/pages/app_info_page.dart';
 import 'package:mcda_app/presentation/settings/pages/appearance_page.dart';
+import 'package:mcda_app/presentation/settings/pages/credits_page.dart';
+import 'package:mcda_app/presentation/settings/pages/privacy_policy_page.dart';
+import 'package:mcda_app/presentation/settings/pages/terms_and_conditions_page.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -36,6 +40,7 @@ class Settings extends StatelessWidget {
 
               title: 'Appearance',
             ),
+
             SizedBox(height: 14),
             ElevatedCustomRedirect(
               onPressed: () {
@@ -64,7 +69,9 @@ class Settings extends StatelessWidget {
             SizedBox(height: 14),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => CreditsPage()));
               },
               containerPosition: 'top',
               title: 'Credits',
@@ -72,7 +79,9 @@ class Settings extends StatelessWidget {
             ),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                );
               },
               containerPosition: 'middle',
               title: 'Privacy policy',
@@ -80,15 +89,21 @@ class Settings extends StatelessWidget {
             ),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => TermsAndConditionsPage(),
+                  ),
+                );
               },
               containerPosition: 'middle',
-              title: 'Terms of use',
+              title: 'Terms and conditions',
               icon: Icons.supervised_user_circle_outlined,
             ),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => AppInfoPage()));
               },
               containerPosition: 'bottom',
               title: 'App info',

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/button/button_state.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/core/provider/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class AppearancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: GoBack(title: 'Appearance'),
       body: BlocProvider(
         create: (context) => ButtonStateCubit(),
         child: BlocBuilder<ButtonStateCubit, ButtonState>(

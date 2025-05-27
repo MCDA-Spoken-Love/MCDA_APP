@@ -1,9 +1,11 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
+import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/core/configs/theme/theme_changer.dart';
 import 'package:mcda_app/core/provider/theme.dart';
 import 'package:mcda_app/presentation/auth/pages/signin.dart';
@@ -15,7 +17,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
-
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light, // Or Brightness.dark
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
   runApp(const MyHomePage());
 }
 
@@ -43,6 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   home: BlocBuilder<AuthStateCubit, AuthState>(
                     builder: (context, state) {
                       if (state is Authenticated) {
+                        final MyColorsExtension myColors =
+                            Theme.of(context).extension<MyColorsExtension>()!;
+                        SystemChrome.setSystemUIOverlayStyle(
+                          SystemUiOverlayStyle(
+                            statusBarColor:
+                                myColors.translucentColor, // Status bar color
+                          ),
+                        );
                         return HomePage();
                       }
                       if (state is Unauthenticated) {

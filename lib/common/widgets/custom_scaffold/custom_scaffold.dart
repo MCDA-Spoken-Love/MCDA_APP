@@ -55,31 +55,38 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         _isStuck ? _minHorizontalPadding : _cardHorizontalPadding;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          // The main scrollable content
-          SingleChildScrollView(
-            padding: EdgeInsets.only(top: 100, bottom: 30, left: 20, right: 20),
-            controller: _scrollController,
-            child: widget.child,
-          ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // The main scrollable content
+            SingleChildScrollView(
+              padding: EdgeInsets.only(
+                top: 100,
+                bottom: 30,
+                left: 20,
+                right: 20,
+              ),
+              controller: _scrollController,
+              child: widget.child,
+            ),
 
-          AnimatedPositioned(
-            duration: Duration(milliseconds: 250),
-            curve: Curves.ease,
-            top: topPadding,
-            left: horizontalPadding,
-            right: horizontalPadding,
-            child:
-                _isStuck
-                    ? ExpandedAppBar.withChild(
-                      child: widget.appBarChild,
-                    ) // When stuck, show expanded appbar,
-                    : FloatingAppBar.withChild(
-                      child: widget.appBarChild,
-                    ), // When floating, show compact ,card
-          ),
-        ],
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 250),
+              curve: Curves.ease,
+              top: topPadding,
+              left: horizontalPadding,
+              right: horizontalPadding,
+              child:
+                  _isStuck
+                      ? ExpandedAppBar.withChild(
+                        child: widget.appBarChild,
+                      ) // When stuck, show expanded appbar,
+                      : FloatingAppBar.withChild(
+                        child: widget.appBarChild,
+                      ), // When floating, show compact ,card
+            ),
+          ],
+        ),
       ),
     );
   }

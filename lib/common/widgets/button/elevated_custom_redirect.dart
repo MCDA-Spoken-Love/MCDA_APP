@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 
+import '../../../core/configs/theme/my_colors_extension.dart';
+
 class ElevatedCustomRedirect extends StatelessWidget {
   final VoidCallback onPressed;
   final String containerPosition;
@@ -17,10 +19,13 @@ class ElevatedCustomRedirect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData colors = Theme.of(context);
+    final MyColorsExtension myColors =
+        Theme.of(context).extension<MyColorsExtension>()!;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        elevation: 0,
         backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
         padding: EdgeInsets.zero,
       ),
       onPressed: onPressed,

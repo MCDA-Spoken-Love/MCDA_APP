@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
-import 'package:mcda_app/common/widgets/navbar/navbar.dart';
+import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
 
 import '../../../common/blocs/button/button_state_cubit.dart';
