@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mcda_app/common/widgets/text/terms_section_body.dart';
-import 'package:mcda_app/common/widgets/text/terms_sections_title.dart';
+import 'package:mcda_app/common/widgets/text/section_body.dart';
+import 'package:mcda_app/common/widgets/text/sections_title.dart';
 
 class PrivacyPolicyContent extends StatelessWidget {
   const PrivacyPolicyContent({super.key});

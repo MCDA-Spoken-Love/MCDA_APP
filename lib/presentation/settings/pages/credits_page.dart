@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,9 +31,9 @@ class CreditsPage extends StatelessWidget {
         statusBarColor: myColors.translucentColor, // Status bar color
       ),
     );
-    return CustomScaffold.withChild(
-      appBarChild: GoBack(title: 'Credits'),
-      child: Center(
+    return Scaffold(
+      appBar: GoBack(title: 'Credits'),
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(

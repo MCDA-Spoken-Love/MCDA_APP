@@ -3,12 +3,12 @@ import 'package:mcda_app/common/widgets/custom_scaffold/expanded_appbar.dart';
 import 'package:mcda_app/common/widgets/custom_scaffold/floating_appbar.dart';
 
 class CustomScaffold extends StatefulWidget {
-  final Widget appBarChild;
-  final Widget child;
+  final Widget appBar;
+  final Widget body;
   const CustomScaffold.withChild({
     super.key,
-    required this.appBarChild,
-    required this.child,
+    required this.appBar,
+    required this.body,
   });
   @override
   State<CustomScaffold> createState() => _CustomScaffoldState();
@@ -67,7 +67,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                 right: 20,
               ),
               controller: _scrollController,
-              child: widget.child,
+              child: widget.body,
             ),
 
             AnimatedPositioned(
@@ -79,10 +79,10 @@ class _CustomScaffoldState extends State<CustomScaffold> {
               child:
                   _isStuck
                       ? ExpandedAppBar.withChild(
-                        child: widget.appBarChild,
+                        child: widget.appBar,
                       ) // When stuck, show expanded appbar,
                       : FloatingAppBar.withChild(
-                        child: widget.appBarChild,
+                        child: widget.appBar,
                       ), // When floating, show compact ,card
             ),
           ],

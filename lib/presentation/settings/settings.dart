@@ -15,11 +15,11 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: CustomScaffold.withChild(
-        appBarChild: Text(
+        appBar: Text(
           'Settings',
           style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
-        child: Column(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

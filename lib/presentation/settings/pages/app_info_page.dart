@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 
 class AppInfoPage extends StatelessWidget {
@@ -7,13 +6,14 @@ class AppInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold.withChild(
-      appBarChild: GoBack(title: 'App Info'),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Center(
+    return Scaffold(
+      appBar: GoBack(title: 'App Info'),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
             children: [
               Text(
                 'MCDA - Spoken Love',
