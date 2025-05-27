@@ -2,6 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:mcda_app/common/utils/string_manipulations.dart';
 import 'package:mcda_app/common/widgets/button/segmented_custom_button.dart';
+import 'package:mcda_app/common/widgets/carousel/color_scheme_carousel.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 import 'package:mcda_app/core/constants/colors.dart';
@@ -48,78 +49,42 @@ class _AppearancePageState extends State<AppearancePage> {
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         return Scaffold(
           appBar: GoBack(title: 'Appearance'),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SectionTitle('Theme'),
-                    Consumer(
-                      builder: (context, ThemeNotifier themeNotifier, child) {
-                        return SegmentedCustomButton(
-                          options: ThemeChoices.values,
-                          labelBuilder:
-                              (choice) => Text(choice.name.toCapitalized),
-                          selected: themeOption,
-                          onSelectionChanged: (choice) {
-                            onThemeChange(choice);
-                            themeNotifier.toggleColorTheme(choice.name);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 28),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SectionTitle('Colors'),
-                    Consumer(
-                      builder:
-                          (context, ThemeNotifier themeNotifier, child) =>
-                              FloatingActionButton(
-                                heroTag: 'appColorSchemeDynamic',
-                                onPressed: () {
-                                  themeNotifier.toggleColorScheme('dynamic');
-                                },
-                                child: Icon(Icons.add),
-                              ),
-                    ),
-                    Consumer(
-                      builder:
-                          (context, ThemeNotifier themeNotifier, child) =>
-                              FloatingActionButton(
-                                heroTag: 'appColorSchemeMain',
-                                onPressed: () {
-                                  themeNotifier.toggleColorScheme('main');
-                                },
-                                child: Icon(Icons.add),
-                              ),
-                    ),
-                    Consumer(
-                      builder: (context, ThemeNotifier themeNotifier, child) {
-                        return SegmentedCustomButton(
-                          options: ThemeChoices.values,
-                          labelBuilder:
-                              (choice) => Text(choice.name.toCapitalized),
-                          selected: themeOption,
-                          onSelectionChanged: (choice) {
-                            onThemeChange(choice);
-                            themeNotifier.toggleColorTheme(choice.name);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SectionTitle('Theme'),
+                      Consumer(
+                        builder: (context, ThemeNotifier themeNotifier, child) {
+                          return SegmentedCustomButton(
+                            options: ThemeChoices.values,
+                            labelBuilder:
+                                (choice) => Text(choice.name.toCapitalized),
+                            selected: themeOption,
+                            onSelectionChanged: (choice) {
+                              onThemeChange(choice);
+                              themeNotifier.toggleColorTheme(choice.name);
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 28),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [SectionTitle('Colors'), ColorSchemeCarousel()],
+                  ),
 
-                const SizedBox(height: 10),
-              ],
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         );
