@@ -47,7 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (context) => AuthStateCubit()..appStarted(),
                 child: MaterialApp(
                   title: 'MCDA_APP',
-                  theme: themeChanger(themeNotifier, lightDynamic, darkDynamic),
+                  theme: themeChanger(
+                    context,
+                    themeNotifier,
+                    lightDynamic,
+                    darkDynamic,
+                  ),
                   home: BlocBuilder<AuthStateCubit, AuthState>(
                     builder: (context, state) {
                       if (state is Authenticated) {

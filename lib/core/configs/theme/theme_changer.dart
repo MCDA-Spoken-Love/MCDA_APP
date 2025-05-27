@@ -5,14 +5,16 @@ import '../../provider/theme.dart';
 import 'my_colors_extension.dart';
 
 ThemeData? themeChanger(
+  BuildContext context,
   ThemeNotifier themeNotifier,
   ColorScheme? lightDynamic,
   ColorScheme? darkDynamic,
 ) {
   final theme = themeNotifier.theme;
   final scheme = themeNotifier.colorScheme;
+  var brightness = MediaQuery.platformBrightnessOf(context).name;
 
-  if (theme == 'light') {
+  ThemeData lightSwitcher() {
     switch (scheme) {
       case 'red':
         return AppTheme().mainLightTheme;
@@ -40,7 +42,9 @@ ThemeData? themeChanger(
       default:
         return AppTheme().mainLightTheme;
     }
-  } else if (theme == 'dark') {
+  }
+
+  ThemeData darkSwitcher() {
     switch (scheme) {
       case 'red':
         return AppTheme().mainDarkTheme;
@@ -67,6 +71,19 @@ ThemeData? themeChanger(
         );
       default:
         return AppTheme().mainDarkTheme;
+    }
+  }
+
+  if (theme == 'light') {
+    return lightSwitcher();
+  } else if (theme == 'dark') {
+    return darkSwitcher();
+  } else if (theme == 'system') {
+    if (brightness == 'dark') {
+      return darkSwitcher();
+    }
+    if (brightness == 'light') {
+      return lightSwitcher();
     }
   }
 

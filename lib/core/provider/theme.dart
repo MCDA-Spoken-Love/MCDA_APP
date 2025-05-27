@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeNotifier extends ChangeNotifier {
   late SharedPreferences prefs;
   late String _theme = 'light';
   late String _colorScheme = 'main';
-
+  var deviceBrightness =
+      SchedulerBinding.instance.platformDispatcher.platformBrightness;
   String get theme => _theme;
 
   String get colorScheme => _colorScheme;
@@ -28,7 +30,9 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   toggleColorTheme(String value) {
-    saveToPrefs('theme', value);
+    _theme = value;
+    print(_theme);
+    saveToPrefs('theme', _theme);
     notifyListeners();
   }
 

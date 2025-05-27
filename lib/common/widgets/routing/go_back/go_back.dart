@@ -7,7 +7,7 @@ class GoBack extends StatefulWidget implements PreferredSizeWidget {
   final VoidCallback? onPressed;
 
   @override
-  Size get preferredSize => const Size.fromHeight(72);
+  Size get preferredSize => const Size.fromHeight(82);
   const GoBack({super.key, required this.title, this.onPressed});
 
   @override

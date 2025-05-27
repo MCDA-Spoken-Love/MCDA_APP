@@ -1,80 +1,100 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/button/button_state.dart';
-import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
-import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/common/utils/string_manipulations.dart';
+import 'package:mcda_app/common/widgets/button/segmented_custom_button.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
+import 'package:mcda_app/common/widgets/text/sections_title.dart';
+import 'package:mcda_app/core/constants/colors.dart';
 import 'package:mcda_app/core/provider/theme.dart';
 import 'package:provider/provider.dart';
 
-class AppearancePage extends StatelessWidget {
+class AppearancePage extends StatefulWidget {
   const AppearancePage({super.key});
+
+  @override
+  State<AppearancePage> createState() => _AppearancePageState();
+}
+
+class _AppearancePageState extends State<AppearancePage> {
+  ThemeChoices themeOption = ThemeChoices.light;
+
+  void onThemeChange(choice) {
+    setState(() => themeOption = choice);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GoBack(title: 'Appearance'),
-      body: BlocProvider(
-        create: (context) => ButtonStateCubit(),
-        child: BlocBuilder<ButtonStateCubit, ButtonState>(
-          builder: (context, state) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Consumer(
-                    builder:
-                        (context, ThemeNotifier themeNotifier, child) =>
-                            SwitchListTile(
-                              title: Text("Dark Mode"),
-                              onChanged: (val) {
-                                themeNotifier.toggleTheme();
-                              },
-                              value:
-                                  themeNotifier.theme == 'dark' ? true : false,
-                            ),
-                  ),
-                  Consumer(
-                    builder:
-                        (context, ThemeNotifier themeNotifier, child) =>
-                            FloatingActionButton(
-                              heroTag: 'appColorSchemeDynamic',
-                              onPressed: () {
-                                themeNotifier.toggleColorScheme('dynamic');
-                              },
-                              child: Icon(Icons.add),
-                            ),
-                  ),
-                  Consumer(
-                    builder:
-                        (context, ThemeNotifier themeNotifier, child) =>
-                            FloatingActionButton(
-                              heroTag: 'appColorSchemeMain',
-                              onPressed: () {
-                                themeNotifier.toggleColorScheme('main');
-                              },
-                              child: Icon(Icons.add),
-                            ),
-                  ),
-                  const SizedBox(height: 10),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-                  Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Consumer(
-                      builder: (context, ThemeNotifier themeNotifier, child) {
-                        return BestyButton(
-                          title: 'Retornar',
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        );
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SectionTitle('Theme'),
+                Consumer(
+                  builder: (context, ThemeNotifier themeNotifier, child) {
+                    return SegmentedCustomButton(
+                      options: ThemeChoices.values,
+                      labelBuilder: (choice) => Text(choice.name.toCapitalized),
+                      selected: themeOption,
+                      onSelectionChanged: (choice) {
+                        onThemeChange(choice);
+                        themeNotifier.toggleColorTheme(choice.name);
                       },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
+                    );
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 28),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SectionTitle('Colors'),
+                Consumer(
+                  builder:
+                      (context, ThemeNotifier themeNotifier, child) =>
+                          FloatingActionButton(
+                            heroTag: 'appColorSchemeDynamic',
+                            onPressed: () {
+                              themeNotifier.toggleColorScheme('dynamic');
+                            },
+                            child: Icon(Icons.add),
+                          ),
+                ),
+                Consumer(
+                  builder:
+                      (context, ThemeNotifier themeNotifier, child) =>
+                          FloatingActionButton(
+                            heroTag: 'appColorSchemeMain',
+                            onPressed: () {
+                              themeNotifier.toggleColorScheme('main');
+                            },
+                            child: Icon(Icons.add),
+                          ),
+                ),
+                Consumer(
+                  builder: (context, ThemeNotifier themeNotifier, child) {
+                    return SegmentedCustomButton(
+                      options: ThemeChoices.values,
+                      labelBuilder: (choice) => Text(choice.name.toCapitalized),
+                      selected: themeOption,
+                      onSelectionChanged: (choice) {
+                        onThemeChange(choice);
+                        themeNotifier.toggleColorTheme(choice.name);
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+          ],
         ),
       ),
     );
