@@ -5,6 +5,7 @@ import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/presentation/settings/pages/app_info_page.dart';
 import 'package:mcda_app/presentation/settings/pages/appearance_page.dart';
 import 'package:mcda_app/presentation/settings/pages/credits_page.dart';
+import 'package:mcda_app/presentation/settings/pages/privacy_page.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy_policy_page.dart';
 import 'package:mcda_app/presentation/settings/pages/terms_and_conditions_page.dart';
 
@@ -44,7 +45,9 @@ class Settings extends StatelessWidget {
             SizedBox(height: 14),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => PrivacyPage()));
               },
               containerPosition: 'top',
               title: 'Account data',
@@ -52,7 +55,9 @@ class Settings extends StatelessWidget {
             ),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => PrivacyPage()));
               },
               containerPosition: 'middle',
               title: 'Privacy',
