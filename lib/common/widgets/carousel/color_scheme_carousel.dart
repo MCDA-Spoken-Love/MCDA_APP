@@ -197,7 +197,7 @@ class _HeroLayoutCardState extends State<HeroLayoutCard> {
                             ),
                           ),
                           automaticallyImplyLeading: false,
-                          backgroundColor: colors.primaryColor,
+                          backgroundColor: myColors.translucentColor,
                           toolbarHeight: 26,
                         ),
                         body: Container(
