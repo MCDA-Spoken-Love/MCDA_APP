@@ -43,7 +43,11 @@ class _GoBackState extends State<GoBack> {
                     ),
                   ),
                 ),
-                icon: Icon(Icons.arrow_back, size: 24),
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 24,
+                  color: theme.colorScheme.onPrimary,
+                ),
               ),
               SizedBox(width: 16),
               Text(
