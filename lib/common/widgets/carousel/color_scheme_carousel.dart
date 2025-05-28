@@ -17,8 +17,7 @@ class ColorSchemeCarousel extends StatefulWidget {
 class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
   String selectedScheme =
       ColorSchemes.values[1].scheme; // Default or from prefs
-
-  late CarouselController controller;
+  ScrollController controller = ScrollController();
 
   Future<Map<String, String>> initializeTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -31,52 +30,59 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
   @override
   void initState() {
     super.initState();
-    controller = CarouselController(initialItem: 0);
     initializeTheme().then((themeOptions) {
       final scheme = themeOptions['scheme']!;
       final index = ColorSchemes.values.indexWhere((e) => e.scheme == scheme);
       setState(() {
         selectedScheme = scheme;
-        controller = CarouselController(initialItem: index);
+        controller.animateTo(
+          index * 10,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
       });
     });
   }
 
-  void changeScheme(String scheme, ThemeNotifier themeNotifier) {
+  void changeScheme(String scheme, ThemeNotifier themeNotifier, int index) {
     setState(() {
       selectedScheme = scheme;
     });
+    controller.animateTo(
+      index * 100,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
     themeNotifier.toggleColorScheme(scheme);
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.sizeOf(context).height;
     return Consumer(
       builder: (context, ThemeNotifier themeNotifier, child) {
         return ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: height / 2),
-          child: CarouselView.weighted(
+          constraints: BoxConstraints(maxHeight: 220),
+          child: ListView.builder(
             controller: controller,
-            itemSnapping: true,
-            onTap: (index) {
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            physics: BouncingScrollPhysics(),
+            itemCount: ColorSchemes.values.length,
+            itemBuilder: (context, index) {
               final colorScheme = ColorSchemes.values[index];
-              changeScheme(colorScheme.scheme, themeNotifier);
+              return HeroLayoutCard(
+                colorScheme: colorScheme,
+                isSelected: selectedScheme == colorScheme.scheme,
+                onSelected: () {
+                  changeScheme(colorScheme.scheme, themeNotifier, index);
+                },
+              );
             },
-            flexWeights: const <int>[7, 1, 1],
-            children:
-                ColorSchemes.values.map((ColorSchemes colorScheme) {
-                  return HeroLayoutCard(
-                    colorScheme: colorScheme,
-                    isSelected: selectedScheme == colorScheme.scheme,
-                  );
-                }).toList(),
           ),
         );
       },
@@ -89,9 +95,12 @@ class HeroLayoutCard extends StatefulWidget {
     super.key,
     required this.colorScheme,
     required this.isSelected,
+    required this.onSelected,
   });
   final ColorSchemes colorScheme;
   final bool isSelected;
+
+  final VoidCallback onSelected;
 
   @override
   State<HeroLayoutCard> createState() => _HeroLayoutCardState();
@@ -126,7 +135,6 @@ class _HeroLayoutCardState extends State<HeroLayoutCard> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).height;
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         final Map<String, ThemeData> colorSchemes = {
@@ -159,143 +167,111 @@ class _HeroLayoutCardState extends State<HeroLayoutCard> {
         final MyColorsExtension myColors =
             colors!.extension<MyColorsExtension>()!;
 
-        return InkWell(
-          borderRadius: BorderRadius.circular(24),
-          child: Container(
-            decoration: BoxDecoration(
-              border:
-                  widget.isSelected
-                      ? Border.all(color: Colors.blue, width: 3)
-                      : null,
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: OverflowBox(
-              maxWidth: width / 3,
-              child: Stack(
-                alignment: AlignmentDirectional.bottomStart,
-                children: <Widget>[
-                  ClipRect(
-                    child: Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: colors.primaryColor,
-                        title: Text(widget.colorScheme.title),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.colorScheme.title),
+            Row(
+              children: [
+                InkWell(
+                  onTap: widget.onSelected,
+                  child: SizedBox(
+                    width: 122,
+                    height: 199,
+                    child: Container(
+                      foregroundDecoration: BoxDecoration(
+                        border:
+                            widget.isSelected
+                                ? Border.all(
+                                  color: colors.highlightColor,
+                                  width: 3,
+                                )
+                                : null,
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                      body: Container(
-                        color: colors.colorScheme.surface,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: colors.colorScheme.tertiary,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        bottomLeft: Radius.circular(24),
-                                        bottomRight: Radius.circular(24),
-                                        topRight: Radius.circular(24),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                      child: Scaffold(
+                        appBar: AppBar(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(24),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: colors.hintColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(24),
-                                        bottomLeft: Radius.circular(24),
-                                        bottomRight: Radius.circular(24),
-                                        topRight: Radius.circular(6),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: colors.colorScheme.tertiary,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        bottomLeft: Radius.circular(24),
-                                        bottomRight: Radius.circular(24),
-                                        topRight: Radius.circular(24),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: colors.hintColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(24),
-                                        bottomLeft: Radius.circular(24),
-                                        bottomRight: Radius.circular(24),
-                                        topRight: Radius.circular(6),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                          ],
+                          ),
+                          automaticallyImplyLeading: false,
+                          backgroundColor: colors.primaryColor,
+                          toolbarHeight: 26,
                         ),
-                      ),
-                      bottomNavigationBar: BottomAppBar(
-                        height: 60,
-                        color: myColors.translucentColor,
-                        child: Container(
-                          constraints: BoxConstraints(maxWidth: 25),
+                        body: Container(
+                          color: colors.colorScheme.surface,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 26,
+                                      width: 52,
+                                      decoration: BoxDecoration(
+                                        color: colors.colorScheme.tertiary,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(3),
+                                          bottomLeft: Radius.circular(12),
+                                          bottomRight: Radius.circular(12),
+                                          topRight: Radius.circular(12),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      height: 26,
+                                      width: 52,
+                                      decoration: BoxDecoration(
+                                        color: colors.hintColor,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          bottomLeft: Radius.circular(12),
+                                          bottomRight: Radius.circular(12),
+                                          topRight: Radius.circular(3),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 6),
+                            ],
+                          ),
+                        ),
+                        bottomNavigationBar: Container(
+                          height: 26,
                           decoration: BoxDecoration(
-                            color: colors.primaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(24)),
+                            color: myColors.translucentColor,
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(24),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(width: 8),
+              ],
             ),
-          ),
+          ],
         );
       },
     );
