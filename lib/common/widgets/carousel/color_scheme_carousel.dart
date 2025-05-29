@@ -35,7 +35,7 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
       setState(() {
         selectedScheme = scheme;
         controller.animateTo(
-          index * 10,
+          index * 1000,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
@@ -72,7 +72,6 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
             controller: controller,
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 12),
-            physics: BouncingScrollPhysics(),
             itemCount: ColorSchemes.values.length,
             itemBuilder: (context, index) {
               final colorScheme = ColorSchemes.values[index];

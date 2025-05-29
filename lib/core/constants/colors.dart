@@ -9,8 +9,7 @@ enum ColorSchemes {
   redColorScheme('Red', 'red'),
   yellowColorScheme('Yellow', 'yellow'),
   purpleColorScheme('Purple', 'purple'),
-  orangeColorScheme('Orange', 'orange'),
-  blackWhiteColorScheme('Black & White', 'bw');
+  orangeColorScheme('Orange', 'orange');
 
   const ColorSchemes(this.title, this.scheme);
   final String title;

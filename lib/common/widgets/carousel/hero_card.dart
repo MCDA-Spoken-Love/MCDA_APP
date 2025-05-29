@@ -146,16 +146,6 @@ class _HeroCardState extends State<HeroCard> {
                 darkDynamic: darkDynamic,
                 lightDynamic: lightDynamic,
               ).orangeDarkTheme,
-          "bw-light":
-              AppTheme(
-                darkDynamic: darkDynamic,
-                lightDynamic: lightDynamic,
-              ).bwLightTheme,
-          "bw-dark":
-              AppTheme(
-                darkDynamic: darkDynamic,
-                lightDynamic: lightDynamic,
-              ).bwDarkTheme,
         };
         var brightness = MediaQuery.platformBrightnessOf(context).name;
 
