@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
 import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/blocs/button/button_state_cubit.dart';
 import '../bloc/user_display_cubit.dart';
@@ -22,6 +23,23 @@ class _HomePageState extends State<HomePage> {
   );
   int currentPageIndex = 1;
 
+  bool? biometricLockEnabled;
+
+  Future<Map<String, bool>> getPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {"biometric_lock": prefs.getBool('biometric_lock') ?? false};
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPrefs().then((res) {
+      setState(() {
+        biometricLockEnabled = res['biometric_lock'];
+      });
+    });
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       currentPageIndex = index;
@@ -30,6 +48,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('biometrick lock: $biometricLockEnabled');
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: Navbar(
@@ -54,7 +73,15 @@ class _HomePageState extends State<HomePage> {
             if (state is UserLoaded) {
               return [
                 Settings(),
-                const Text('Index 1: Business', style: optionStyle),
+                Column(
+                  children: [
+                    const Text('Index 1: Business', style: optionStyle),
+                    Text(
+                      'bloqueio biometrico: $biometricLockEnabled',
+                      style: optionStyle,
+                    ),
+                  ],
+                ),
                 const Text('Index 2: School', style: optionStyle),
               ][currentPageIndex];
             }
