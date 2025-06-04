@@ -10,8 +10,8 @@ class UserPrivacyLoaded extends UserPrivacyDisplayState {
   UserPrivacyLoaded({required this.userPrivacyEntity});
 }
 
-class LoadUserFailure extends UserPrivacyDisplayState {
+class LoadUserPrivacyFailure extends UserPrivacyDisplayState {
   final String errorMessage;
 
-  LoadUserFailure({required this.errorMessage});
+  LoadUserPrivacyFailure({required this.errorMessage});
 }

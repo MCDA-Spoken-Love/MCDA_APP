@@ -45,9 +45,9 @@ class Settings extends StatelessWidget {
             SizedBox(height: 14),
             ElevatedCustomRedirect(
               onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (context) => PrivacyPage()));
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AppearancePage()),
+                );
               },
               containerPosition: 'top',
               title: 'Account data',
