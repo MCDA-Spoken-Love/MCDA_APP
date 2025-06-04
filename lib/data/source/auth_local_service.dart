@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthLocalService {
   Future<bool> isLoggedIn();
-
   Future<Either> signout();
 }
 

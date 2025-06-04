@@ -1,4 +1,4 @@
-import '../../../domain/entities/user.dart';
+import 'package:mcda_app/domain/entities/user.dart';
 
 abstract class UserDisplayState {}
 

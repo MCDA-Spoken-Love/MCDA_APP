@@ -5,7 +5,7 @@ import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/presentation/settings/pages/app_info_page.dart';
 import 'package:mcda_app/presentation/settings/pages/appearance_page.dart';
 import 'package:mcda_app/presentation/settings/pages/credits_page.dart';
-import 'package:mcda_app/presentation/settings/pages/privacy_page.dart';
+import 'package:mcda_app/presentation/settings/pages/privacy/page/privacy_page.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy_policy_page.dart';
 import 'package:mcda_app/presentation/settings/pages/terms_and_conditions_page.dart';
 
