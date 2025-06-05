@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:mcda_app/common/utils/map_to_string.dart';
 import 'package:mcda_app/data/models/privacy.dart';
 import 'package:mcda_app/data/source/privacy_api_service.dart';
 import 'package:mcda_app/domain/repository/privacy.dart';
@@ -27,7 +28,7 @@ class PrivacyRepositoryImpl extends PrivacyRepository {
     Either result = await PrivacyApiServiceImpl().toggleLastSeen();
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
       (data) async {
         Response response = data;
@@ -43,7 +44,7 @@ class PrivacyRepositoryImpl extends PrivacyRepository {
     Either result = await PrivacyApiServiceImpl().toggleStatusVisibility();
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
       (data) async {
         Response response = data;
