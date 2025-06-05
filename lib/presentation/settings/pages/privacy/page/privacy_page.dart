@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
+import 'package:mcda_app/domain/usecases/toggle_status_visibility.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_cubit.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,6 +49,10 @@ class _PrivacyPageState extends State<PrivacyPage> {
     super.dispose();
   }
 
+  void _handleToggleVisibility(bool value) async {
+    var result = await ToggleStatusVisibilityUseCase().call();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +78,10 @@ class _PrivacyPageState extends State<PrivacyPage> {
                       contentPadding: EdgeInsets.all(0),
                       title: Text('Allow my status to be visible'),
                       value: statusVisibilityEnabled ?? false,
-                      onChanged: (bool value) {},
+                      onChanged: (bool value) async {
+                        var result =
+                            await ToggleStatusVisibilityUseCase().call();
+                      },
                     ),
                     SizedBox(height: 20),
                     SectionTitle('App lock'),
