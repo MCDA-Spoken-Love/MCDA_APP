@@ -69,7 +69,6 @@ class _HomePageState extends State<HomePage> {
   void _handleAuth() {
     getPrefs().then((res) {
       bool? biometricLockEnabledRes = res['biometric_lock'];
-      print(res);
       setState(() {
         biometricLockEnabled = biometricLockEnabledRes;
       });

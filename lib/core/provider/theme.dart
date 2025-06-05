@@ -15,8 +15,7 @@ class ThemeNotifier extends ChangeNotifier {
   ThemeNotifier() {
     _theme = 'light';
     _colorScheme = 'main';
-    loadFromPrefs('theme');
-    loadFromPrefs('scheme');
+    loadFromPrefs();
   }
 
   toggleTheme() {
@@ -31,7 +30,6 @@ class ThemeNotifier extends ChangeNotifier {
 
   toggleColorTheme(String value) {
     _theme = value;
-    print(_theme);
     saveToPrefs('theme', _theme);
     notifyListeners();
   }
@@ -46,9 +44,10 @@ class ThemeNotifier extends ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
   }
 
-  loadFromPrefs(String key) async {
+  loadFromPrefs() async {
     await _initPrefs();
-    _theme = prefs.getString(key) ?? 'light';
+    _theme = prefs.getString('theme') ?? 'light';
+    _colorScheme = prefs.getString('scheme') ?? 'main';
     notifyListeners();
   }
 

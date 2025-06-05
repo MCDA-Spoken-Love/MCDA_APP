@@ -35,7 +35,7 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
       setState(() {
         selectedScheme = scheme;
         controller.animateTo(
-          index * 1000,
+          index * 122,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
@@ -49,7 +49,7 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
       selectedScheme = scheme;
     });
     controller.animateTo(
-      index * 100,
+      index * 122,
       duration: Duration(milliseconds: 300),
       curve: Curves.ease,
     );
