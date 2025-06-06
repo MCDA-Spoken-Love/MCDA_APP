@@ -41,10 +41,10 @@ class CustomButton extends StatelessWidget {
   Widget _error(BuildContext context) {
     ThemeData themeColors = Theme.of(context);
     return ElevatedButton(
-      onPressed: null,
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        disabledBackgroundColor: themeColors.colorScheme.error,
+        backgroundColor: themeColors.colorScheme.error,
         minimumSize: Size(
           width ?? MediaQuery.of(context).size.width,
           height ?? 60,
