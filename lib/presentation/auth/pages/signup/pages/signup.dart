@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_one.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_three.dart';
@@ -170,11 +171,12 @@ class _SignupPageState extends State<SignupPage> {
                   );
                 }
                 if (state is ButtonFailureState) {
-                  var snackBar = SnackBar(
-                    backgroundColor: colors.colorScheme.error,
-                    content: Text(state.errorMessage),
+                  rootScaffoldMessengerKey.currentState?.showSnackBar(
+                    SnackBar(
+                      content: Text(state.errorMessage),
+                      backgroundColor: colors.colorScheme.error,
+                    ),
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
               child: SafeArea(

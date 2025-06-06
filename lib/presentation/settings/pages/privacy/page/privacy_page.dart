@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
+import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
 import 'package:mcda_app/domain/usecases/toggle_last_seen.dart';
 import 'package:mcda_app/domain/usecases/toggle_status_visibility.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_cubit.dart';
@@ -54,11 +55,12 @@ class _PrivacyPageState extends State<PrivacyPage> {
     var result = await ToggleStatusVisibilityUseCase().call();
     result.fold(
       (failure) {
-        var snackBar = SnackBar(
-          content: Text(failure),
-          backgroundColor: colors.colorScheme.error,
+        rootScaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            content: Text(failure),
+            backgroundColor: colors.colorScheme.error,
+          ),
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       },
       (success) => setState(() {
         statusVisibilityEnabled = value;
@@ -72,11 +74,12 @@ class _PrivacyPageState extends State<PrivacyPage> {
     var result = await ToggleLastSeenUseCase().call();
     result.fold(
       (failure) {
-        var snackBar = SnackBar(
-          content: Text(failure),
-          backgroundColor: colors.colorScheme.error,
+        rootScaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            content: Text(failure),
+            backgroundColor: colors.colorScheme.error,
+          ),
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       },
       (success) => setState(() {
         lastSeenEnabled = value;

@@ -4,6 +4,7 @@ import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
+import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/pages/signup.dart';
 import 'package:mcda_app/presentation/home/pages/home.dart';
 
@@ -48,11 +49,12 @@ class SigninPage extends StatelessWidget {
                   );
                 }
                 if (state is ButtonFailureState) {
-                  var snackBar = SnackBar(
-                    content: Text(state.errorMessage),
-                    backgroundColor: colors.colorScheme.error,
+                  rootScaffoldMessengerKey.currentState?.showSnackBar(
+                    SnackBar(
+                      content: Text(state.errorMessage),
+                      backgroundColor: colors.colorScheme.error,
+                    ),
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
               child: SafeArea(
