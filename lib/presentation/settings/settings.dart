@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mcda_app/common/widgets/button/elevated_custom_redirect.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
-import 'package:mcda_app/presentation/settings/pages/account_data.dart';
+import 'package:mcda_app/presentation/settings/pages/account_data/page/account_data.dart';
 import 'package:mcda_app/presentation/settings/pages/app_info_page.dart';
 import 'package:mcda_app/presentation/settings/pages/appearance_page.dart';
 import 'package:mcda_app/presentation/settings/pages/credits_page.dart';

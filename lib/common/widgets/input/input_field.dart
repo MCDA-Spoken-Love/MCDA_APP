@@ -46,16 +46,10 @@ class _InputFieldState extends State<InputField> {
   }
 
   Widget _title(BuildContext context) {
-    ThemeData themeColors = Theme.of(context);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          textAlign: TextAlign.start,
-          style: TextStyle(color: themeColors.canvasColor, fontSize: 20),
-        ),
+        Text(widget.label, textAlign: TextAlign.start),
         SizedBox(height: 8),
       ],
     );
@@ -152,7 +146,6 @@ class _InputFieldState extends State<InputField> {
 
     return InputDecoration(
       filled: true,
-      fillColor: fillColor ?? themeColors.colorScheme.tertiary,
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
         borderSide: BorderSide(color: themeColors.colorScheme.error, width: 3),

@@ -47,7 +47,7 @@ class AuthRepositoryImpl extends AuthRepository {
       },
       (data) {
         Response response = data;
-        return Right(response);
+        return Right(response.data);
       },
     );
   }
