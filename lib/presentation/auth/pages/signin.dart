@@ -17,10 +17,8 @@ class SigninPage extends StatelessWidget {
   SigninPage({super.key});
 
   final TextEditingController _emailCon = TextEditingController(
-    text: 'msallesblanco@gmail.com',
   );
   final TextEditingController _passwordCon = TextEditingController(
-    text: 'Shiro744760@',
   );
   final _formKey = GlobalKey<FormState>();
 
