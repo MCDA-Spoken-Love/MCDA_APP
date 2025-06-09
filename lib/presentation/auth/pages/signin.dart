@@ -16,10 +16,8 @@ import '../../../domain/usecases/signin.dart';
 class SigninPage extends StatelessWidget {
   SigninPage({super.key});
 
-  final TextEditingController _emailCon = TextEditingController(
-  );
-  final TextEditingController _passwordCon = TextEditingController(
-  );
+  final TextEditingController _emailCon = TextEditingController();
+  final TextEditingController _passwordCon = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override

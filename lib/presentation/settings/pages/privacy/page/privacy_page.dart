@@ -42,6 +42,10 @@ class _PrivacyPageState extends State<PrivacyPage> {
         biometricLockEnabled = res['biometric_lock'];
       });
     });
+    final cubit = context.read<UserPrivacyDisplayCubit>();
+    if (cubit.state is UserPrivacyLoading) {
+      cubit.displayUserPrivacy();
+    }
   }
 
   @override
@@ -49,7 +53,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
     super.dispose();
   }
 
-  void _handleToggleVisibility(bool value, BuildContext context) async {
+  void _handleToggleVisibility(bool value) async {
     ThemeData colors = Theme.of(context);
 
     var result = await ToggleStatusVisibilityUseCase().call();
@@ -68,7 +72,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
     );
   }
 
-  void _handleToggleLastSeen(bool value, BuildContext context) async {
+  void _handleToggleLastSeen(bool value) async {
     ThemeData colors = Theme.of(context);
 
     var result = await ToggleLastSeenUseCase().call();
@@ -91,73 +95,66 @@ class _PrivacyPageState extends State<PrivacyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GoBack(title: 'Privacy'),
-      body: BlocProvider(
-        create: (context) => UserPrivacyDisplayCubit()..displayUserPrivacy(),
-        child: BlocListener<UserPrivacyDisplayCubit, UserPrivacyDisplayState>(
-          listener: (context, state) {
-            if (state is UserPrivacyLoaded) {
-              setState(() {
-                statusVisibilityEnabled =
-                    state.userPrivacyEntity.allow_status_visibility;
-                lastSeenEnabled = state.userPrivacyEntity.allow_last_seen;
-              });
-            }
-          },
-          child: BlocBuilder<UserPrivacyDisplayCubit, UserPrivacyDisplayState>(
-            builder: (context, state) {
-              if (state is UserPrivacyLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state is LoadUserPrivacyFailure) {
-                return Center(child: Text(state.errorMessage));
-              }
-              if (state is UserPrivacyLoaded) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SectionTitle('Visibility'),
-                      SwitchListTile(
-                        contentPadding: EdgeInsets.all(0),
-                        title: Text('Allow my status to be visible'),
-                        value: statusVisibilityEnabled ?? false,
-                        onChanged:
-                            (bool value) =>
-                                _handleToggleVisibility(value, context),
-                      ),
-                      SwitchListTile(
-                        contentPadding: EdgeInsets.all(0),
-                        title: Text('Allow last seen'),
-                        subtitle: Text(
-                          'When enabled, other users will be able to see when you were last online',
-                        ),
-                        value: lastSeenEnabled ?? false,
-                        onChanged:
-                            (bool value) =>
-                                _handleToggleLastSeen(value, context),
-                      ),
-                      SizedBox(height: 20),
-                      SectionTitle('App lock'),
-                      SwitchListTile(
-                        isThreeLine: true,
-                        contentPadding: EdgeInsets.all(0),
-                        title: Text('Unlock with biometrics'),
-                        subtitle: Text(
-                          'When enabled, you’ll need to use fingerprint, face or other unique identifiers to open this app.',
-                        ),
-                        value: biometricLockEnabled ?? false,
-                        onChanged: (bool value) {
-                          setBiometricLock(value);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }
+      body: BlocListener<UserPrivacyDisplayCubit, UserPrivacyDisplayState>(
+        listener: (context, state) {
+          if (state is UserPrivacyLoaded) {
+            setState(() {
+              statusVisibilityEnabled =
+                  state.userPrivacyEntity.allow_status_visibility;
+              lastSeenEnabled = state.userPrivacyEntity.allow_last_seen;
+            });
+          }
+        },
+        child: BlocBuilder<UserPrivacyDisplayCubit, UserPrivacyDisplayState>(
+          builder: (context, state) {
+            if (state is UserPrivacyLoading) {
               return const Center(child: CircularProgressIndicator());
-            },
-          ),
+            }
+            if (state is LoadUserPrivacyFailure) {
+              return Center(child: Text(state.errorMessage));
+            }
+            if (state is UserPrivacyLoaded) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SectionTitle('Visibility'),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.all(0),
+                      title: Text('Allow my status to be visible'),
+                      value: statusVisibilityEnabled ?? false,
+                      onChanged: (bool value) => _handleToggleVisibility(value),
+                    ),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.all(0),
+                      title: Text('Allow last seen'),
+                      subtitle: Text(
+                        'When enabled, other users will be able to see when you were last online',
+                      ),
+                      value: lastSeenEnabled ?? false,
+                      onChanged: (bool value) => _handleToggleLastSeen(value),
+                    ),
+                    SizedBox(height: 20),
+                    SectionTitle('App lock'),
+                    SwitchListTile(
+                      isThreeLine: true,
+                      contentPadding: EdgeInsets.all(0),
+                      title: Text('Unlock with biometrics'),
+                      subtitle: Text(
+                        'When enabled, you’ll need to use fingerprint, face or other unique identifiers to open this app.',
+                      ),
+                      value: biometricLockEnabled ?? false,
+                      onChanged: (bool value) {
+                        setBiometricLock(value);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );

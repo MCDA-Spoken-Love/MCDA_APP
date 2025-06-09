@@ -71,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
-  Widget _createAccountButton(BuildContext context) {
+  Widget _createAccountButton() {
     final MyColorsExtension myColors =
         Theme.of(context).extension<MyColorsExtension>()!;
     return Builder(
@@ -110,7 +110,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Widget stepSwitcher(BuildContext context) {
+  Widget stepSwitcher() {
     switch (formStepper) {
       case 3:
         return SignupStepThree(
@@ -185,7 +185,7 @@ class _SignupPageState extends State<SignupPage> {
                   key: _formKey,
                   child: SingleChildScrollView(
                     reverse: true,
-                    child: stepSwitcher(context),
+                    child: stepSwitcher(),
                   ),
                 ),
               ),

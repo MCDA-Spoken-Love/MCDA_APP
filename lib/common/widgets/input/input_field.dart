@@ -45,7 +45,7 @@ class _InputFieldState extends State<InputField> {
     });
   }
 
-  Widget _title(BuildContext context) {
+  Widget _title() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -55,13 +55,13 @@ class _InputFieldState extends State<InputField> {
     );
   }
 
-  Widget _loading(BuildContext context) {
+  Widget _loading() {
     ThemeData themeColors = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _title(context),
+        _title(),
         TextFormField(
           style: TextStyle(color: themeColors.colorScheme.error),
           onChanged: widget.onChanged,
@@ -73,7 +73,6 @@ class _InputFieldState extends State<InputField> {
           obscureText: _obscureText && widget.inputType == 'password',
           controller: widget.controller,
           decoration: _decorator(
-            context,
             CircularProgressIndicator(),
             themeColors.colorScheme.tertiary,
           ),
@@ -82,13 +81,13 @@ class _InputFieldState extends State<InputField> {
     );
   }
 
-  Widget _error(BuildContext context) {
+  Widget _error() {
     ThemeData themeColors = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _title(context),
+        _title(),
 
         TextFormField(
           style: TextStyle(color: themeColors.colorScheme.error),
@@ -101,7 +100,6 @@ class _InputFieldState extends State<InputField> {
           obscureText: _obscureText && widget.inputType == 'password',
           controller: widget.controller,
           decoration: _decorator(
-            context,
             Icon(Icons.error, color: themeColors.colorScheme.error),
             themeColors.colorScheme.tertiary,
           ),
@@ -110,13 +108,13 @@ class _InputFieldState extends State<InputField> {
     );
   }
 
-  Widget _initial(BuildContext context) {
+  Widget _initial() {
     ThemeData themeColors = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _title(context),
+        _title(),
         TextFormField(
           style: TextStyle(color: themeColors.colorScheme.primary),
 
@@ -127,21 +125,13 @@ class _InputFieldState extends State<InputField> {
           validator: widget.validator,
           obscureText: _obscureText && widget.inputType == 'password',
           controller: widget.controller,
-          decoration: _decorator(
-            context,
-            null,
-            themeColors.colorScheme.tertiary,
-          ),
+          decoration: _decorator(null, themeColors.colorScheme.tertiary),
         ),
       ],
     );
   }
 
-  InputDecoration _decorator(
-    BuildContext context,
-    Widget? suffixIcon,
-    Color? fillColor,
-  ) {
+  InputDecoration _decorator(Widget? suffixIcon, Color? fillColor) {
     ThemeData themeColors = Theme.of(context);
 
     return InputDecoration(
@@ -191,12 +181,12 @@ class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     if (widget.isLoading == true) {
-      return _loading(context);
+      return _loading();
     }
     if (widget.error == true) {
-      return _error(context);
+      return _error();
     }
 
-    return _initial(context);
+    return _initial();
   }
 }

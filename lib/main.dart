@@ -1,22 +1,33 @@
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
+import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
 import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/core/configs/theme/theme_changer.dart';
 import 'package:mcda_app/core/provider/theme.dart';
 import 'package:mcda_app/presentation/auth/pages/signin.dart';
+import 'package:mcda_app/presentation/home/bloc/user_display_cubit.dart';
 import 'package:mcda_app/presentation/home/pages/home.dart';
+import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_cubit.dart';
 import 'package:mcda_app/presentation/splash_screen.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory:
+        kIsWeb
+            ? HydratedStorageDirectory.web
+            : HydratedStorageDirectory((await getTemporaryDirectory()).path),
+  );
   await dotenv.load(fileName: ".env");
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -25,7 +36,17 @@ void main() async {
       systemNavigationBarColor: Colors.transparent,
     ),
   );
-  runApp(const MyHomePage());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => UserDisplayCubit()),
+        BlocProvider(create: (_) => UserPrivacyDisplayCubit()),
+        BlocProvider(create: (_) => ButtonStateCubit()),
+        BlocProvider(create: (_) => AuthStateCubit()),
+      ],
+      child: MyHomePage(),
+    ),
+  );
 }
 
 class MyHomePage extends StatefulWidget {

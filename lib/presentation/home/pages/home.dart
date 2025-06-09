@@ -3,13 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
-import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
 import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../common/blocs/button/button_state_cubit.dart';
 import '../bloc/user_display_cubit.dart';
 import '../bloc/user_display_state.dart';
 
@@ -88,6 +86,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _handleAuth();
+
+    final cubit = context.read<UserDisplayCubit>();
+    if (cubit.state is UserLoading) {
+      cubit.displayUser();
+    }
   }
 
   void _onItemTapped(int index) {
@@ -109,75 +112,69 @@ class _HomePageState extends State<HomePage> {
                 currentPageIndex: currentPageIndex,
               )
               : null,
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => UserDisplayCubit()..displayUser()),
-          BlocProvider(create: (context) => ButtonStateCubit()),
-          BlocProvider(create: (context) => AuthStateCubit()),
-        ],
-        child: BlocBuilder<UserDisplayCubit, UserDisplayState>(
-          builder: (context, state) {
-            if (_authorized) {
-              if (state is UserLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state is LoadUserFailure) {
-                return Center(child: Text(state.errorMessage));
-              }
-              if (state is UserLoaded) {
-                return [
-                  Settings(),
-                  Column(
-                    children: [
-                      const Text('Index 1: Business'),
-                      Text('bloqueio biometrico: $biometricLockEnabled'),
-                    ],
-                  ),
-                  const Text('Index 2: School'),
-                ][currentPageIndex];
-              }
-              return Container();
+      body: BlocBuilder<UserDisplayCubit, UserDisplayState>(
+        builder: (context, state) {
+          if (_authorized) {
+            if (state is UserLoading) {
+              return const Center(child: CircularProgressIndicator());
             }
-            return Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(20),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  backgroundColor: themeColors.colorScheme.primary,
-                ),
-                onPressed: _handleAuth,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    BestyTitle(title: 'Authenticate'),
-                    SizedBox(width: 10),
-                    Icon(
-                      Icons.fingerprint,
-                      size: 42,
-                      color: themeColors.colorScheme.tertiary,
-                    ),
+            if (state is LoadUserFailure) {
+              return Center(child: Text(state.errorMessage));
+            }
+            if (state is UserLoaded) {
+              return [
+                Settings(),
+                Column(
+                  children: [
+                    const Text('Index 1: Business'),
+                    Text('bloqueio biometrico: $biometricLockEnabled'),
+                    Text('bloqueio biometrico: ${state.userEntity.email}'),
                   ],
                 ),
+                const Text('Index 2: School'),
+              ][currentPageIndex];
+            }
+            return Container();
+          }
+          return Center(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: themeColors.colorScheme.primary,
               ),
-              // : ElevatedButton(
-              //   onPressed: _handleAuth,
-              //   child: Row(
-              //     mainAxisSize: MainAxisSize.min,
-              //     children: <Widget>[
-              //       Text(
-              //         _isAuthenticating
-              //             ? 'Cancel'
-              //             : 'Authenticate: biometrics only',
-              //       ),
-              //       const Icon(Icons.fingerprint),
-              //     ],
-              //   ),
-              // ),
-            );
-          },
-        ),
+              onPressed: _handleAuth,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  BestyTitle(title: 'Authenticate'),
+                  SizedBox(width: 10),
+                  Icon(
+                    Icons.fingerprint,
+                    size: 42,
+                    color: themeColors.colorScheme.tertiary,
+                  ),
+                ],
+              ),
+            ),
+            // : ElevatedButton(
+            //   onPressed: _handleAuth,
+            //   child: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: <Widget>[
+            //       Text(
+            //         _isAuthenticating
+            //             ? 'Cancel'
+            //             : 'Authenticate: biometrics only',
+            //       ),
+            //       const Icon(Icons.fingerprint),
+            //     ],
+            //   ),
+            // ),
+          );
+        },
       ),
     );
   }
