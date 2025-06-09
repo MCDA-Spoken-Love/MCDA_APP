@@ -35,6 +35,24 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
+  Future<Either> deleteAccount() async {
+    Either result = await AuthApiServiceImpl().deleteAccount();
+    return result.fold(
+      (error) {
+        return Left(mapToString(error.data));
+      },
+      (data) async {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.remove('token');
+        sharedPreferences.remove('theme');
+        sharedPreferences.remove('scheme');
+        return Right(data);
+      },
+    );
+  }
+
+  @override
   Future<Either> changePassword(
     ChangePasswordReqParams changePasswordReq,
   ) async {

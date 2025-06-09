@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';
 import 'package:mcda_app/common/widgets/text/section_body.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
+import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
+import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
+import 'package:mcda_app/core/provider/theme.dart';
+import 'package:mcda_app/domain/usecases/delete_account.dart';
+import 'package:mcda_app/presentation/auth/pages/signin.dart';
+import 'package:provider/provider.dart';
 
 class DeleteAccount extends StatefulWidget {
   const DeleteAccount({super.key});
@@ -11,11 +17,46 @@ class DeleteAccount extends StatefulWidget {
 }
 
 class _DeleteAccountState extends State<DeleteAccount> {
+  bool _isLoading = false;
+
+  void _deleteAccount() async {
+    setState(() => _isLoading = true);
+    var response = await DeleteAccountUseCase().call();
+    response.fold(
+      (error) {
+        rootScaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            content: Text(error),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      },
+      (success) {
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SigninPage()),
+        );
+        rootScaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            elevation: 100,
+            content: Text(success['message']),
+            backgroundColor:
+                Theme.of(context).extension<MyColorsExtension>()!.submitColor,
+          ),
+        );
+      },
+    );
+    setState(() => _isLoading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     ThemeData colors = Theme.of(context);
+    MyColorsExtension myColorsExtension =
+        colors.extension<MyColorsExtension>()!;
 
+    double sheetHeight = MediaQuery.of(context).size.height * .6;
     Future openDialog() {
       return showModalBottomSheet(
         isScrollControlled: true,
@@ -25,7 +66,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            height: size.height * 0.9,
+            height: sheetHeight,
             decoration: BoxDecoration(
               color: colors.colorScheme.surface,
               borderRadius: BorderRadius.only(
@@ -46,6 +87,32 @@ class _DeleteAccountState extends State<DeleteAccount> {
                   SizedBox(height: 8),
                   SectionBody(
                     'Are you certain you desire to terminate your account?',
+                  ),
+                  SizedBox(height: 23),
+                  CustomButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    backgroundColor: myColorsExtension.submitColor,
+                    title: 'No, I have changed my mind',
+                  ),
+                  SizedBox(height: 14),
+                  Consumer(
+                    builder: (context, ThemeNotifier themeNotifier, child) {
+                      return CustomButton(
+                        isLoading: _isLoading,
+                        onPressed: () {
+                          _deleteAccount();
+                          themeNotifier.toggleColorScheme('main');
+                          if (themeNotifier.theme == 'dark') {
+                            themeNotifier.toggleTheme();
+                          }
+                        },
+                        titleColor: colors.colorScheme.error,
+                        backgroundColor: Colors.transparent,
+                        title: 'Yes, please delete my account',
+                      );
+                    },
                   ),
                 ],
               ),

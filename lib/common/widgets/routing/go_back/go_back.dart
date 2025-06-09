@@ -21,10 +21,10 @@ class _GoBackState extends State<GoBack> {
     Theme.of(context).extension<MyColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.only(
-        top: 40.0,
+        top: 20.0,
         left: 20.0,
         right: 20.0,
-        bottom: 0.0,
+        bottom: 0,
       ),
       child: Column(
         children: [
@@ -52,7 +52,7 @@ class _GoBackState extends State<GoBack> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 7),
           CustomContainer(
             position: 'unique',
             paddings: EdgeInsets.all(2.0),

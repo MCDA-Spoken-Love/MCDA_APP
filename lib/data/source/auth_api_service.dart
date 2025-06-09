@@ -10,6 +10,7 @@ abstract class AuthApiService {
   Future<Either> signup(SignupReqParams signupReq);
   Future<Either> signin(SigninReqParams signinReq);
   Future<Either> getUser();
+  Future<Either> deleteAccount();
   dynamic getUserByFilter(String filter, String type);
   Future<Either> changePassword(ChangePasswordReqParams changePasswordReq);
 }
@@ -22,6 +23,16 @@ class AuthApiServiceImpl extends AuthApiService {
         'api/auth/registration/',
         data: signupReq.toMap(),
       );
+      return Right(response);
+    } on DioException catch (e) {
+      return Left(e.response);
+    }
+  }
+
+  @override
+  Future<Either> deleteAccount() async {
+    try {
+      var response = await DioClient().delete('api/user/');
       return Right(response);
     } on DioException catch (e) {
       return Left(e.response);
