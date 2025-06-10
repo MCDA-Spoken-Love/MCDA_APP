@@ -6,7 +6,7 @@ import 'package:mcda_app/common/widgets/text/section_body.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/domain/usecases/user/terminate_relationship.dart';
-import 'package:mcda_app/presentation/home/pages/home.dart';
+import 'package:mcda_app/presentation/home/home.dart';
 
 class RelationshipSettingsPage extends StatefulWidget {
   const RelationshipSettingsPage({super.key});

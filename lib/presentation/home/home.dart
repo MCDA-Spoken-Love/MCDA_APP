@@ -8,8 +8,8 @@ import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../bloc/user_display_cubit.dart';
-import '../bloc/user_display_state.dart';
+import '../../common/blocs/user/user_display_cubit.dart';
+import '../../common/blocs/user/user_display_state.dart';
 
 Logger logger = Logger(
   printer: PrettyPrinter(methodCount: 0, colors: true, printEmojis: true),

@@ -5,8 +5,8 @@ import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 import 'package:mcda_app/domain/usecases/privacy/toggle_last_seen.dart';
 import 'package:mcda_app/domain/usecases/privacy/toggle_status_visibility.dart';
-import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_cubit.dart';
-import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_state.dart';
+import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
+import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrivacyPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:mcda_app/common/blocs/user/user_display_state.dart';
 import 'package:mcda_app/domain/entities/user.dart';
-import 'package:mcda_app/presentation/home/bloc/user_display_state.dart';
 
 import '../../../domain/usecases/user/get_user.dart';
 
@@ -21,8 +21,6 @@ class UserDisplayCubit extends HydratedCubit<UserDisplayState> {
 
   @override
   UserDisplayState? fromJson(Map<String, dynamic> json) {
-    print(json);
-
     switch (json['type']) {
       case 'UserLoaded':
         return UserLoaded(userEntity: UserEntity.fromJson(json['userEntity']));
