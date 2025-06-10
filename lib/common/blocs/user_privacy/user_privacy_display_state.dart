@@ -2,6 +2,8 @@ import 'package:mcda_app/domain/entities/user_privacy.dart';
 
 abstract class UserPrivacyDisplayState {}
 
+class UserPrivacyInitial extends UserPrivacyDisplayState {}
+
 class UserPrivacyLoading extends UserPrivacyDisplayState {}
 
 class UserPrivacyLoaded extends UserPrivacyDisplayState {

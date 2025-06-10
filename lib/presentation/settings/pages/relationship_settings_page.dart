@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/relationship_termination/relationship_termation_bloc.dart';
+import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_bloc.dart';
 import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_event.dart';
 import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_state.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';

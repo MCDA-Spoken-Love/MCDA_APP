@@ -4,9 +4,10 @@ import 'package:mcda_app/domain/entities/user_privacy.dart';
 import 'package:mcda_app/domain/usecases/privacy/get_user_privacy.dart';
 
 class UserPrivacyDisplayCubit extends HydratedCubit<UserPrivacyDisplayState> {
-  UserPrivacyDisplayCubit() : super(UserPrivacyLoading());
+  UserPrivacyDisplayCubit() : super(UserPrivacyInitial());
 
   void displayUserPrivacy() async {
+    emit(UserPrivacyLoading());
     var result = await GetUserPrivacyUseCase().call();
     result.fold(
       (error) {

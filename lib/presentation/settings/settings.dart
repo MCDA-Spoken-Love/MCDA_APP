@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/common/widgets/button/elevated_custom_redirect.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
@@ -15,8 +16,18 @@ import 'package:mcda_app/presentation/settings/pages/relationship_settings_page.
 import 'package:mcda_app/presentation/settings/pages/terms_and_conditions_page.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({super.key});
+
+  @override
+  State<Settings> createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
+  Future<void> logout() async {
+    SignoutUseCase().call();
+    await HydratedBloc.storage.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,15 +138,15 @@ class Settings extends StatelessWidget {
             Consumer(
               builder: (context, ThemeNotifier themeNotifier, child) {
                 return ElevatedCustomRedirect(
-                  onPressed: () {
+                  onPressed: () async {
                     themeNotifier.toggleColorScheme('main');
                     if (themeNotifier.theme == 'dark') {
                       themeNotifier.toggleTheme();
                     }
-                    SignoutUseCase().call();
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => SigninPage()),
                     );
+                    logout();
                   },
                   containerPosition: 'bottom',
                   title: 'Logout',
