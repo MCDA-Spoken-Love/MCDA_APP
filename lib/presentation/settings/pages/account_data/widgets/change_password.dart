@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';
 import 'package:mcda_app/common/widgets/input/input_field.dart';
+import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
-import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
-import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/data/models/change_password_req_params.dart';
-import 'package:mcda_app/domain/usecases/change_password.dart';
+import 'package:mcda_app/domain/usecases/auth/change_password.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -21,45 +20,31 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  void handleChangePassword() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var result = await ChangePasswordUseCase().call(
+      param: ChangePasswordReqParams(
+        new_password1: _newPasswordCon.text,
+        new_password2: _newPasswordConfirmCon.text,
+      ),
+    );
+    result.fold(
+      (failure) {
+        GlobalSnackBar.show(context, failure, status: 'error');
+      },
+      (success) {
+        GlobalSnackBar.show(context, success['detail'], status: 'success');
+      },
+    );
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    ThemeData colors = Theme.of(context);
-    MyColorsExtension myColorsExtension = colors.extension()!;
-
-    void handleChangePassword() async {
-      setState(() {
-        _isLoading = true;
-      });
-      var result = await ChangePasswordUseCase().call(
-        param: ChangePasswordReqParams(
-          new_password1: _newPasswordCon.text,
-          new_password2: _newPasswordConfirmCon.text,
-        ),
-      );
-      result.fold(
-        (failure) {
-          rootScaffoldMessengerKey.currentState?.showSnackBar(
-            SnackBar(
-              content: Text(failure),
-              backgroundColor: colors.colorScheme.error,
-            ),
-          );
-        },
-        (success) {
-          rootScaffoldMessengerKey.currentState?.showSnackBar(
-            SnackBar(
-              content: Text(success['detail']),
-              backgroundColor: myColorsExtension.submitColor,
-            ),
-          );
-        },
-      );
-      setState(() {
-        _isLoading = false;
-      });
-      return null;
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

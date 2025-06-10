@@ -8,7 +8,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
-import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/core/configs/theme/theme_changer.dart';
 import 'package:mcda_app/core/provider/theme.dart';
@@ -74,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
               return BlocProvider(
                 create: (context) => AuthStateCubit()..appStarted(),
                 child: MaterialApp(
-                  scaffoldMessengerKey: rootScaffoldMessengerKey,
                   title: 'MCDA_APP',
                   theme: themeChanger(
                     context,

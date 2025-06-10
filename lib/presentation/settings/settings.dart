@@ -3,7 +3,7 @@ import 'package:mcda_app/common/widgets/button/elevated_custom_redirect.dart';
 import 'package:mcda_app/common/widgets/containers/custom_container.dart';
 import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/core/provider/theme.dart';
-import 'package:mcda_app/domain/usecases/signout.dart';
+import 'package:mcda_app/domain/usecases/auth/signout.dart';
 import 'package:mcda_app/presentation/auth/pages/signin.dart';
 import 'package:mcda_app/presentation/settings/pages/account_data/page/account_data.dart';
 import 'package:mcda_app/presentation/settings/pages/app_info_page.dart';
@@ -11,6 +11,7 @@ import 'package:mcda_app/presentation/settings/pages/appearance_page.dart';
 import 'package:mcda_app/presentation/settings/pages/credits_page.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/page/privacy_page.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy_policy_page.dart';
+import 'package:mcda_app/presentation/settings/pages/relationship_settings_page.dart';
 import 'package:mcda_app/presentation/settings/pages/terms_and_conditions_page.dart';
 import 'package:provider/provider.dart';
 
@@ -70,7 +71,11 @@ class Settings extends StatelessWidget {
             ),
             ElevatedCustomRedirect(
               onPressed: () {
-                false;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => RelationshipSettingsPage(),
+                  ),
+                );
               },
               containerPosition: 'bottom',
               title: 'Relationship Settings',

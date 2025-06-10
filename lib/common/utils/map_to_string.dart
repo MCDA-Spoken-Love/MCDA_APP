@@ -5,10 +5,10 @@ String mapToString(Map<String, dynamic> errorMap) {
   final allMessages =
       errorMap.values.expand((value) {
         if (value is List) return value;
-        return [];
+        return [value];
       }).toList();
 
   if (allMessages.isEmpty) return "An unknown error occurred.";
 
-  return allMessages.join(" ");
+  return allMessages.join(", ");
 }

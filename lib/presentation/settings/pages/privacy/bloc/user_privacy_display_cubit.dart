@@ -1,6 +1,6 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/domain/entities/user_privacy.dart';
-import 'package:mcda_app/domain/usecases/get_user_privacy.dart';
+import 'package:mcda_app/domain/usecases/privacy/get_user_privacy.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_state.dart';
 
 class UserPrivacyDisplayCubit extends HydratedCubit<UserPrivacyDisplayState> {

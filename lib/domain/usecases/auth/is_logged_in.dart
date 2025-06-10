@@ -1,6 +1,6 @@
 import 'package:mcda_app/data/repository/auth.dart';
 
-import '../../core/usecase/usecase.dart';
+import '../../../core/usecase/usecase.dart';
 
 class IsLoggedInUseCase implements UseCase<bool, dynamic> {
   @override

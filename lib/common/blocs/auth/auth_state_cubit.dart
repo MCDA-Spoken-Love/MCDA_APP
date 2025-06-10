@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/domain/usecases/is_logged_in.dart';
+import 'package:mcda_app/domain/usecases/auth/is_logged_in.dart';
 
 import 'auth_state.dart';
 

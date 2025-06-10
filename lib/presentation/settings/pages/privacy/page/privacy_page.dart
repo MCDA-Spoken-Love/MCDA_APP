@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
+import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
-import 'package:mcda_app/core/configs/scaffold/scaffold_messenger_key.dart';
-import 'package:mcda_app/domain/usecases/toggle_last_seen.dart';
-import 'package:mcda_app/domain/usecases/toggle_status_visibility.dart';
+import 'package:mcda_app/domain/usecases/privacy/toggle_last_seen.dart';
+import 'package:mcda_app/domain/usecases/privacy/toggle_status_visibility.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_cubit.dart';
 import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,17 +54,10 @@ class _PrivacyPageState extends State<PrivacyPage> {
   }
 
   void _handleToggleVisibility(bool value) async {
-    ThemeData colors = Theme.of(context);
-
     var result = await ToggleStatusVisibilityUseCase().call();
     result.fold(
       (failure) {
-        rootScaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text(failure),
-            backgroundColor: colors.colorScheme.error,
-          ),
-        );
+        GlobalSnackBar.show(context, failure, status: 'error');
       },
       (success) => setState(() {
         statusVisibilityEnabled = value;
@@ -73,17 +66,10 @@ class _PrivacyPageState extends State<PrivacyPage> {
   }
 
   void _handleToggleLastSeen(bool value) async {
-    ThemeData colors = Theme.of(context);
-
     var result = await ToggleLastSeenUseCase().call();
     result.fold(
       (failure) {
-        rootScaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text(failure),
-            backgroundColor: colors.colorScheme.error,
-          ),
-        );
+        GlobalSnackBar.show(context, failure, status: 'error');
       },
       (success) => setState(() {
         lastSeenEnabled = value;

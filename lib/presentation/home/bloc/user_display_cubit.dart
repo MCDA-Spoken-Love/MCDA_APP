@@ -2,7 +2,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/domain/entities/user.dart';
 import 'package:mcda_app/presentation/home/bloc/user_display_state.dart';
 
-import '../../../domain/usecases/get_user.dart';
+import '../../../domain/usecases/user/get_user.dart';
 
 class UserDisplayCubit extends HydratedCubit<UserDisplayState> {
   UserDisplayCubit() : super(UserLoading());

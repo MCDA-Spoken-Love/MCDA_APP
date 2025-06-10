@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';
+import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/section_body.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
-import 'package:mcda_app/core/provider/theme.dart';
-import 'package:mcda_app/domain/usecases/user/delete_account.dart';
-import 'package:mcda_app/presentation/auth/pages/signin.dart';
-import 'package:provider/provider.dart';
+import 'package:mcda_app/domain/usecases/user/terminate_relationship.dart';
+import 'package:mcda_app/presentation/home/pages/home.dart';
 
-class DeleteAccount extends StatefulWidget {
-  const DeleteAccount({super.key});
+class RelationshipSettingsPage extends StatefulWidget {
+  const RelationshipSettingsPage({super.key});
 
   @override
-  State<DeleteAccount> createState() => _DeleteAccountState();
+  State<RelationshipSettingsPage> createState() =>
+      _RelationshipSettingsPageState();
 }
 
-class _DeleteAccountState extends State<DeleteAccount> {
+class _RelationshipSettingsPageState extends State<RelationshipSettingsPage> {
   bool _isLoading = false;
 
-  void _deleteAccount() async {
+  void _terminateRelationShip() async {
     setState(() => _isLoading = true);
-    var response = await DeleteAccountUseCase().call();
-    response.fold(
-      (error) {
+    var result = await TerminateRelationshipUseCase().call();
+    result.fold(
+      (failure) {
         Navigator.pop(context);
-        GlobalSnackBar.show(context, error, status: 'error');
+        GlobalSnackBar.show(context, failure, status: 'error');
       },
       (success) {
         Navigator.pop(context);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => SigninPage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
         GlobalSnackBar.show(context, success['message'], status: 'success');
       },
@@ -68,14 +68,18 @@ class _DeleteAccountState extends State<DeleteAccount> {
               child: ListView(
                 physics: ClampingScrollPhysics(),
                 children: [
-                  SectionTitle('Account deletion'),
+                  SectionTitle('Terminate relationship'),
                   SizedBox(height: 20),
                   SectionBody(
-                    'You are about to delete your MCDA account. Be sure that you are certain of this decision, for this action cannot be reverted. Once deleted, your account is permanently gone, for the sake of data-security of the information that was shared here. ',
+                    'We are so sorry to see that you wish to end your relationship. We hope this may be a click mistake, but if not, please remember to seek help and support from friends, family and professionals, if needed.',
                   ),
                   SizedBox(height: 8),
                   SectionBody(
-                    'Are you certain you desire to terminate your account?',
+                    'Your account will still be active, but you will have to setup a new relationship to make use of all functionalities again. We hope to see you again soon :(',
+                  ),
+                  SizedBox(height: 8),
+                  SectionBody(
+                    'Are you certain you desire to terminate your relationship?',
                   ),
                   SizedBox(height: 23),
                   CustomButton(
@@ -86,22 +90,14 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     title: 'No, I have changed my mind',
                   ),
                   SizedBox(height: 14),
-                  Consumer(
-                    builder: (context, ThemeNotifier themeNotifier, child) {
-                      return CustomButton(
-                        isLoading: _isLoading,
-                        onPressed: () {
-                          _deleteAccount();
-                          themeNotifier.toggleColorScheme('main');
-                          if (themeNotifier.theme == 'dark') {
-                            themeNotifier.toggleTheme();
-                          }
-                        },
-                        titleColor: colors.colorScheme.error,
-                        backgroundColor: Colors.transparent,
-                        title: 'Yes, please delete my account',
-                      );
+                  CustomButton(
+                    isLoading: _isLoading,
+                    onPressed: () {
+                      _terminateRelationShip();
                     },
+                    titleColor: colors.colorScheme.error,
+                    backgroundColor: Colors.transparent,
+                    title: 'Yes, please terminate relationship',
                   ),
                 ],
               ),
@@ -111,18 +107,18 @@ class _DeleteAccountState extends State<DeleteAccount> {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle('Delete account'),
-        CustomButton(
+    return Scaffold(
+      appBar: GoBack(title: 'Relationship Settings'),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: CustomButton(
           onPressed: () {
             openDialog();
           },
-          title: 'Delete your account',
+          title: 'Terminate relationship',
           error: true,
         ),
-      ],
+      ),
     );
   }
 }

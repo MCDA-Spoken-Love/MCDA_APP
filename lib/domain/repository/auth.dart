@@ -10,7 +10,5 @@ abstract class AuthRepository {
   Future<Either> changePassword(ChangePasswordReqParams changePasswordReq);
   Future<Either> signout();
   Future<bool> isLoggedIn();
-  Future<Either> getUser();
   Future<Either> refresh();
-  Future<Either> deleteAccount();
 }
