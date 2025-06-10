@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'my_colors_extension.dart';
 
+Color saturate(Color color, double amount) {
+  final hsl = HSLColor.fromColor(color);
+  final saturated = hsl.withSaturation(
+    (hsl.saturation * (1 + amount)).clamp(0.0, 1.0),
+  );
+  return saturated.toColor();
+}
+
+// Helper for more colorful backgrounds in dark themes
+Color colorfulDark(Color base, Color accent, {double blend = 0.15}) {
+  return Color.lerp(base, accent, blend) ?? base;
+}
+
 class AppTheme {
   final ColorScheme? darkDynamic;
   final ColorScheme? lightDynamic;
@@ -50,7 +63,7 @@ class AppTheme {
     highlightColor: Color(0xFF9747FF),
     disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
-    canvasColor: Color(0xFFE5E7EB),
+    canvasColor: Color(0xFF1f1c27),
     brightness: Brightness.dark,
     textTheme: TextTheme().apply(
       bodyColor: Colors.black,
@@ -86,6 +99,8 @@ class AppTheme {
     brightness: Brightness.light,
     colorScheme: lightDynamic,
     textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.black)),
+    highlightColor:
+        lightDynamic?.primary.withOpacity(0.7) ?? Colors.white, // brighter
   ).copyWith(
     extensions: <ThemeExtension<dynamic>>[
       MyColorsExtension(
@@ -103,6 +118,8 @@ class AppTheme {
     brightness: Brightness.dark,
     colorScheme: darkDynamic,
     textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.white)),
+    highlightColor:
+        darkDynamic?.primary.withOpacity(0.7) ?? Colors.white, // brighter
   ).copyWith(
     extensions: <ThemeExtension<dynamic>>[
       MyColorsExtension(
@@ -115,23 +132,25 @@ class AppTheme {
     ],
   );
 
+  // iOS
   ThemeData iosLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    primaryColor: Color(0xFF007AFF), // iOS Blue
-    scaffoldBackgroundColor: Color(0xFFF9F9F9), // iOS system background
-    canvasColor: Color(0xFFFFFFFF),
+    primaryColor: Color(0xFF007AFF),
+    scaffoldBackgroundColor: Color(0xFFF9F9F9),
+    canvasColor: Color(0xFFF9F9F9),
+    highlightColor: Color(0xFF60AFFF),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
-      primary: Color(0xFF007AFF), // iOS Blue
+      primary: Color(0xFF007AFF),
       onPrimary: Colors.white,
-      secondary: Color(0xFF5856D6), // iOS Purple
+      secondary: Color(0xFF5856D6),
       onSecondary: Colors.white,
       surface: Color(0xFFFFFFFF),
       onSurface: Color(0xFF1C1C1E),
-      error: Color(0xFFFF3B30), // iOS Red
+      error: Color(0xFFFF3B30),
       onError: Colors.white,
-      tertiary: Color(0xFF34C759), // iOS Green
+      tertiary: Color(0xFF34C759),
       onTertiary: Colors.white,
     ),
     textTheme: TextTheme().apply(
@@ -153,20 +172,21 @@ class AppTheme {
   final ThemeData iosDarkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    primaryColor: Color(0xFF0A84FF), // iOS Blue (Dark)
-    scaffoldBackgroundColor: Color(0xFF000000), // iOS system background dark
-    canvasColor: Color(0xFF1C1C1E),
+    primaryColor: Color(0xFF0A84FF),
+    scaffoldBackgroundColor: Color(0xFF000000),
+    canvasColor: Color(0xFF000000),
+    highlightColor: Color(0xFF5CADFF),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
-      primary: Color(0xFF0A84FF), // iOS Blue (Dark)
+      primary: Color(0xFF0A84FF),
       onPrimary: Colors.white,
-      secondary: Color(0xFF5E5CE6), // iOS Purple (Dark)
+      secondary: Color(0xFF5E5CE6),
       onSecondary: Colors.white,
       surface: Color(0xFF1C1C1E),
       onSurface: Color(0xFFF2F2F7),
-      error: Color(0xFFFF453A), // iOS Red (Dark)
+      error: Color(0xFFFF453A),
       onError: Colors.white,
-      tertiary: Color(0xFF30D158), // iOS Green (Dark)
+      tertiary: Color(0xFF30D158),
       onTertiary: Colors.white,
     ),
     textTheme: TextTheme().apply(
@@ -185,23 +205,25 @@ class AppTheme {
     ],
   );
 
+  // Blue
   final ThemeData blueLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    primaryColor: Color(0xFF1976D2), // Blue 700
-    scaffoldBackgroundColor: Color(0xFFF5F8FD), // Light blue background
-    canvasColor: Color(0xFFFFFFFF),
+    primaryColor: Color(0xFF1976D2),
+    scaffoldBackgroundColor: Color(0xFFF5F8FD),
+    canvasColor: Color(0xFFF5F8FD),
+    highlightColor: Color(0xFF63A4FF),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
-      primary: Color(0xFF1976D2), // Blue 700
+      primary: Color(0xFF1976D2),
       onPrimary: Colors.white,
-      secondary: Color(0xFF42A5F5), // Blue 400
+      secondary: Color(0xFF42A5F5),
       onSecondary: Colors.white,
       surface: Color(0xFFFFFFFF),
       onSurface: Color(0xFF0D1333),
-      error: Color(0xFFD32F2F), // Red 700
+      error: Color(0xFFD32F2F),
       onError: Colors.white,
-      tertiary: Color(0xFF90CAF9), // Blue 200
+      tertiary: Color(0xFF90CAF9),
       onTertiary: Colors.black,
     ),
     textTheme: TextTheme().apply(
@@ -223,20 +245,21 @@ class AppTheme {
   final ThemeData blueDarkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    primaryColor: Color(0xFF2196F3), // Blue 500
-    scaffoldBackgroundColor: Color(0xFF121A2B), // Dark blue background
-    canvasColor: Color(0xFF1A237E), // Indigo 900
+    primaryColor: Color(0xFF2196F3),
+    scaffoldBackgroundColor: colorfulDark(Color(0xFF121A2B), Color(0xFF2196F3)),
+    canvasColor: colorfulDark(Color(0xFF121A2B), Color(0xFF2196F3)),
+    highlightColor: Color(0xFF6EC6FF),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
-      primary: Color(0xFF2196F3), // Blue 500
+      primary: Color(0xFF2196F3),
       onPrimary: Colors.white,
-      secondary: Color(0xFF64B5F6), // Blue 300
+      secondary: Color(0xFF64B5F6),
       onSecondary: Colors.white,
-      surface: Color(0xFF1A237E), // Indigo 900
+      surface: Color(0xFF1A237E),
       onSurface: Color(0xFFE3F2FD),
-      error: Color(0xFFEF5350), // Red 400
+      error: Color(0xFFEF5350),
       onError: Colors.white,
-      tertiary: Color(0xFF90CAF9), // Blue 200
+      tertiary: Color(0xFF90CAF9),
       onTertiary: Colors.black,
     ),
     textTheme: TextTheme().apply(
@@ -255,18 +278,19 @@ class AppTheme {
     ],
   );
 
-  // GREEN
+  // Green
   final ThemeData greenLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    primaryColor: Color(0xFF43A047), // Green 600
-    scaffoldBackgroundColor: Color(0xFFF1F8E9), // Light green background
-    canvasColor: Color(0xFFFFFFFF),
+    primaryColor: Color(0xFF43A047),
+    scaffoldBackgroundColor: Color(0xFFF1F8E9),
+    canvasColor: Color(0xFFF1F8E9),
+    highlightColor: Color(0xFF76D275),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFF43A047),
       onPrimary: Colors.white,
-      secondary: Color(0xFF66BB6A), // Green 400
+      secondary: Color(0xFF66BB6A),
       onSecondary: Colors.white,
       surface: Color(0xFFFFFFFF),
       onSurface: Color(0xFF1B5E20),
@@ -295,8 +319,9 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Color(0xFF66BB6A),
-    scaffoldBackgroundColor: Color(0xFF263238),
-    canvasColor: Color(0xFF1B5E20),
+    scaffoldBackgroundColor: colorfulDark(Color(0xFF263238), Color(0xFF66BB6A)),
+    canvasColor: colorfulDark(Color(0xFF263238), Color(0xFF66BB6A)),
+    highlightColor: Color(0xFF98EE99),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Color(0xFF66BB6A),
@@ -326,13 +351,14 @@ class AppTheme {
     ],
   );
 
-  // RED
+  // Red
   final ThemeData redLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Color(0xFFD32F2F),
     scaffoldBackgroundColor: Color(0xFFFFEBEE),
-    canvasColor: Color(0xFFFFFFFF),
+    canvasColor: Color(0xFFFFEBEE),
+    highlightColor: Color(0xFFFF6659),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFFD32F2F),
@@ -366,8 +392,9 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Color(0xFFEF5350),
-    scaffoldBackgroundColor: Color(0xFF212121),
-    canvasColor: Color(0xFFB71C1C),
+    scaffoldBackgroundColor: colorfulDark(Color(0xFF212121), Color(0xFFEF5350)),
+    canvasColor: colorfulDark(Color(0xFF212121), Color(0xFFEF5350)),
+    highlightColor: Color(0xFFFF867C),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Color(0xFFEF5350),
@@ -397,13 +424,14 @@ class AppTheme {
     ],
   );
 
-  // YELLOW
+  // Yellow
   final ThemeData yellowLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Color(0xFFFFB300),
     scaffoldBackgroundColor: Color(0xFFFFFDE7),
-    canvasColor: Color(0xFFFFFFFF),
+    canvasColor: Color(0xFFFFFDE7),
+    highlightColor: Color(0xFFFFF176),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFFFFB300),
@@ -437,8 +465,9 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Color(0xFFFFF176),
-    scaffoldBackgroundColor: Color(0xFF212121),
-    canvasColor: Color(0xFFF57C00),
+    scaffoldBackgroundColor: colorfulDark(Color(0xFF212121), Color(0xFFFFF176)),
+    canvasColor: colorfulDark(Color(0xFF212121), Color(0xFFFFF176)),
+    highlightColor: Color(0xFFFFFF8D),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Color(0xFFFFF176),
@@ -468,13 +497,14 @@ class AppTheme {
     ],
   );
 
-  // PURPLE
+  // Purple
   final ThemeData purpleLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Color(0xFF8E24AA),
     scaffoldBackgroundColor: Color(0xFFF3E5F5),
-    canvasColor: Color(0xFFFFFFFF),
+    canvasColor: Color(0xFFF3E5F5),
+    highlightColor: Color(0xFFCE93D8),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFF8E24AA),
@@ -508,8 +538,9 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Color(0xFFBA68C8),
-    scaffoldBackgroundColor: Color(0xFF212121),
-    canvasColor: Color(0xFF4A148C),
+    scaffoldBackgroundColor: colorfulDark(Color(0xFF212121), Color(0xFFBA68C8)),
+    canvasColor: colorfulDark(Color(0xFF212121), Color(0xFFBA68C8)),
+    highlightColor: Color(0xFFE1BEE7),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Color(0xFFBA68C8),
@@ -539,13 +570,14 @@ class AppTheme {
     ],
   );
 
-  // ORANGE
+  // Orange
   final ThemeData orangeLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Color(0xFFF57C00),
     scaffoldBackgroundColor: Color(0xFFFFF3E0),
-    canvasColor: Color(0xFFFFFFFF),
+    canvasColor: Color(0xFFFFF3E0),
+    highlightColor: Color(0xFFFFB74D),
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFFF57C00),
@@ -579,8 +611,9 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Color(0xFFFFA726),
-    scaffoldBackgroundColor: Color(0xFF212121),
-    canvasColor: Color(0xFFE65100),
+    scaffoldBackgroundColor: colorfulDark(Color(0xFF212121), Color(0xFFFFA726)),
+    canvasColor: colorfulDark(Color(0xFF212121), Color(0xFFFFA726)),
+    highlightColor: Color(0xFFFFCC80),
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Color(0xFFFFA726),
@@ -610,13 +643,14 @@ class AppTheme {
     ],
   );
 
-  // BLACK & WHITE
+  // Black & White
   final ThemeData bwLightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Colors.black,
     scaffoldBackgroundColor: Colors.white,
     canvasColor: Colors.white,
+    highlightColor: Colors.grey[400],
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: Colors.black,
@@ -650,8 +684,9 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Colors.white,
-    scaffoldBackgroundColor: Colors.black,
-    canvasColor: Colors.black,
+    scaffoldBackgroundColor: colorfulDark(Colors.black, Colors.white),
+    canvasColor: colorfulDark(Colors.black, Colors.white),
+    highlightColor: Colors.grey[100],
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: Colors.white,

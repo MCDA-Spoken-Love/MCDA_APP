@@ -189,7 +189,7 @@ class _HeroCardState extends State<HeroCard> {
                           toolbarHeight: 26,
                         ),
                         body: Container(
-                          color: colors.colorScheme.surface,
+                          color: colors.canvasColor,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

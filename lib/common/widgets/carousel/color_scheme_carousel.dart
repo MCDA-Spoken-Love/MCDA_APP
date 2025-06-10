@@ -17,7 +17,7 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
   String selectedScheme =
       ColorSchemes.values[1].scheme; // Default or from prefs
   ScrollController controller = ScrollController();
-  Map<String, String>? deviceInfo;
+  Map<String, String> deviceInfo = {'os': 'unknown', 'release': 'unknown'};
 
   Future<void> initializeTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -47,7 +47,7 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
   @override
   void initState() {
     super.initState();
-    getOs();
+    getDeviceInfo();
     initializeTheme();
   }
 
@@ -74,16 +74,11 @@ class _ColorSchemeCarouselState extends State<ColorSchemeCarousel> {
   Widget build(BuildContext context) {
     List<ColorSchemes> availableSchemes =
         ColorSchemes.values.where((scheme) {
-          if (scheme == ColorSchemes.dynamicColorScheme) {
-            if (deviceInfo != null &&
-                deviceInfo!['os'] == 'android' &&
-                int.tryParse(deviceInfo!['androidVersion'] ?? '0') != null &&
-                int.parse(deviceInfo!['androidVersion']!) >= 12) {
-              return true;
-            }
-            return false;
+          if (deviceInfo['os'] == 'android' &&
+              int.parse(deviceInfo['release']!) >= 12) {
+            return true;
           }
-          return true;
+          return false;
         }).toList();
 
     return Consumer(
