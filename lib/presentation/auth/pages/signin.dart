@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
+import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/pages/signup.dart';
 import 'package:mcda_app/presentation/home/pages/home.dart';
@@ -10,7 +11,7 @@ import 'package:mcda_app/presentation/home/pages/home.dart';
 import '../../../common/blocs/button/button_state.dart';
 import '../../../common/blocs/button/button_state_cubit.dart';
 import '../../../data/models/signin_req_params.dart';
-import '../../../domain/usecases/signin.dart';
+import '../../../domain/usecases/auth/signin.dart';
 
 class SigninPage extends StatelessWidget {
   SigninPage({super.key});
@@ -44,11 +45,11 @@ class SigninPage extends StatelessWidget {
                   );
                 }
                 if (state is ButtonFailureState) {
-                  var snackBar = SnackBar(
-                    content: Text(state.errorMessage),
-                    backgroundColor: colors.colorScheme.error,
+                  GlobalSnackBar.show(
+                    context,
+                    state.errorMessage,
+                    status: 'error',
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
               child: SafeArea(

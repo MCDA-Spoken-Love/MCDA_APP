@@ -44,6 +44,11 @@ dependencies:
   dartz: ^0.10.1
   flutter_dotenv: ^5.2.1
   curved_labeled_navigation_bar: ^2.0.6
+  url_launcher: ^6.2.6
+  local_auth: ^2.3.0
+  hydrated_bloc: ^10.0.0
+  path_provider: ^2.1.5
+  device_info_plus: ^11.4.0
 
 dev_dependencies:
   flutter_test:

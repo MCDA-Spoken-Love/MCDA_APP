@@ -2,73 +2,152 @@ import 'package:flutter/material.dart';
 import 'package:mcda_app/core/configs/theme/app_theme.dart';
 
 import '../../provider/theme.dart';
-import 'my_colors_extension.dart';
 
 ThemeData? themeChanger(
+  BuildContext context,
   ThemeNotifier themeNotifier,
   ColorScheme? lightDynamic,
   ColorScheme? darkDynamic,
 ) {
   final theme = themeNotifier.theme;
   final scheme = themeNotifier.colorScheme;
+  var brightness = MediaQuery.platformBrightnessOf(context).name;
 
-  if (theme == 'light') {
+  ThemeData lightSwitcher() {
     switch (scheme) {
       case 'red':
-        return AppTheme().mainLightTheme;
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).redLightTheme;
+      case 'purple':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).purpleLightTheme;
+      case 'green':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).greenLightTheme;
+      case 'orange':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).orangeLightTheme;
+      case 'yellow':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).yellowLightTheme;
+      case 'bw':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).bwLightTheme;
       case 'blue':
-        return AppTheme().mainLightTheme;
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).blueLightTheme;
       case 'main':
-        return AppTheme().mainLightTheme;
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).mainLightTheme;
       case 'dynamic':
-        return ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.light,
-          colorScheme: lightDynamic!,
-          textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.black)),
-        ).copyWith(
-          extensions: <ThemeExtension<dynamic>>[
-            MyColorsExtension(
-              submitColor: Color(0xFF009A5E),
-              onlineColor: Color(0xff00FF9C),
-              disabledColor: Color(0x50CB80AB),
-              offlineColor: Color(0xFFFFE700),
-              translucentColor: lightDynamic.primaryContainer,
-            ),
-          ],
-        );
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).dynamicLight;
+      case 'ios':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).iosLightTheme;
       default:
-        return AppTheme().mainLightTheme;
-    }
-  } else if (theme == 'dark') {
-    switch (scheme) {
-      case 'red':
-        return AppTheme().mainDarkTheme;
-      case 'blue':
-        return AppTheme().mainDarkTheme;
-      case 'main':
-        return AppTheme().mainDarkTheme;
-      case 'dynamic':
-        return ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.dark,
-          colorScheme: darkDynamic!,
-          textTheme: TextTheme(bodyLarge: TextStyle(color: Colors.white)),
-        ).copyWith(
-          extensions: <ThemeExtension<dynamic>>[
-            MyColorsExtension(
-              submitColor: Color(0xFF009A5E),
-              onlineColor: Color(0xff00FF9C),
-              disabledColor: Color(0x50CB80AB),
-              offlineColor: Color(0xFFFFE700),
-              translucentColor: darkDynamic.primaryContainer,
-            ),
-          ],
-        );
-      default:
-        return AppTheme().mainDarkTheme;
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).mainLightTheme;
     }
   }
 
-  return AppTheme().mainLightTheme;
+  ThemeData darkSwitcher() {
+    switch (scheme) {
+      case 'red':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).redDarkTheme;
+      case 'purple':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).purpleDarkTheme;
+      case 'green':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).greenDarkTheme;
+      case 'orange':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).orangeDarkTheme;
+      case 'yellow':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).yellowDarkTheme;
+      case 'bw':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).bwDarkTheme;
+      case 'blue':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).blueDarkTheme;
+      case 'main':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).mainDarkTheme;
+      case 'dynamic':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).dynamicDark;
+      case 'ios':
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).iosDarkTheme;
+      default:
+        return AppTheme(
+          darkDynamic: darkDynamic,
+          lightDynamic: lightDynamic,
+        ).mainDarkTheme;
+    }
+  }
+
+  if (theme == 'light') {
+    return lightSwitcher();
+  } else if (theme == 'dark') {
+    return darkSwitcher();
+  } else if (theme == 'system') {
+    if (brightness == 'dark') {
+      return darkSwitcher();
+    }
+    if (brightness == 'light') {
+      return lightSwitcher();
+    }
+  }
+
+  return AppTheme(
+    darkDynamic: darkDynamic,
+    lightDynamic: lightDynamic,
+  ).mainLightTheme;
 }

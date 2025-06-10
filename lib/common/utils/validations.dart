@@ -11,3 +11,12 @@ extension FullnameValidator on String {
     return RegExp(r'^[a-z A-Z,.\-]+$').hasMatch(this);
   }
 }
+
+extension PasswordValidator on String {
+  bool isValidPassword() {
+    return RegExp(
+          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$',
+        ).hasMatch(this) &&
+        length >= 8;
+  }
+}

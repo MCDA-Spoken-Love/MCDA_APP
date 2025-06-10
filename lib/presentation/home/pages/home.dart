@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
-import 'package:mcda_app/common/widgets/button/besty_button.dart';
-import 'package:mcda_app/common/widgets/navbar/navbar.dart';
-import 'package:mcda_app/domain/usecases/signout.dart';
-import 'package:provider/provider.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:logger/logger.dart';
+import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
+import 'package:mcda_app/common/widgets/text/besty_title.dart';
+import 'package:mcda_app/presentation/settings/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../common/blocs/button/button_state_cubit.dart';
-import '../../../core/provider/theme.dart';
-import '../../auth/pages/signin.dart';
 import '../bloc/user_display_cubit.dart';
 import '../bloc/user_display_state.dart';
+
+Logger logger = Logger(
+  printer: PrettyPrinter(methodCount: 0, colors: true, printEmojis: true),
+);
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,11 +23,75 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-  );
   int currentPageIndex = 1;
+  bool _authorized = false;
+  bool? biometricLockEnabled;
+
+  final LocalAuthentication auth = LocalAuthentication();
+
+  Future<Map<String, dynamic>> getPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {
+      "biometric_lock": prefs.getBool('biometric_lock') ?? false,
+      "app_theme": prefs.getString('theme'),
+      "app_scheme": prefs.getString('scheme'),
+    };
+  }
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _authorized = true;
+      });
+      authenticated = await auth.authenticate(
+        localizedReason: 'Authenticate to access the app\'s functionalities',
+        options: const AuthenticationOptions(stickyAuth: true),
+      );
+    } on PlatformException catch (e) {
+      logger.e(e);
+      setState(() {
+        _authorized = false;
+      });
+      return;
+    }
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _authorized = authenticated;
+    });
+  }
+
+  void _handleAuth() {
+    getPrefs().then((res) {
+      bool? biometricLockEnabledRes = res['biometric_lock'];
+      setState(() {
+        biometricLockEnabled = biometricLockEnabledRes;
+      });
+      auth.isDeviceSupported().then((bool isSupported) {
+        if (isSupported && biometricLockEnabledRes!) {
+          _authenticate();
+        } else {
+          setState(() {
+            _authorized = true;
+          });
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _handleAuth();
+
+    final cubit = context.read<UserDisplayCubit>();
+    if (cubit.state is UserLoading) {
+      cubit.displayUser();
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,21 +101,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData themeColors = Theme.of(context);
+
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: Navbar(
-        onItemTapped: _onItemTapped,
-        currentPageIndex: currentPageIndex,
-      ),
-
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => UserDisplayCubit()..displayUser()),
-          BlocProvider(create: (context) => ButtonStateCubit()),
-          BlocProvider(create: (context) => AuthStateCubit()),
-        ],
-        child: BlocBuilder<UserDisplayCubit, UserDisplayState>(
-          builder: (context, state) {
+      bottomNavigationBar:
+          _authorized
+              ? Navbar(
+                onItemTapped: _onItemTapped,
+                currentPageIndex: currentPageIndex,
+              )
+              : null,
+      body: BlocBuilder<UserDisplayCubit, UserDisplayState>(
+        builder: (context, state) {
+          if (_authorized) {
             if (state is UserLoading) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -57,92 +123,58 @@ class _HomePageState extends State<HomePage> {
             }
             if (state is UserLoaded) {
               return [
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                SwitchListTile(
-                                  title: Text("Dark Mode"),
-                                  onChanged: (val) {
-                                    themeNotifier.toggleTheme();
-                                  },
-                                  value:
-                                      themeNotifier.theme == 'dark'
-                                          ? true
-                                          : false,
-                                ),
-                      ),
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                FloatingActionButton(
-                                  heroTag: 'appColorSchemeDynamic',
-                                  onPressed: () {
-                                    themeNotifier.toggleColorScheme('dynamic');
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                      ),
-                      Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) =>
-                                FloatingActionButton(
-                                  heroTag: 'appColorSchemeMain',
-                                  onPressed: () {
-                                    themeNotifier.toggleColorScheme('main');
-                                  },
-                                  child: Icon(Icons.add),
-                                ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        state.userEntity.email,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(32),
-                        child: Consumer(
-                          builder: (
-                            context,
-                            ThemeNotifier themeNotifier,
-                            child,
-                          ) {
-                            return BestyButton(
-                              title: 'Logout',
-                              onPressed: () {
-                                themeNotifier.toggleColorScheme('main');
-                                if (themeNotifier.theme == 'dark') {
-                                  themeNotifier.toggleTheme();
-                                }
-                                context.read<ButtonStateCubit>().execute(
-                                  usecase: SignoutUseCase(),
-                                );
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => SigninPage(),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                Settings(),
+                Column(
+                  children: [
+                    const Text('Index 1: Business'),
+                    Text('bloqueio biometrico: $biometricLockEnabled'),
+                    Text('bloqueio biometrico: ${state.userEntity.email}'),
+                  ],
                 ),
-                const Text('Index 1: Business', style: optionStyle),
-                const Text('Index 2: School', style: optionStyle),
+                const Text('Index 2: School'),
               ][currentPageIndex];
             }
             return Container();
-          },
-        ),
+          }
+          return Center(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: themeColors.colorScheme.primary,
+              ),
+              onPressed: _handleAuth,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  BestyTitle(title: 'Authenticate'),
+                  SizedBox(width: 10),
+                  Icon(
+                    Icons.fingerprint,
+                    size: 42,
+                    color: themeColors.colorScheme.tertiary,
+                  ),
+                ],
+              ),
+            ),
+            // : ElevatedButton(
+            //   onPressed: _handleAuth,
+            //   child: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: <Widget>[
+            //       Text(
+            //         _isAuthenticating
+            //             ? 'Cancel'
+            //             : 'Authenticate: biometrics only',
+            //       ),
+            //       const Icon(Icons.fingerprint),
+            //     ],
+            //   ),
+            // ),
+          );
+        },
       ),
     );
   }

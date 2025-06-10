@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:mcda_app/common/utils/map_to_string.dart';
+import 'package:mcda_app/data/models/change_password_req_params.dart';
 import 'package:mcda_app/data/models/signin_req_params.dart';
 import 'package:mcda_app/data/models/signup_req_params.dart';
 import 'package:mcda_app/data/source/auth_api_service.dart';
@@ -9,7 +10,6 @@ import 'package:mcda_app/data/source/auth_local_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/repository/auth.dart';
-import '../models/user.dart';
 
 Logger logger = Logger(
   printer: PrettyPrinter(methodCount: 0, colors: true, printEmojis: true),
@@ -34,17 +34,19 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either> getUser() async {
-    Either result = await AuthApiServiceImpl().getUser();
+  Future<Either> changePassword(
+    ChangePasswordReqParams changePasswordReq,
+  ) async {
+    Either result = await AuthApiServiceImpl().changePassword(
+      changePasswordReq,
+    );
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
-      (data) async {
+      (data) {
         Response response = data;
-        var userModel = UserModel.fromMap(response.data);
-        var userEntity = userModel.toEntity();
-        return Right(userEntity);
+        return Right(response.data);
       },
     );
   }

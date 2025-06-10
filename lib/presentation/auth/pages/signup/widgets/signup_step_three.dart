@@ -10,7 +10,7 @@ class SignupStepThree extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController passwordCon;
   final TextEditingController confirmPasswordCon;
-  final Function(BuildContext) submit;
+  final Function() submit;
   final VoidCallback previousStep;
   final void Function(bool?) acceptPrivacyPolicy;
   final void Function(bool?) acceptTermsAndConditions;
@@ -135,7 +135,7 @@ class SignupStepThree extends StatelessWidget {
                       titleColor: colors.highlightColor,
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * .02),
-                    submit(context),
+                    submit(),
                   ],
                 ),
               ],

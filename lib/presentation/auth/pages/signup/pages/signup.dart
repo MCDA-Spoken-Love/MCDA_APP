@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
+import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_one.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_three.dart';
@@ -9,7 +10,7 @@ import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_two.
 
 import '../../../../../common/blocs/button/button_state.dart';
 import '../../../../../data/models/signup_req_params.dart';
-import '../../../../../domain/usecases/signup.dart';
+import '../../../../../domain/usecases/auth/signup.dart';
 import '../../../../home/pages/home.dart';
 
 class SignupPage extends StatefulWidget {
@@ -70,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
-  Widget _createAccountButton(BuildContext context) {
+  Widget _createAccountButton() {
     final MyColorsExtension myColors =
         Theme.of(context).extension<MyColorsExtension>()!;
     return Builder(
@@ -109,7 +110,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Widget stepSwitcher(BuildContext context) {
+  Widget stepSwitcher() {
     switch (formStepper) {
       case 3:
         return SignupStepThree(
@@ -170,11 +171,11 @@ class _SignupPageState extends State<SignupPage> {
                   );
                 }
                 if (state is ButtonFailureState) {
-                  var snackBar = SnackBar(
-                    backgroundColor: colors.colorScheme.error,
-                    content: Text(state.errorMessage),
+                  GlobalSnackBar.show(
+                    context,
+                    state.errorMessage,
+                    status: 'error',
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
               },
               child: SafeArea(
@@ -183,7 +184,7 @@ class _SignupPageState extends State<SignupPage> {
                   key: _formKey,
                   child: SingleChildScrollView(
                     reverse: true,
-                    child: stepSwitcher(context),
+                    child: stepSwitcher(),
                   ),
                 ),
               ),
