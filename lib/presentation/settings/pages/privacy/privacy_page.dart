@@ -10,7 +10,6 @@ import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_state.da
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PrivacyPage extends StatefulWidget {
   const PrivacyPage({super.key});
@@ -20,31 +19,7 @@ class PrivacyPage extends StatefulWidget {
 }
 
 class _PrivacyPageState extends State<PrivacyPage> {
-  bool? biometricLockEnabled;
   bool _synced = false;
-
-  Future<Map<String, bool>> getPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return {"biometric_lock": prefs.getBool('biometric_lock') ?? false};
-  }
-
-  void setBiometricLock(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('biometric_lock', value);
-    setState(() {
-      biometricLockEnabled = value;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getPrefs().then((res) {
-      setState(() {
-        biometricLockEnabled = res['biometric_lock'];
-      });
-    });
-  }
 
   @override
   void dispose() {
@@ -177,9 +152,11 @@ class _PrivacyPageState extends State<PrivacyPage> {
                                 subtitle: Text(
                                   'When enabled, you’ll need to use fingerprint, face or other unique identifiers to open this app.',
                                 ),
-                                value: biometricLockEnabled ?? false,
+                                value: privacyState.biometricLockEnabled,
                                 onChanged: (bool value) {
-                                  setBiometricLock(value);
+                                  context
+                                      .read<PrivacyCubit>()
+                                      .updateBiometricLock(value);
                                 },
                               ),
                             ],

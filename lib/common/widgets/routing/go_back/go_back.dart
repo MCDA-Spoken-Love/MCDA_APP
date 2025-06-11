@@ -19,46 +19,50 @@ class _GoBackState extends State<GoBack> {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     Theme.of(context).extension<MyColorsExtension>()!;
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 20.0,
-        left: 20.0,
-        right: 20.0,
-        bottom: 0,
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  widget.onPressed ?? Navigator.of(context).pop();
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(theme.primaryColor),
-                  fixedSize: WidgetStateProperty.all(Size(40, 40)),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 0.0,
+          left: 20.0,
+          right: 20.0,
+          bottom: 0,
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    widget.onPressed ?? Navigator.of(context).pop();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                      theme.primaryColor,
+                    ),
+                    fixedSize: WidgetStateProperty.all(Size(40, 40)),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
                     ),
                   ),
+                  icon: Icon(Icons.arrow_back, size: 24),
                 ),
-                icon: Icon(Icons.arrow_back, size: 24),
-              ),
-              SizedBox(width: 16),
-              Text(
-                widget.title,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          SizedBox(height: 7),
-          CustomContainer(
-            position: 'unique',
-            paddings: EdgeInsets.all(2.0),
-            child: SizedBox(height: 1),
-          ),
-        ],
+                SizedBox(width: 16),
+                Text(
+                  widget.title,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(height: 7),
+            CustomContainer(
+              position: 'unique',
+              paddings: EdgeInsets.all(2.0),
+              child: SizedBox(height: 1),
+            ),
+          ],
+        ),
       ),
     );
   }

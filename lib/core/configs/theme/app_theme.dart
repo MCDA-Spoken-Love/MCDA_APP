@@ -52,7 +52,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        extensionPrimary: Color(0xFF8967B3),
+        extensionPrimary: Color(0xFFA78CC9),
       ),
     ],
   );
@@ -63,7 +63,8 @@ class AppTheme {
     highlightColor: Color(0xFF9747FF),
     disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
-    canvasColor: Color(0xFF1f1c27),
+    scaffoldBackgroundColor: Color.fromARGB(255, 22, 13, 46),
+    canvasColor: Color.fromARGB(255, 22, 13, 46),
     brightness: Brightness.dark,
     textTheme: TextTheme().apply(
       bodyColor: Colors.black,
