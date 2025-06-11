@@ -52,7 +52,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        extensionPrimary: Color(0xFFA78CC9),
+        extensionPrimary: Color(0x508967B3),
       ),
     ],
   );
@@ -63,8 +63,7 @@ class AppTheme {
     highlightColor: Color(0xFF9747FF),
     disabledColor: Color(0xff654055),
     hintColor: Color(0xFFCB80AB),
-    scaffoldBackgroundColor: Color.fromARGB(255, 22, 13, 46),
-    canvasColor: Color.fromARGB(255, 22, 13, 46),
+    canvasColor: Color(0xFF1f1c27),
     brightness: Brightness.dark,
     textTheme: TextTheme().apply(
       bodyColor: Colors.black,
@@ -90,7 +89,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        extensionPrimary: Color(0xFF624E88),
+        extensionPrimary: Color(0x50624E88),
       ),
     ],
   );
@@ -165,7 +164,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        extensionPrimary: Color(0xFF0A84FF),
+        extensionPrimary: Color(0x500A84FF),
       ),
     ],
   );
@@ -201,7 +200,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        extensionPrimary: Color(0xFF0A84FF),
+        extensionPrimary: Color(0x500A84FF),
       ),
     ],
   );
@@ -238,7 +237,7 @@ class AppTheme {
         onlineColor: Color(0xFF42A5F5),
         disabledColor: Color(0x502196F3),
         offlineColor: Color(0xFF90CAF9),
-        extensionPrimary: Color(0xFF1976D2),
+        extensionPrimary: Color(0x501976D2),
       ),
     ],
   );
@@ -274,7 +273,7 @@ class AppTheme {
         onlineColor: Color(0xFF64B5F6),
         disabledColor: Color(0x502196F3),
         offlineColor: Color(0xFF90CAF9),
-        extensionPrimary: Color(0xFF2196F3),
+        extensionPrimary: Color(0x502196F3),
       ),
     ],
   );
@@ -311,7 +310,7 @@ class AppTheme {
         onlineColor: Color(0xFF66BB6A),
         disabledColor: Color(0x5043A047),
         offlineColor: Color(0xFFA5D6A7),
-        extensionPrimary: Color(0xFF43A047),
+        extensionPrimary: Color(0x5043A047),
       ),
     ],
   );
@@ -347,7 +346,7 @@ class AppTheme {
         onlineColor: Color(0xFF43A047),
         disabledColor: Color(0x5066BB6A),
         offlineColor: Color(0xFFA5D6A7),
-        extensionPrimary: Color(0xFF66BB6A),
+        extensionPrimary: Color(0x5066BB6A),
       ),
     ],
   );
@@ -384,7 +383,7 @@ class AppTheme {
         onlineColor: Color(0xFFEF5350),
         disabledColor: Color(0x50D32F2F),
         offlineColor: Color(0xFFFFCDD2),
-        extensionPrimary: Color(0xFFD32F2F),
+        extensionPrimary: Color(0x50D32F2F),
       ),
     ],
   );
@@ -420,7 +419,7 @@ class AppTheme {
         onlineColor: Color(0xFFD32F2F),
         disabledColor: Color(0x50EF5350),
         offlineColor: Color(0xFFFFCDD2),
-        extensionPrimary: Color(0xFFEF5350),
+        extensionPrimary: Color(0x50EF5350),
       ),
     ],
   );
@@ -457,7 +456,7 @@ class AppTheme {
         onlineColor: Color(0xFFFFF176),
         disabledColor: Color(0x50FFB300),
         offlineColor: Color(0xFFFFF9C4),
-        extensionPrimary: Color(0xFFFFB300),
+        extensionPrimary: Color(0x50FFB300),
       ),
     ],
   );
@@ -493,7 +492,7 @@ class AppTheme {
         onlineColor: Color(0xFFFFB300),
         disabledColor: Color(0x50FFF176),
         offlineColor: Color(0xFFFFF9C4),
-        extensionPrimary: Color(0xFFFFF176),
+        extensionPrimary: Color(0x50FFF176),
       ),
     ],
   );
@@ -530,7 +529,7 @@ class AppTheme {
         onlineColor: Color(0xFFBA68C8),
         disabledColor: Color(0x508E24AA),
         offlineColor: Color(0xFFE1BEE7),
-        extensionPrimary: Color(0xFF8E24AA),
+        extensionPrimary: Color(0x508E24AA),
       ),
     ],
   );
@@ -566,7 +565,7 @@ class AppTheme {
         onlineColor: Color(0xFF8E24AA),
         disabledColor: Color(0x50BA68C8),
         offlineColor: Color(0xFFE1BEE7),
-        extensionPrimary: Color(0xFFBA68C8),
+        extensionPrimary: Color(0x50BA68C8),
       ),
     ],
   );
@@ -603,7 +602,7 @@ class AppTheme {
         onlineColor: Color(0xFFFFA726),
         disabledColor: Color(0x50F57C00),
         offlineColor: Color(0xFFFFE0B2),
-        extensionPrimary: Color(0xFFF57C00),
+        extensionPrimary: Color(0x50F57C00),
       ),
     ],
   );
@@ -639,7 +638,7 @@ class AppTheme {
         onlineColor: Color(0xFFF57C00),
         disabledColor: Color(0x50FFA726),
         offlineColor: Color(0xFFFFE0B2),
-        extensionPrimary: Color(0xFFFFA726),
+        extensionPrimary: Color(0x50FFA726),
       ),
     ],
   );
@@ -676,7 +675,7 @@ class AppTheme {
         onlineColor: Colors.grey,
         disabledColor: Color(0x50000000),
         offlineColor: Colors.grey[300]!,
-        extensionPrimary: Color(0xFF000000),
+        extensionPrimary: Color(0x50000000),
       ),
     ],
   );
@@ -712,7 +711,7 @@ class AppTheme {
         onlineColor: Colors.grey,
         disabledColor: Color(0x50FFFFFF),
         offlineColor: Colors.grey[700]!,
-        extensionPrimary: Color(0xFFFFFFFF),
+        extensionPrimary: Color(0x50FFFFFF),
       ),
     ],
   );
