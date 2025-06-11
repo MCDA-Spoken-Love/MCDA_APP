@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
+import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
+import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_state.dart';
 import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
@@ -91,6 +93,10 @@ class _HomePageState extends State<HomePage> {
     if (cubit.state is UserLoading) {
       cubit.displayUser();
     }
+    final privacyCubit = context.read<UserPrivacyDisplayCubit>();
+    if (privacyCubit.state is! UserPrivacyLoaded) {
+      privacyCubit.displayUserPrivacy();
+    }
   }
 
   void _onItemTapped(int index) {
@@ -123,7 +129,11 @@ class _HomePageState extends State<HomePage> {
             }
             if (state is UserLoaded) {
               return [
-                Settings(),
+                BlocBuilder<UserPrivacyDisplayCubit, UserPrivacyDisplayState>(
+                  builder: (context, state) {
+                    return Settings();
+                  },
+                ),
                 Column(
                   children: [
                     const Text('Index 1: Business'),

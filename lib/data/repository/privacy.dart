@@ -12,7 +12,7 @@ class PrivacyRepositoryImpl extends PrivacyRepository {
 
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
       (data) async {
         Response response = data;
