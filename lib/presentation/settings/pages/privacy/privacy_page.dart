@@ -21,6 +21,7 @@ class PrivacyPage extends StatefulWidget {
 
 class _PrivacyPageState extends State<PrivacyPage> {
   bool? biometricLockEnabled;
+  bool _synced = false;
 
   Future<Map<String, bool>> getPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -56,10 +57,6 @@ class _PrivacyPageState extends State<PrivacyPage> {
       appBar: GoBack(title: 'Privacy'),
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create:
-                (context) => UserPrivacyDisplayCubit()..displayUserPrivacy(),
-          ),
           BlocProvider(create: (context) => PrivacyCubit()),
           BlocProvider(create: (context) => ChangePrivacyBloc()),
         ],
@@ -103,6 +100,24 @@ class _PrivacyPageState extends State<PrivacyPage> {
                           BuildContext context,
                           ChangePrivacyState changePrivacyState,
                         ) {
+                          final userPrivacyState =
+                              context.watch<UserPrivacyDisplayCubit>().state;
+
+                          if (!_synced &&
+                              userPrivacyState is UserPrivacyLoaded) {
+                            context.read<PrivacyCubit>().setStatusVisibility(
+                              userPrivacyState
+                                  .userPrivacyEntity
+                                  .allow_status_visibility,
+                            );
+                            context.read<PrivacyCubit>().setLastSeen(
+                              userPrivacyState
+                                  .userPrivacyEntity
+                                  .allow_last_seen,
+                            );
+                            _synced = true;
+                          }
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -120,7 +135,11 @@ class _PrivacyPageState extends State<PrivacyPage> {
                                     context,
                                   ).add(
                                     ChangeStatusVisibilitySetting(
-                                      onSuccess: () {},
+                                      onSuccess: () {
+                                        context
+                                            .read<UserPrivacyDisplayCubit>()
+                                            .displayUserPrivacy();
+                                      },
                                     ),
                                   );
                                 },
@@ -139,7 +158,13 @@ class _PrivacyPageState extends State<PrivacyPage> {
                                   BlocProvider.of<ChangePrivacyBloc>(
                                     context,
                                   ).add(
-                                    ChangeLastSeenSetting(onSuccess: () {}),
+                                    ChangeLastSeenSetting(
+                                      onSuccess: () {
+                                        context
+                                            .read<UserPrivacyDisplayCubit>()
+                                            .displayUserPrivacy();
+                                      },
+                                    ),
                                   );
                                 },
                               ),
