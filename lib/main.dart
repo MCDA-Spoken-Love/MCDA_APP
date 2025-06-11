@@ -8,13 +8,13 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
+import 'package:mcda_app/common/blocs/user/user_display_cubit.dart';
+import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/core/configs/theme/theme_changer.dart';
 import 'package:mcda_app/core/provider/theme.dart';
 import 'package:mcda_app/presentation/auth/pages/signin.dart';
-import 'package:mcda_app/presentation/home/bloc/user_display_cubit.dart';
-import 'package:mcda_app/presentation/home/pages/home.dart';
-import 'package:mcda_app/presentation/settings/pages/privacy/bloc/user_privacy_display_cubit.dart';
+import 'package:mcda_app/presentation/home/home.dart';
 import 'package:mcda_app/presentation/splash_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SystemChrome.setSystemUIOverlayStyle(
                           SystemUiOverlayStyle(
                             statusBarColor:
-                                myColors.translucentColor, // Status bar color
+                                myColors.extensionPrimary, // Status bar color
                           ),
                         );
                         return HomePage();

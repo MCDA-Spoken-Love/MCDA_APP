@@ -8,7 +8,8 @@ import 'package:mcda_app/common/widgets/dropdown/besty_dropdown.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
-import 'package:mcda_app/data/source/auth_api_service.dart';
+import 'package:mcda_app/data/models/get_user_by_filter_params.dart';
+import 'package:mcda_app/domain/usecases/auth/get_user_by_filter.dart';
 
 class SignupStepTwo extends StatefulWidget {
   final TextEditingController emailCon;
@@ -60,17 +61,18 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
   void onChangedUsername(String value) async {
     debounce.call(() async {
       late String errorMessage = '';
-      dynamic result = await AuthApiServiceImpl().getUserByFilter(
-        value,
-        'username',
+      var result = await GetUserByFilterUseCase().call(
+        param: GetUserByFilterParams(filter: value, type: 'username'),
       );
-      if (result['user_count'] >= 1) {
-        errorMessage = 'username already exists';
-      } else {
-        errorMessage = '';
-      }
-      setState(() {
-        usernameInputError = errorMessage;
+      result.fold((failure) {}, (success) {
+        if (success['user_count'] >= 1) {
+          errorMessage = 'username already exists';
+        } else {
+          errorMessage = '';
+        }
+        setState(() {
+          usernameInputError = errorMessage;
+        });
       });
     });
   }
@@ -78,17 +80,18 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
   void onChangedEmail(String value) {
     debounce.call(() async {
       late String errorMessage = '';
-      dynamic result = await AuthApiServiceImpl().getUserByFilter(
-        value,
-        'email',
+      var result = await GetUserByFilterUseCase().call(
+        param: GetUserByFilterParams(filter: value, type: 'email'),
       );
-      if (result['user_count'] >= 1) {
-        errorMessage = 'Email already exists';
-      } else {
-        errorMessage = '';
-      }
-      setState(() {
-        emailInputError = errorMessage;
+      result.fold((failure) {}, (success) {
+        if (success['user_count'] >= 1) {
+          errorMessage = 'email already exists';
+        } else {
+          errorMessage = '';
+        }
+        setState(() {
+          emailInputError = errorMessage;
+        });
       });
     });
   }

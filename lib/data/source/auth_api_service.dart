@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mcda_app/core/network/dio_client.dart';
 import 'package:mcda_app/data/models/change_password_req_params.dart';
+import 'package:mcda_app/data/models/get_user_by_filter_params.dart';
 import 'package:mcda_app/data/models/signup_req_params.dart';
 
 import '../models/signin_req_params.dart';
@@ -9,7 +10,7 @@ import '../models/signin_req_params.dart';
 abstract class AuthApiService {
   Future<Either> signup(SignupReqParams signupReq);
   Future<Either> signin(SigninReqParams signinReq);
-  dynamic getUserByFilter(String filter, String type);
+  dynamic getUserByFilter(GetUserByFilterParams filterReq);
   Future<Either> changePassword(ChangePasswordReqParams changePasswordReq);
 }
 
@@ -43,17 +44,20 @@ class AuthApiServiceImpl extends AuthApiService {
   }
 
   @override
-  Future getUserByFilter(String filter, String type) async {
+  Future<Either> getUserByFilter(GetUserByFilterParams filterReq) async {
+    Map<String, dynamic> filterMap = filterReq.toMap();
     try {
-      if (type != 'username' && type != 'email') {
-        return {"error": "Data provided should be username or email"};
+      if (filterMap['type'] != 'username' && filterMap['type'] != 'email') {
+        return Left({"error": "Data provided should be username or email"});
       } else {
-        var response = await DioClient().get('api/user/search/?$type=$filter');
+        var response = await DioClient().get(
+          'api/user/search/?${filterMap['type']}=${filterMap['filter']}',
+        );
 
-        return response.data;
+        return Right(response);
       }
     } on DioException catch (e) {
-      return e.response;
+      return Left(e.response);
     }
   }
 

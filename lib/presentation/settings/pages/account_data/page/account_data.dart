@@ -15,7 +15,7 @@ class AccountData extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ChangePassword(), DeleteAccount()],
+            children: [ChangePasswordWidget(), DeleteAccountWidget()],
           ),
         ),
       ),

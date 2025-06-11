@@ -17,6 +17,7 @@ class ElevatedCustomRedirect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0,
@@ -32,11 +33,15 @@ class ElevatedCustomRedirect extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 14,
           children: [
-            Icon(icon, size: 31),
+            Icon(icon, size: 31, color: theme.colorScheme.onSurface),
 
             Text(
               title,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSurface,
+              ),
             ),
           ],
         ),

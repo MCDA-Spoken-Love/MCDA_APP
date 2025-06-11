@@ -30,7 +30,7 @@ class UserRepositoryImpl extends UserRepository {
     Either result = await UserApiServiceImpl().deleteAccount();
     return result.fold(
       (error) {
-        return Left(mapToString(error));
+        return Left(mapToString(error.data));
       },
       (data) async {
         SharedPreferences sharedPreferences =
@@ -48,7 +48,7 @@ class UserRepositoryImpl extends UserRepository {
     Either result = await UserApiServiceImpl().getUser();
     return result.fold(
       (error) {
-        return Left(error);
+        return Left(mapToString(error.data));
       },
       (data) async {
         Response response = data;

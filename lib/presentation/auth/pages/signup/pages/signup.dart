@@ -11,7 +11,7 @@ import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_two.
 import '../../../../../common/blocs/button/button_state.dart';
 import '../../../../../data/models/signup_req_params.dart';
 import '../../../../../domain/usecases/auth/signup.dart';
-import '../../../../home/pages/home.dart';
+import '../../../../home/home.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -149,8 +149,6 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData colors = Theme.of(context);
-
     return Scaffold(
       body: SizedBox.expand(
         child: Container(

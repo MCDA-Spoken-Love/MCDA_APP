@@ -25,8 +25,8 @@ class SegmentedCustomButton<T extends Enum> extends StatelessWidget {
       child: SegmentedButton<Enum>(
         style: SegmentedButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 34, vertical: 26),
-          selectedBackgroundColor: myColors.translucentColor,
-          side: BorderSide(width: 2, color: myColors.translucentColor as Color),
+          selectedBackgroundColor: myColors.extensionPrimary,
+          side: BorderSide(width: 2, color: myColors.extensionPrimary as Color),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),

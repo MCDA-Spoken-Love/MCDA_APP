@@ -6,7 +6,7 @@ import 'package:mcda_app/common/widgets/input/besty_input.dart';
 import 'package:mcda_app/common/widgets/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/pages/signup.dart';
-import 'package:mcda_app/presentation/home/pages/home.dart';
+import 'package:mcda_app/presentation/home/home.dart';
 
 import '../../../common/blocs/button/button_state.dart';
 import '../../../common/blocs/button/button_state_cubit.dart';

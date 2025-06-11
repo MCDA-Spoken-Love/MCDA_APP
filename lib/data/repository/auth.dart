@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:mcda_app/common/utils/map_to_string.dart';
 import 'package:mcda_app/data/models/change_password_req_params.dart';
+import 'package:mcda_app/data/models/get_user_by_filter_params.dart';
 import 'package:mcda_app/data/models/signin_req_params.dart';
 import 'package:mcda_app/data/models/signup_req_params.dart';
 import 'package:mcda_app/data/source/auth_api_service.dart';
@@ -29,6 +30,20 @@ class AuthRepositoryImpl extends AuthRepository {
             await SharedPreferences.getInstance();
         sharedPreferences.setString('token', response.data['access']);
         return Right(response);
+      },
+    );
+  }
+
+  @override
+  Future<Either> getUserByFilter(GetUserByFilterParams filterReq) async {
+    Either result = await AuthApiServiceImpl().getUserByFilter(filterReq);
+    return result.fold(
+      (error) {
+        return Left(mapToString(error.data));
+      },
+      (data) async {
+        Response response = data;
+        return Right(response.data);
       },
     );
   }

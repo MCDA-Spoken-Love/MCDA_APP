@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mcda_app/common/utils/launch_url.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CreditsPage extends StatelessWidget {
   const CreditsPage({super.key});
@@ -11,24 +11,13 @@ class CreditsPage extends StatelessWidget {
   final String instagramUrl = "https://www.instagram.com/majuu_bix/?hl=pt-br";
   final String githubUrl = "https://github.com/MatheusBlanco";
 
-  // Helper function to launch URLs
-  Future<void> launchUrlInBrowser(String url) async {
-    final Uri urlParsed = Uri.parse(url);
-
-    if (await canLaunchUrl(urlParsed)) {
-      await launchUrl(urlParsed, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final MyColorsExtension myColors =
         Theme.of(context).extension<MyColorsExtension>()!;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: myColors.translucentColor, // Status bar color
+        statusBarColor: myColors.extensionPrimary, // Status bar color
       ),
     );
     return Scaffold(

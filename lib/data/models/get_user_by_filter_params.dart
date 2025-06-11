@@ -9,6 +9,6 @@ class GetUserByFilterParams {
       );
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'filter': filter, 'value': type};
+    return <String, dynamic>{'filter': filter, 'type': type};
   }
 }
