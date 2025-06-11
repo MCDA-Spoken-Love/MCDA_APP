@@ -6,14 +6,14 @@ class MyColorsExtension extends ThemeExtension<MyColorsExtension> {
     required this.onlineColor,
     required this.disabledColor,
     required this.offlineColor,
-    required this.translucentColor,
+    required this.extensionPrimary,
   });
 
   final Color? submitColor;
   final Color? onlineColor;
   final Color? disabledColor;
   final Color? offlineColor;
-  final Color? translucentColor;
+  final Color? extensionPrimary;
 
   @override
   ThemeExtension<MyColorsExtension> copyWith() {
@@ -22,7 +22,7 @@ class MyColorsExtension extends ThemeExtension<MyColorsExtension> {
       onlineColor: onlineColor,
       offlineColor: offlineColor,
       disabledColor: disabledColor,
-      translucentColor: translucentColor,
+      extensionPrimary: extensionPrimary,
     );
   }
 
@@ -40,8 +40,8 @@ class MyColorsExtension extends ThemeExtension<MyColorsExtension> {
       onlineColor: Color.lerp(onlineColor, other.onlineColor, t)!,
       disabledColor: Color.lerp(disabledColor, other.disabledColor, t)!,
       offlineColor: Color.lerp(offlineColor, other.offlineColor, t)!,
-      translucentColor:
-          Color.lerp(translucentColor, other.translucentColor, t)!,
+      extensionPrimary:
+          Color.lerp(extensionPrimary, other.extensionPrimary, t)!,
     );
   }
 }

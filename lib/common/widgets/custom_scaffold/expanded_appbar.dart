@@ -16,7 +16,7 @@ class ExpandedAppBar extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Material(
-          color: myColors.translucentColor,
+          color: myColors.extensionPrimary,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: child,

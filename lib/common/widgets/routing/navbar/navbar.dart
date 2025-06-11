@@ -29,7 +29,7 @@ class Navbar extends StatelessWidget {
             : TextStyle(fontWeight: FontWeight.normal);
 
     return Container(
-      color: myColors.translucentColor,
+      color: myColors.extensionPrimary,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 6.0),
         child: CurvedNavigationBar(
@@ -38,7 +38,7 @@ class Navbar extends StatelessWidget {
           animationDuration: Duration(milliseconds: 300),
           buttonBackgroundColor: colors.colorScheme.primary,
           animationCurve: Curves.decelerate,
-          color: myColors.translucentColor as Color,
+          color: myColors.extensionPrimary as Color,
           backgroundColor: colors.scaffoldBackgroundColor,
           items: <CurvedNavigationBarItem>[
             CurvedNavigationBarItem(

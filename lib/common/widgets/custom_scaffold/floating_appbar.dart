@@ -17,7 +17,7 @@ class FloatingAppBar extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Material(
           borderRadius: BorderRadius.circular(12),
-          color: myColors.translucentColor,
+          color: myColors.extensionPrimary,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: child,

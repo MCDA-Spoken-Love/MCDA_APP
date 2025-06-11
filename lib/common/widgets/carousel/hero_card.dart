@@ -185,7 +185,7 @@ class _HeroCardState extends State<HeroCard> {
                             ),
                           ),
                           automaticallyImplyLeading: false,
-                          backgroundColor: myColors.translucentColor,
+                          backgroundColor: myColors.extensionPrimary,
                           toolbarHeight: 26,
                         ),
                         body: Container(
@@ -246,7 +246,7 @@ class _HeroCardState extends State<HeroCard> {
                         bottomNavigationBar: Container(
                           height: 26,
                           decoration: BoxDecoration(
-                            color: myColors.translucentColor,
+                            color: myColors.extensionPrimary,
                             borderRadius: BorderRadius.vertical(
                               bottom: Radius.circular(24),
                             ),

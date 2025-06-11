@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         SystemChrome.setSystemUIOverlayStyle(
                           SystemUiOverlayStyle(
                             statusBarColor:
-                                myColors.translucentColor, // Status bar color
+                                myColors.extensionPrimary, // Status bar color
                           ),
                         );
                         return HomePage();

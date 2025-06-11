@@ -66,7 +66,7 @@ class CustomContainer extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 2),
           padding: paddings ?? const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
-            color: myColors.translucentColor,
+            color: myColors.extensionPrimary,
             borderRadius: handleBorderRadius(),
           ),
           child: child,

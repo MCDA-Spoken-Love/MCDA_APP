@@ -28,7 +28,7 @@ class CreditsPage extends StatelessWidget {
         Theme.of(context).extension<MyColorsExtension>()!;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: myColors.translucentColor, // Status bar color
+        statusBarColor: myColors.extensionPrimary, // Status bar color
       ),
     );
     return Scaffold(

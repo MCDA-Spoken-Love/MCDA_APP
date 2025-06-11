@@ -52,7 +52,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        translucentColor: Color(0x508967B3),
+        extensionPrimary: Color(0xFF8967B3),
       ),
     ],
   );
@@ -89,7 +89,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        translucentColor: Color(0x50624E88),
+        extensionPrimary: Color(0xFF624E88),
       ),
     ],
   );
@@ -108,7 +108,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        translucentColor: lightDynamic?.primaryContainer,
+        extensionPrimary: lightDynamic?.primaryContainer,
       ),
     ],
   );
@@ -127,7 +127,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        translucentColor: darkDynamic?.primaryContainer,
+        extensionPrimary: darkDynamic?.primaryContainer,
       ),
     ],
   );
@@ -164,7 +164,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        translucentColor: Color(0x500A84FF),
+        extensionPrimary: Color(0xFF0A84FF),
       ),
     ],
   );
@@ -200,7 +200,7 @@ class AppTheme {
         onlineColor: Color(0xff00FF9C),
         disabledColor: Color(0x50CB80AB),
         offlineColor: Color(0xFFFFE700),
-        translucentColor: Color(0x500A84FF),
+        extensionPrimary: Color(0xFF0A84FF),
       ),
     ],
   );
@@ -237,7 +237,7 @@ class AppTheme {
         onlineColor: Color(0xFF42A5F5),
         disabledColor: Color(0x502196F3),
         offlineColor: Color(0xFF90CAF9),
-        translucentColor: Color(0x501976D2),
+        extensionPrimary: Color(0xFF1976D2),
       ),
     ],
   );
@@ -273,7 +273,7 @@ class AppTheme {
         onlineColor: Color(0xFF64B5F6),
         disabledColor: Color(0x502196F3),
         offlineColor: Color(0xFF90CAF9),
-        translucentColor: Color(0x502196F3),
+        extensionPrimary: Color(0xFF2196F3),
       ),
     ],
   );
@@ -310,7 +310,7 @@ class AppTheme {
         onlineColor: Color(0xFF66BB6A),
         disabledColor: Color(0x5043A047),
         offlineColor: Color(0xFFA5D6A7),
-        translucentColor: Color(0x5043A047),
+        extensionPrimary: Color(0xFF43A047),
       ),
     ],
   );
@@ -346,7 +346,7 @@ class AppTheme {
         onlineColor: Color(0xFF43A047),
         disabledColor: Color(0x5066BB6A),
         offlineColor: Color(0xFFA5D6A7),
-        translucentColor: Color(0x5066BB6A),
+        extensionPrimary: Color(0xFF66BB6A),
       ),
     ],
   );
@@ -383,7 +383,7 @@ class AppTheme {
         onlineColor: Color(0xFFEF5350),
         disabledColor: Color(0x50D32F2F),
         offlineColor: Color(0xFFFFCDD2),
-        translucentColor: Color(0x50D32F2F),
+        extensionPrimary: Color(0xFFD32F2F),
       ),
     ],
   );
@@ -419,7 +419,7 @@ class AppTheme {
         onlineColor: Color(0xFFD32F2F),
         disabledColor: Color(0x50EF5350),
         offlineColor: Color(0xFFFFCDD2),
-        translucentColor: Color(0x50EF5350),
+        extensionPrimary: Color(0xFFEF5350),
       ),
     ],
   );
@@ -456,7 +456,7 @@ class AppTheme {
         onlineColor: Color(0xFFFFF176),
         disabledColor: Color(0x50FFB300),
         offlineColor: Color(0xFFFFF9C4),
-        translucentColor: Color(0x50FFB300),
+        extensionPrimary: Color(0xFFFFB300),
       ),
     ],
   );
@@ -492,7 +492,7 @@ class AppTheme {
         onlineColor: Color(0xFFFFB300),
         disabledColor: Color(0x50FFF176),
         offlineColor: Color(0xFFFFF9C4),
-        translucentColor: Color(0x50FFF176),
+        extensionPrimary: Color(0xFFFFF176),
       ),
     ],
   );
@@ -529,7 +529,7 @@ class AppTheme {
         onlineColor: Color(0xFFBA68C8),
         disabledColor: Color(0x508E24AA),
         offlineColor: Color(0xFFE1BEE7),
-        translucentColor: Color(0x508E24AA),
+        extensionPrimary: Color(0xFF8E24AA),
       ),
     ],
   );
@@ -565,7 +565,7 @@ class AppTheme {
         onlineColor: Color(0xFF8E24AA),
         disabledColor: Color(0x50BA68C8),
         offlineColor: Color(0xFFE1BEE7),
-        translucentColor: Color(0x50BA68C8),
+        extensionPrimary: Color(0xFFBA68C8),
       ),
     ],
   );
@@ -602,7 +602,7 @@ class AppTheme {
         onlineColor: Color(0xFFFFA726),
         disabledColor: Color(0x50F57C00),
         offlineColor: Color(0xFFFFE0B2),
-        translucentColor: Color(0x50F57C00),
+        extensionPrimary: Color(0xFFF57C00),
       ),
     ],
   );
@@ -638,7 +638,7 @@ class AppTheme {
         onlineColor: Color(0xFFF57C00),
         disabledColor: Color(0x50FFA726),
         offlineColor: Color(0xFFFFE0B2),
-        translucentColor: Color(0x50FFA726),
+        extensionPrimary: Color(0xFFFFA726),
       ),
     ],
   );
@@ -675,7 +675,7 @@ class AppTheme {
         onlineColor: Colors.grey,
         disabledColor: Color(0x50000000),
         offlineColor: Colors.grey[300]!,
-        translucentColor: Color(0x50000000),
+        extensionPrimary: Color(0xFF000000),
       ),
     ],
   );
@@ -711,7 +711,7 @@ class AppTheme {
         onlineColor: Colors.grey,
         disabledColor: Color(0x50FFFFFF),
         offlineColor: Colors.grey[700]!,
-        translucentColor: Color(0x50FFFFFF),
+        extensionPrimary: Color(0xFFFFFFFF),
       ),
     ],
   );
