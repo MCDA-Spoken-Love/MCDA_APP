@@ -4,7 +4,7 @@ import 'package:mcda_app/common/blocs/delete_account/delete_account_bloc.dart';
 import 'package:mcda_app/common/blocs/delete_account/delete_account_event.dart';
 import 'package:mcda_app/common/blocs/delete_account/delete_account_state.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';
-import 'package:mcda_app/common/widgets/snackbar.dart';
+import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/section_body.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';

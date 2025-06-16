@@ -8,7 +8,7 @@ import 'package:mcda_app/common/blocs/user_privacy/privacy/privacy_state.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_state.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
-import 'package:mcda_app/common/widgets/snackbar.dart';
+import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 
 class PrivacyPage extends StatefulWidget {

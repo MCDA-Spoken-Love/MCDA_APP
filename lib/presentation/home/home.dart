@@ -5,6 +5,7 @@ import 'package:mcda_app/common/blocs/biometric_lock/biometric_lock_event.dart';
 import 'package:mcda_app/common/blocs/biometric_lock/biometric_lock_state.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_state.dart';
+import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
@@ -114,16 +115,42 @@ class _HomePageState extends State<HomePage> {
                             return Settings();
                           },
                         ),
-                        Column(
-                          children: [
-                            const Text('Index 1: Business'),
-
-                            Text(
-                              'bloqueio biometrico: ${state.userEntity.email}',
+                        CustomScaffold.withChild(
+                          appBar: Text(
+                            'Relationship',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
+                          ),
+                          body: Column(
+                            children: [
+                              const Text('Index 1: Business'),
+
+                              Text(
+                                'bloqueio biometrico: ${state.userEntity.email}',
+                              ),
+                            ],
+                          ),
                         ),
-                        const Text('Index 2: School'),
+                        CustomScaffold.withChild(
+                          appBar: Text(
+                            'Account',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          body: Column(
+                            children: [
+                              const Text('Index 1: Business'),
+
+                              Text(
+                                'bloqueio biometrico: ${state.userEntity.email}',
+                              ),
+                            ],
+                          ),
+                        ),
                       ][currentPageIndex];
                     }
                     return Container();

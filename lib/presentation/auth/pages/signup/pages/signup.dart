@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
-import 'package:mcda_app/common/widgets/snackbar.dart';
+import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_one.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/widgets/signup_step_three.dart';

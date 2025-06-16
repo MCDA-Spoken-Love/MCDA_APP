@@ -49,6 +49,7 @@ dependencies:
   hydrated_bloc: ^10.0.0
   path_provider: ^2.1.5
   device_info_plus: ^11.4.0
+  device_preview: ^1.2.0
 
 dev_dependencies:
   flutter_test:

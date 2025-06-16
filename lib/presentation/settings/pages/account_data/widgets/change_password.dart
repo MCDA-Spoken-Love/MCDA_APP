@@ -6,7 +6,7 @@ import 'package:mcda_app/common/blocs/change_password/change_password_state.dart
 import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';
 import 'package:mcda_app/common/widgets/input/input_field.dart';
-import 'package:mcda_app/common/widgets/snackbar.dart';
+import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
 
 class ChangePasswordWidget extends StatefulWidget {

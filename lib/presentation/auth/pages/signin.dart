@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/utils/validations.dart';
 import 'package:mcda_app/common/widgets/button/besty_button.dart';
 import 'package:mcda_app/common/widgets/input/besty_input.dart';
-import 'package:mcda_app/common/widgets/snackbar.dart';
+import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
 import 'package:mcda_app/presentation/auth/pages/signup/pages/signup.dart';
 import 'package:mcda_app/presentation/home/home.dart';
