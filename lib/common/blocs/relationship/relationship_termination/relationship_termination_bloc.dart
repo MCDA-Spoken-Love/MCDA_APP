@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_event.dart';
-import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_state.dart';
-import 'package:mcda_app/domain/usecases/user/terminate_relationship.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_termination/relationship_termination_event.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_termination/relationship_termination_state.dart';
+import 'package:mcda_app/domain/usecases/relationship/terminate_relationship.dart';
 
 class RelationshipTermationBloc
     extends Bloc<RelationshipTerminationEvent, RelationshipTerminationState> {

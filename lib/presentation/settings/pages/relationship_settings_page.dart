@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_bloc.dart';
-import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_event.dart';
-import 'package:mcda_app/common/blocs/relationship_termination/relationship_termination_state.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_termination/relationship_termination_bloc.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_termination/relationship_termination_event.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_termination/relationship_termination_state.dart';
 import 'package:mcda_app/common/widgets/button/custom_button.dart';
 import 'package:mcda_app/common/widgets/routing/go_back/go_back.dart';
-import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/common/widgets/text/section_body.dart';
 import 'package:mcda_app/common/widgets/text/sections_title.dart';
+import 'package:mcda_app/common/widgets/text/snackbar.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 import 'package:mcda_app/presentation/home/home.dart';
 

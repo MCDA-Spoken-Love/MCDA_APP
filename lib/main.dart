@@ -8,6 +8,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state.dart';
 import 'package:mcda_app/common/blocs/auth/auth_state_cubit.dart';
 import 'package:mcda_app/common/blocs/button/button_state_cubit.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_display_cubit.dart';
 import 'package:mcda_app/common/blocs/user/user_display_cubit.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
 import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
@@ -39,6 +40,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => UserDisplayCubit()),
+        BlocProvider(create: (_) => RelationshipDisplayCubit()),
         BlocProvider(create: (_) => UserPrivacyDisplayCubit()),
         BlocProvider(create: (_) => ButtonStateCubit()),
         BlocProvider(create: (_) => AuthStateCubit()),

@@ -13,19 +13,6 @@ Logger logger = Logger(
 
 class UserRepositoryImpl extends UserRepository {
   @override
-  Future<Either> terminateRelationship() async {
-    Either result = await UserApiServiceImpl().terminateRelationship();
-    return result.fold(
-      (error) {
-        return Left(mapToString(error.data));
-      },
-      (data) async {
-        return Right(data);
-      },
-    );
-  }
-
-  @override
   Future<Either> deleteAccount() async {
     Either result = await UserApiServiceImpl().deleteAccount();
     return result.fold(
