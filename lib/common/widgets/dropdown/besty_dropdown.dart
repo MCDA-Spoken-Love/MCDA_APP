@@ -39,7 +39,7 @@ class _BestyDropdownState extends State<BestyDropdown> {
           title: widget.label,
           textAlign: TextAlign.start,
           color: themeColors.canvasColor,
-          fontSize: 18,
+          fontSize: 16,
         ),
         SizedBox(height: 8),
 

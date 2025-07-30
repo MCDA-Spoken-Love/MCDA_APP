@@ -3,7 +3,7 @@ import 'package:mcda_app/domain/entities/user_privacy.dart';
 class UserPrivacyModel {
   final int id;
   final bool allow_last_seen;
-  final int user;
+  final String user;
   final bool allow_status_visibility;
 
   UserPrivacyModel({

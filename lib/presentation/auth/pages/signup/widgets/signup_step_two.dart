@@ -179,30 +179,34 @@ class _SignupStepTwoState extends State<SignupStepTwo> {
             position: 'bottom',
             child: Row(
               children: [
-                BestyButton(
-                  width: MediaQuery.of(context).size.width * .4,
-                  onPressed: () {
-                    widget.previousStep();
-                  },
-                  title: 'Previous',
-                  titleSize: 14,
-                  backgroundColor: Colors.white,
-                  titleColor: colors.highlightColor,
+                Expanded(
+                  child: BestyButton(
+                    width: MediaQuery.of(context).size.width * .4,
+                    onPressed: () {
+                      widget.previousStep();
+                    },
+                    title: 'Previous',
+                    titleSize: 14,
+                    backgroundColor: Colors.white,
+                    titleColor: colors.highlightColor,
+                  ),
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width * .02),
-                BestyButton(
-                  width: MediaQuery.of(context).size.width * .4,
-                  onPressed: () {
-                    if (widget.formKey.currentState!.validate()) {
-                      widget.nextStep();
-                    } else {
-                      return;
-                    }
-                  },
-                  title: 'Next',
-                  titleSize: 14,
-                  backgroundColor: myColors.submitColor,
-                  titleColor: Colors.white,
+                Expanded(
+                  child: BestyButton(
+                    width: MediaQuery.of(context).size.width * .4,
+                    onPressed: () {
+                      if (widget.formKey.currentState!.validate()) {
+                        widget.nextStep();
+                      } else {
+                        return;
+                      }
+                    },
+                    title: 'Next',
+                    titleSize: 14,
+                    backgroundColor: myColors.submitColor,
+                    titleColor: Colors.white,
+                  ),
                 ),
               ],
             ),

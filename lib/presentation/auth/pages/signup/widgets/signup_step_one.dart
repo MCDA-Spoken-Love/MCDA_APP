@@ -33,18 +33,18 @@ class SignupStepOne extends StatelessWidget {
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   BestyTitle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 14,
                     title: 'Welcome to',
                   ),
                   RichText(
                     text: TextSpan(
                       text: ' M',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colors.hintColor,
                         fontFamily: 'BestyBeige',
                       ),
@@ -52,7 +52,7 @@ class SignupStepOne extends StatelessWidget {
                         TextSpan(
                           text: 'ore',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             fontFamily: 'BestyBeige',
                             color: Colors.white,
                           ),
@@ -64,7 +64,7 @@ class SignupStepOne extends StatelessWidget {
                     text: TextSpan(
                       text: ' C',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colors.hintColor,
                         fontFamily: 'BestyBeige',
                       ),
@@ -72,7 +72,7 @@ class SignupStepOne extends StatelessWidget {
                         TextSpan(
                           text: 'are',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             fontFamily: 'BestyBeige',
                             color: Colors.white,
                           ),
@@ -80,18 +80,18 @@ class SignupStepOne extends StatelessWidget {
                       ],
                     ),
                   ),
-                  BestyTitle(color: Colors.white, fontSize: 18, title: ' and'),
+                  BestyTitle(color: Colors.white, fontSize: 14, title: ' and'),
                 ],
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   RichText(
                     text: TextSpan(
-                      text: ' D',
+                      text: 'D',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colors.hintColor,
                         fontFamily: 'BestyBeige',
                       ),
@@ -99,7 +99,7 @@ class SignupStepOne extends StatelessWidget {
                         TextSpan(
                           text: 'isplays',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             fontFamily: 'BestyBeige',
                             color: Colors.white,
                           ),
@@ -107,12 +107,12 @@ class SignupStepOne extends StatelessWidget {
                       ],
                     ),
                   ),
-                  BestyTitle(color: Colors.white, fontSize: 18, title: ' of'),
+                  BestyTitle(color: Colors.white, fontSize: 14, title: ' of'),
                   RichText(
                     text: TextSpan(
                       text: ' A',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: colors.hintColor,
                         fontFamily: 'BestyBeige',
                       ),
@@ -120,7 +120,7 @@ class SignupStepOne extends StatelessWidget {
                         TextSpan(
                           text: 'ffection',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             fontFamily: 'BestyBeige',
                             color: Colors.white,
                           ),
@@ -199,33 +199,35 @@ class SignupStepOne extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              BestyButton(
-                width: MediaQuery.of(context).size.width * .4,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SigninPage()),
-                  );
-                },
-                title: 'Sign in, instead',
-                titleSize: 10,
-                backgroundColor: Colors.white,
-                titleColor: colors.highlightColor,
+              Expanded(
+                child: BestyButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SigninPage()),
+                    );
+                  },
+                  title: 'Sign in,',
+                  titleSize: 10,
+                  backgroundColor: Colors.white,
+                  titleColor: colors.highlightColor,
+                ),
               ),
               SizedBox(width: MediaQuery.of(context).size.width * .02),
-              BestyButton(
-                width: MediaQuery.of(context).size.width * .4,
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    nextStep();
-                  } else {
-                    return;
-                  }
-                },
-                title: 'Next',
-                titleSize: 14,
-                backgroundColor: myColors.submitColor,
-                titleColor: Colors.white,
+              Expanded(
+                child: BestyButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      nextStep();
+                    } else {
+                      return;
+                    }
+                  },
+                  title: 'Next',
+                  titleSize: 14,
+                  backgroundColor: myColors.submitColor,
+                  titleColor: Colors.white,
+                ),
               ),
             ],
           ),

@@ -58,7 +58,7 @@ class Navbar extends StatelessWidget {
                 size: 30,
                 color: colorSwitcher(1),
               ),
-              label: 'Favorite',
+              label: 'Relationship',
               labelStyle: fontStyleSwitcher(1),
             ),
             CurvedNavigationBarItem(

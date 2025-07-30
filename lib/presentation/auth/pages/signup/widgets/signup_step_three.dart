@@ -124,18 +124,20 @@ class SignupStepThree extends StatelessWidget {
 
                 Row(
                   children: [
-                    BestyButton(
-                      width: MediaQuery.of(context).size.width * .4,
-                      onPressed: () {
-                        previousStep();
-                      },
-                      title: 'Previous',
-                      titleSize: 14,
-                      backgroundColor: Colors.white,
-                      titleColor: colors.highlightColor,
+                    Expanded(
+                      child: BestyButton(
+                        width: MediaQuery.of(context).size.width * .4,
+                        onPressed: () {
+                          previousStep();
+                        },
+                        title: 'Previous',
+                        titleSize: 14,
+                        backgroundColor: Colors.white,
+                        titleColor: colors.highlightColor,
+                      ),
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * .02),
-                    submit(),
+                    Expanded(child: submit()),
                   ],
                 ),
               ],

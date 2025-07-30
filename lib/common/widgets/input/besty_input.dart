@@ -56,7 +56,7 @@ class _BestyInputState extends State<BestyInput> {
           title: widget.label,
           textAlign: TextAlign.start,
           color: themeColors.canvasColor,
-          fontSize: 20,
+          fontSize: 16,
         ),
         SizedBox(height: 8),
       ],
