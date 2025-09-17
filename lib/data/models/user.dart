@@ -6,7 +6,6 @@ class UserModel {
   final String username;
   final String first_name;
   final String last_name;
-  final String password;
   final String? gender;
   final String? sexuality;
   final String connection_code;
@@ -21,7 +20,6 @@ class UserModel {
     required this.first_name,
     required this.last_name,
     required this.id,
-    required this.password,
     required this.connection_code,
     required this.email,
     required this.username,
@@ -37,7 +35,6 @@ class UserModel {
       first_name: map['first_name'],
       last_name: map['last_name'],
       id: map['id'],
-      password: map['password'],
       connection_code: map['connection_code'],
       email: map['email'],
       username: map['username'],
@@ -53,7 +50,6 @@ extension UserXModel on UserModel {
       first_name: first_name,
       last_name: last_name,
       id: id,
-      password: password,
       connection_code: connection_code,
       gender: gender,
       sexuality: sexuality,

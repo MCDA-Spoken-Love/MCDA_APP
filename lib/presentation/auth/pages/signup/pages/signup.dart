@@ -78,7 +78,6 @@ class _SignupPageState extends State<SignupPage> {
       builder: (context) {
         return BestyButton(
           width: MediaQuery.of(context).size.width * .4,
-
           title: 'Create Account',
           titleSize: 10,
           backgroundColor: myColors.submitColor,

@@ -7,7 +7,7 @@ class RelationShipDisplayInitial extends RelationshipDisplayState {}
 class RelationShipDisplayLoading extends RelationshipDisplayState {}
 
 class RelationShipDisplayLoaded extends RelationshipDisplayState {
-  final List<RelationshipEntity> relationships;
+  final List<RelationshipEntity>? relationships;
 
   RelationShipDisplayLoaded({required this.relationships});
 }

@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcda_app/common/blocs/biometric_lock/biometric_lock_bloc.dart';
 import 'package:mcda_app/common/blocs/biometric_lock/biometric_lock_event.dart';
 import 'package:mcda_app/common/blocs/biometric_lock/biometric_lock_state.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_display_cubit.dart';
+import 'package:mcda_app/common/blocs/relationship/relationship_display_state.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_cubit.dart';
 import 'package:mcda_app/common/blocs/user_privacy/user_privacy_display_state.dart';
 import 'package:mcda_app/common/widgets/custom_scaffold/custom_scaffold.dart';
 import 'package:mcda_app/common/widgets/routing/navbar/navbar.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
+import 'package:mcda_app/presentation/onboarding/pages/add_relationship.dart';
 import 'package:mcda_app/presentation/settings/settings.dart';
 
 import '../../common/blocs/user/user_display_cubit.dart';
@@ -27,9 +30,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    final cubit = context.read<UserDisplayCubit>();
-    if (cubit.state is UserLoading) {
-      cubit.displayUser();
+    final userCubit = context.read<UserDisplayCubit>();
+    if (userCubit.state is UserLoading) {
+      userCubit.displayUser();
+    }
+    final relationshipCubit = context.read<RelationshipDisplayCubit>();
+    if (relationshipCubit.state is RelationShipDisplayLoading) {
+      relationshipCubit.displayRelationship();
     }
     final privacyCubit = context.read<UserPrivacyDisplayCubit>();
     if (privacyCubit.state is! UserPrivacyLoaded) {
@@ -43,8 +50,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _home(BuildContext context) {
     ThemeData themeColors = Theme.of(context);
 
     return BlocProvider(
@@ -161,6 +167,28 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RelationshipDisplayCubit, RelationshipDisplayState>(
+      builder: (context, state) {
+        if (state is RelationShipDisplayLoading) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (state is LoadRelationShipFailure) {
+          return Center(child: Text(state.errorMessage));
+        }
+        if (state is RelationShipDisplayLoaded) {
+          if (state.relationships!.isNotEmpty) {
+            return _home(context);
+          }
+          return AddRelationship();
+        }
+
+        return Center(child: Text('Unable to load relationship data'));
+      },
     );
   }
 }

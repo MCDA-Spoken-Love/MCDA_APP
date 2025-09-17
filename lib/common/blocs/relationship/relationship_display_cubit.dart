@@ -13,7 +13,13 @@ class RelationshipDisplayCubit extends HydratedCubit<RelationshipDisplayState> {
         emit(LoadRelationShipFailure(errorMessage: error));
       },
       (data) {
-        emit(RelationShipDisplayLoaded(relationships: data));
+        // Parse the response data
+        final response = data.data; // Assuming response.data is a List<Map>
+        final relationships =
+            (response as List)
+                .map((e) => RelationshipEntity.fromJson(e))
+                .toList();
+        emit(RelationShipDisplayLoaded(relationships: relationships));
       },
     );
   }
@@ -40,7 +46,7 @@ class RelationshipDisplayCubit extends HydratedCubit<RelationshipDisplayState> {
     if (state is RelationShipDisplayLoaded) {
       return {
         'type': 'RelationShipDisplayLoaded',
-        'relationships': state.relationships.map((e) => e.toJson()).toList(),
+        'relationships': state.relationships?.map((e) => e.toJson()).toList(),
       };
     } else if (state is LoadRelationShipFailure) {
       return {'type': 'LoadUserFailure', 'errorMessage': state.errorMessage};

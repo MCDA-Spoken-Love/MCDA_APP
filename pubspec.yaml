@@ -50,6 +50,7 @@ dependencies:
   path_provider: ^2.1.5
   device_info_plus: ^11.4.0
   device_preview: ^1.2.0
+  web_socket_channel: ^3.0.3
 
 dev_dependencies:
   flutter_test:

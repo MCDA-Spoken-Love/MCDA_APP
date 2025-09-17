@@ -4,7 +4,6 @@ class UserEntity {
   final String username;
   final String first_name;
   final String last_name;
-  final String password;
   final String? gender;
   final String? sexuality;
   final String connection_code;
@@ -19,7 +18,6 @@ class UserEntity {
     required this.first_name,
     required this.last_name,
     required this.id,
-    required this.password,
     required this.connection_code,
     required this.email,
     required this.username,
@@ -30,7 +28,6 @@ class UserEntity {
       id: json['id'],
       first_name: json['first_name'],
       last_name: json['last_name'],
-      password: json['password'],
       connection_code: json['connection_code'],
       email: json['email'],
       username: json['username'],
@@ -46,7 +43,6 @@ class UserEntity {
     'id': id,
     'first_name': first_name,
     'last_name': last_name,
-    'password': password,
     'connection_code': connection_code,
     'email': email,
     'username': username,

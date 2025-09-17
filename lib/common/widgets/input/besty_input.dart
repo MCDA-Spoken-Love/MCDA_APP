@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mcda_app/common/widgets/text/besty_title.dart';
+import 'package:mcda_app/core/configs/theme/my_colors_extension.dart';
 
 class BestyInput extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String label;
   final String? inputType;
   final FormFieldValidator<String>? validator;
@@ -12,10 +14,12 @@ class BestyInput extends StatefulWidget {
   final bool? error;
   final bool? isLoading;
   final String? errorMessage;
+  final String? copyToastMessage;
+  final int? maxLength; // NEW
 
   const BestyInput({
     super.key,
-    required this.controller,
+    this.controller,
     required this.label,
     this.inputType = 'text',
     this.validator,
@@ -25,12 +29,15 @@ class BestyInput extends StatefulWidget {
     this.error,
     this.isLoading,
     this.errorMessage,
+    this.copyToastMessage,
+    this.maxLength, // NEW
   }) : assert(
          inputType == 'text' ||
              inputType == 'email' ||
              inputType == 'password' ||
-             inputType == 'number',
-         'inputType must be text, email, password or number',
+             inputType == 'number' ||
+             inputType == 'copy',
+         'inputType must be text, email, password, number or copy',
        );
 
   @override
@@ -39,6 +46,40 @@ class BestyInput extends StatefulWidget {
 
 class _BestyInputState extends State<BestyInput> {
   bool _obscureText = true;
+  late final TextEditingController _effectiveController;
+  late final bool _ownsController;
+  String? _copyFeedback;
+
+  @override
+  void initState() {
+    super.initState();
+    _ownsController = widget.controller == null;
+    _effectiveController = widget.controller ?? TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    if (_ownsController) {
+      _effectiveController.dispose();
+    }
+    super.dispose();
+  }
+
+  Future<void> _handleCopy() async {
+    final text = _effectiveController.text;
+    if (text.isEmpty) return;
+    await Clipboard.setData(ClipboardData(text: text));
+    setState(() {
+      _copyFeedback = widget.copyToastMessage ?? 'Copied';
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _copyFeedback = null;
+        });
+      }
+    });
+  }
 
   void _toggle() {
     setState(() {
@@ -79,7 +120,7 @@ class _BestyInputState extends State<BestyInput> {
           },
           validator: widget.validator,
           obscureText: _obscureText && widget.inputType == 'password',
-          controller: widget.controller,
+          controller: _effectiveController,
           decoration: _decorator(
             CircularProgressIndicator(),
             themeColors.colorScheme.tertiary,
@@ -106,7 +147,7 @@ class _BestyInputState extends State<BestyInput> {
           },
           validator: widget.validator,
           obscureText: _obscureText && widget.inputType == 'password',
-          controller: widget.controller,
+          controller: _effectiveController,
           decoration: _decorator(
             Icon(Icons.error, color: themeColors.colorScheme.error),
             themeColors.colorScheme.tertiary,
@@ -118,6 +159,8 @@ class _BestyInputState extends State<BestyInput> {
 
   Widget _initial() {
     ThemeData themeColors = Theme.of(context);
+    final bool isCopy = widget.inputType == 'copy';
+    final suffix = _buildSuffix(themeColors, isCopy);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,18 +168,60 @@ class _BestyInputState extends State<BestyInput> {
         _title(),
         TextFormField(
           style: TextStyle(color: themeColors.colorScheme.primary),
-
-          onChanged: widget.onChanged,
+          onChanged: isCopy ? null : widget.onChanged,
+          readOnly: isCopy, // IMPORTANT for copy-only mode
+          enableInteractiveSelection: true,
           onTapOutside: (event) {
             widget.onTapOutside;
           },
+          maxLength: widget.maxLength,
+          maxLengthEnforcement: MaxLengthEnforcement.enforced,
           validator: widget.validator,
           obscureText: _obscureText && widget.inputType == 'password',
-          controller: widget.controller,
-          decoration: _decorator(null, themeColors.colorScheme.tertiary),
+          controller: _effectiveController,
+          decoration: _decorator(suffix, themeColors.colorScheme.tertiary),
         ),
       ],
     );
+  }
+
+  Widget? _buildSuffix(ThemeData themeColors, bool isCopy) {
+    ThemeData themeColors = Theme.of(context);
+
+    if (widget.suffixIcon != null && !isCopy) return widget.suffixIcon;
+
+    if (widget.inputType == 'password') {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+        child: GestureDetector(
+          onTap: _toggle,
+          child: Icon(
+            _obscureText
+                ? Icons.visibility_rounded
+                : Icons.visibility_off_rounded,
+            color: themeColors.colorScheme.primary,
+            size: 24,
+          ),
+        ),
+      );
+    }
+
+    if (isCopy) {
+      return IconButton(
+        tooltip: 'Copy',
+        splashRadius: 20,
+        icon: Icon(
+          _copyFeedback == null ? Icons.copy_rounded : Icons.check_rounded,
+          color:
+              _copyFeedback == null
+                  ? themeColors.colorScheme.primary
+                  : themeColors.extension<MyColorsExtension>()?.submitColor,
+        ),
+        onPressed: _handleCopy,
+      );
+    }
+
+    return widget.suffixIcon;
   }
 
   InputDecoration _decorator(Widget? suffixIcon, Color? fillColor) {
