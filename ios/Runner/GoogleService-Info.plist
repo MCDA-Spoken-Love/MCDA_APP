@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBcDuyTpqq5V92DXL1EYCkr1LmUz5BZgQA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>507309810418</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mcdaApp</string>
+	<key>PROJECT_ID</key>
+	<string>mcda-spokenlove</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mcda-spokenlove.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:507309810418:ios:b8c1c5e2d7f1c810b8a66b</string>
+</dict>
+</plist>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "507309810418",
+    "project_id": "mcda-spokenlove",
+    "storage_bucket": "mcda-spokenlove.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507309810418:android:005282df00523f46b8a66b",
+        "android_client_info": {
+          "package_name": "com.example.mcda_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM7ibv8geBPClaLZtszFqJqPD6yYZLNAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

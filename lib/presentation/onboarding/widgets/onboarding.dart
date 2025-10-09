@@ -45,7 +45,7 @@ class _OnboardingState extends State<Onboarding> {
           (prev, curr) => curr is WebSocketMessage || curr is WebSocketError,
       listener: (context, state) {
         if (state is WebSocketMessage) {
-          print(state);
+          print(state.data);
         }
         if (state is WebSocketError) {
           ScaffoldMessenger.of(

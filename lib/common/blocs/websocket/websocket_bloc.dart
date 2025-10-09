@@ -47,6 +47,7 @@ class WebsocketBloc extends Bloc<WebSocketEvent, WebSocketState> {
   }
 
   void _onInbound(WebSocketInbound e, Emitter<WebSocketState> emit) {
+    print(e.data);
     emit(WebSocketMessage(data: e.data));
   }
 
