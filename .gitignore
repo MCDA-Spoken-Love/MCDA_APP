@@ -43,3 +43,5 @@ app-example
 /android
 /.idea
 /.vscode
+
+__snapshots__/
