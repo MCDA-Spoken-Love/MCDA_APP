@@ -1,10 +1,12 @@
 import { Stack } from "expo-router";
+import { useAuth } from "@/features/auth";
 
-const isLoggedIn = false;
+export const Routing = () => {
+  const { isLoggedIn } = useAuth();
 
-export default function Routing() {
   return (
     <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen name="welcome" options={{ headerShown: false }} />
       </Stack.Protected>
@@ -21,8 +23,8 @@ export default function Routing() {
         />
       </Stack.Protected>
       <Stack.Protected guard={isLoggedIn}>
-        <Stack.Screen name="private" />
+        <Stack.Screen name="home" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );
-}
+};

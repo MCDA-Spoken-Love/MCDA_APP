@@ -4,14 +4,12 @@ import { PortalHost } from "@rn-primitives/portal";
 import { NAV_THEME } from "@/lib/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import * as SplashScreen from "expo-splash-screen";
-import Routing from "@/app/routing";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { Coiny_400Regular } from "@expo-google-fonts/coiny";
-import {
-  configureReanimatedLogger,
-  ReanimatedLogLevel,
-} from "react-native-reanimated";
+import { configureReanimatedLogger, ReanimatedLogLevel } from "react-native-reanimated";
+import { Stack } from "expo-router";
+import { useAuth } from "@/features/auth";
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -21,6 +19,8 @@ configureReanimatedLogger({
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const { isLoggedIn } = useAuth();
+
   const colorScheme = useColorScheme();
   const resolvedColorScheme = colorScheme === "dark" ? "dark" : "light";
   const [loaded] = useFonts({
@@ -38,7 +38,27 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={NAV_THEME[resolvedColorScheme]}>
-      <Routing />
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Protected guard={!isLoggedIn}>
+          <Stack.Screen name="welcome" options={{ headerShown: false }} />
+        </Stack.Protected>
+        <Stack.Protected guard={!isLoggedIn}>
+          <Stack.Screen
+            name="signin"
+            options={{ headerShown: false, animation: "none" }}
+          />
+        </Stack.Protected>
+        <Stack.Protected guard={!isLoggedIn}>
+          <Stack.Screen
+            name="signup"
+            options={{ headerShown: false, animation: "none" }}
+          />
+        </Stack.Protected>
+        <Stack.Protected guard={isLoggedIn}>
+          <Stack.Screen name="home" options={{ headerShown: false }} />
+        </Stack.Protected>
+      </Stack>
       <PortalHost />
     </ThemeProvider>
   );
