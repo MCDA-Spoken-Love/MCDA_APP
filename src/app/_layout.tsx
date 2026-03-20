@@ -7,7 +7,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { Coiny_400Regular } from "@expo-google-fonts/coiny";
-import { configureReanimatedLogger, ReanimatedLogLevel } from "react-native-reanimated";
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated";
 import { Stack } from "expo-router";
 import { useAuth } from "@/features/auth";
 

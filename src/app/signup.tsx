@@ -3,7 +3,7 @@ import { AuthOverlay } from "@/features/auth/components/auth-overlay";
 
 export default function SignUp() {
   return (
-    <AuthOverlay triggerAnimation>
+    <AuthOverlay data-testid="screen-signup" triggerAnimation>
       <SignupPage />
     </AuthOverlay>
   );

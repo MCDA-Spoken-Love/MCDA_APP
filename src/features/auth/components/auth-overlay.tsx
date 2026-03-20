@@ -1,8 +1,4 @@
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { ReactNode, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
@@ -64,7 +60,7 @@ export const AuthOverlay = ({
   ]);
 
   return (
-    <SafeAreaView className={"flex-1 bg-primary"}>
+    <SafeAreaView className={"flex-1 bg-primary"} testID={"auth-overlay"}>
       <View className="flex-1 flex-col">
         <View className={"relative h-1/2"}>
           <Animated.View

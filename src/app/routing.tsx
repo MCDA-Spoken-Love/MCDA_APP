@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { useAuth } from "@/features/auth";
 
-export const Routing = () => {
+export default function Routing() {
   const { isLoggedIn } = useAuth();
 
   return (
@@ -27,4 +27,4 @@ export const Routing = () => {
       </Stack.Protected>
     </Stack>
   );
-};
+}

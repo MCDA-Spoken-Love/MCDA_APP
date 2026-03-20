@@ -5,10 +5,6 @@ import { router } from "expo-router";
 import { Href } from "expo-router/build/types";
 
 export function WelcomePage() {
-  const handlePressIn = (screen: Href) => {
-    router.prefetch(screen);
-  };
-
   const handleNavigate = (screen: Href) => {
     return router.push(screen);
   };
@@ -22,7 +18,7 @@ export function WelcomePage() {
         <Button
           variant={"accent"}
           size={"full"}
-          onPressIn={() => handlePressIn("/signin")}
+          datatest-id={"screen-welcome-signin-button"}
           onPress={() => handleNavigate("/signin")}
         >
           <Text className="font-coiny">Login</Text>
@@ -30,7 +26,7 @@ export function WelcomePage() {
         <Button
           variant={"ghost"}
           size={"full"}
-          onPressIn={() => handlePressIn("/signup")}
+          datatest-id={"screen-welcome-signup-button"}
           onPress={() => handleNavigate("/signup")}
         >
           <Text className="font-coiny">Criar conta</Text>

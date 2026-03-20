@@ -3,7 +3,7 @@ import { AuthOverlay } from "@/features/auth/components/auth-overlay";
 
 export default function Signin() {
   return (
-    <AuthOverlay triggerAnimation>
+    <AuthOverlay data-testid={"screen-signin"} triggerAnimation>
       <Text>Login</Text>
     </AuthOverlay>
   );

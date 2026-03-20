@@ -3,7 +3,7 @@ import { AuthOverlay } from "@/features/auth/components/auth-overlay";
 
 export default function welcome() {
   return (
-    <AuthOverlay>
+    <AuthOverlay data-testid={"screen-welcome"}>
       <WelcomePage />
     </AuthOverlay>
   );

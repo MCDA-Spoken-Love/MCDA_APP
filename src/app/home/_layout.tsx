@@ -4,7 +4,7 @@ import Home from "@/app/home/index";
 
 export default function HomeLayout() {
   return (
-    <SafeAreaView style={{ flex: 1 }} testID={"screen-home"}>
+    <SafeAreaView style={{ flex: 1 }} datatest-id={"screen-home"}>
       <View style={{ flex: 1 }}>
         <Home />
       </View>

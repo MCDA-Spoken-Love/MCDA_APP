@@ -1,7 +1,7 @@
 import { useAuth } from "@/features/auth";
 import React from "react";
 import { render, screen } from "@testing-library/react-native";
-import { Routing } from "@/app/routing";
+import Routing from "@/app/routing";
 
 jest.mock("@/features/auth", () => ({
   useAuth: jest.fn(() => false),
