@@ -8,7 +8,10 @@ import Routing from "@/app/routing";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { Coiny_400Regular } from "@expo-google-fonts/coiny";
-import { configureReanimatedLogger, ReanimatedLogLevel } from "react-native-reanimated";
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated";
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
