@@ -1,4 +1,8 @@
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { ReactNode, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -73,6 +77,7 @@ export const AuthOverlay = ({
       <View className="flex-1 flex-col">
         <View className={"relative h-1/2"}>
           <Animated.View
+            testID={"logo-container"}
             style={[animatedStyles, { width, ...styles.container }]}
           >
             <Image
@@ -92,7 +97,10 @@ export const AuthOverlay = ({
             source={require("@/assets/images/hearts-bg.svg")}
           />
         </View>
-        <Animated.View style={[animatedStylesText, styles.textContainer]}>
+        <Animated.View
+          testID={"text-container"}
+          style={[animatedStylesText, styles.textContainer]}
+        >
           <TouchableOpacity onPress={() => handleEasterEggPress()}>
             <View className={"flex-col items-start gap-1 self-stretch"}>
               <Text

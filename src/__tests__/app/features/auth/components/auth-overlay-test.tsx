@@ -1,40 +1,6 @@
 import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { act, render, screen } from "@testing-library/react-native";
 import { Text as RNText } from "react-native";
-
-const mockSharedValues: { value: number }[] = [];
-const mockWithSpring = jest.fn((toValue: number) => toValue);
-
-jest.mock("react-native-reanimated", () => {
-  const React = require("react");
-  const { View } = require("react-native");
-
-  return {
-    __esModule: true,
-    default: { View },
-
-    useSharedValue: (initial: number) => {
-      const ref = React.useRef(null as { value: number } | null);
-
-      if (ref.current === null) {
-        ref.current = { value: initial };
-        mockSharedValues.push(ref.current);
-      }
-
-      return ref.current;
-    },
-
-    useAnimatedStyle: (worklet: () => unknown) => worklet(),
-
-    withSpring: mockWithSpring,
-
-    __getSharedValues: () => mockSharedValues,
-    __resetSharedValues: () => {
-      mockSharedValues.length = 0;
-      mockWithSpring.mockClear();
-    },
-  };
-});
 
 jest.mock("@/components/ui/text", () => {
   const React = require("react");
@@ -56,18 +22,22 @@ jest.mock("@/components/ui/image", () => {
   };
 });
 
-// Require AFTER mocks so the component uses this mocked module instance.
 const { AuthOverlay } = require("@/features/auth/components/auth-overlay");
 
-const reanimatedMock = jest.requireMock("react-native-reanimated") as {
-  withSpring: jest.Mock;
-  __getSharedValues: () => { value: number }[];
-  __resetSharedValues: () => void;
+const advanceAnimation = (ms = 2000) => {
+  act(() => {
+    jest.advanceTimersByTime(ms);
+  });
 };
 
 describe("<AuthOverlay />", () => {
   beforeEach(() => {
-    reanimatedMock.__resetSharedValues();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
 
   it("renders static texts, images and children", () => {
@@ -88,25 +58,35 @@ describe("<AuthOverlay />", () => {
     expect(screen.getByTestId("overlay-child")).toBeTruthy();
   });
 
-  it("keeps initial shared values when triggerAnimation is false", () => {
+  it("keeps initial animated styles when triggerAnimation is false", () => {
     render(
       <AuthOverlay triggerAnimation={false}>
         <RNText>child</RNText>
       </AuthOverlay>,
     );
 
-    const values = reanimatedMock.__getSharedValues().map((s) => s.value);
+    const logoContainer = screen.getByTestId("logo-container");
+    const textContainer = screen.getByTestId("text-container");
 
-    expect(values).toEqual([0, 0, 320, 305, -22]);
-    expect(reanimatedMock.withSpring).not.toHaveBeenCalledWith(180);
+    expect(logoContainer).toHaveAnimatedStyle({
+      width: 320,
+      transform: [{ translateY: 0 }, { translateX: 0 }],
+    });
+
+    expect(textContainer).toHaveAnimatedStyle({
+      transform: [{ translateY: 335.5 }, { translateX: -24.200000000000003 }],
+    });
   });
 
-  it("updates shared values when triggerAnimation changes from false to true", () => {
+  it("updates animated styles when triggerAnimation changes from false to true", () => {
     const { rerender } = render(
       <AuthOverlay triggerAnimation={false}>
         <RNText>child</RNText>
       </AuthOverlay>,
     );
+
+    const logoContainer = screen.getByTestId("logo-container");
+    const textContainer = screen.getByTestId("text-container");
 
     rerender(
       <AuthOverlay triggerAnimation={true}>
@@ -114,36 +94,50 @@ describe("<AuthOverlay />", () => {
       </AuthOverlay>,
     );
 
-    const values = reanimatedMock.__getSharedValues().map((s) => s.value);
+    advanceAnimation();
 
-    expect(values).toEqual([-50, 60, 180, 75, 38]);
-    expect(reanimatedMock.withSpring).toHaveBeenCalledWith(180);
+    expect(logoContainer).toHaveAnimatedStyle({
+      width: 180,
+      transform: [{ translateY: -55.00000000000001 }, { translateX: 66 }],
+    });
+
+    expect(textContainer).toHaveAnimatedStyle({
+      transform: [{ translateY: 82.5 }, { translateX: 41.800000000000004 }],
+    });
   });
 
-  it("applies animated values on first render when triggerAnimation is true", () => {
+  it("applies animated styles on first render when triggerAnimation is true", () => {
     render(
       <AuthOverlay triggerAnimation={true}>
         <RNText>child</RNText>
       </AuthOverlay>,
     );
 
-    const values = reanimatedMock.__getSharedValues().map((s) => s.value);
+    const logoContainer = screen.getByTestId("logo-container");
 
-    expect(values).toEqual([-50, 60, 180, 75, 38]);
-    expect(reanimatedMock.withSpring).toHaveBeenCalledWith(180);
+    advanceAnimation();
+
+    expect(logoContainer).toHaveAnimatedStyle({
+      width: 180,
+      transform: [{ translateY: -55.00000000000001 }, { translateX: 66 }],
+    });
   });
 
-  it("does not rerun the effect when rerendered with triggerAnimation still true", () => {
+  it("keeps the same animated style when rerendered with triggerAnimation still true", () => {
     const { rerender } = render(
       <AuthOverlay triggerAnimation={true}>
         <RNText>child</RNText>
       </AuthOverlay>,
     );
 
-    const valuesBefore = reanimatedMock.__getSharedValues().map((s) => s.value);
-    const count180Before = reanimatedMock.withSpring.mock.calls.filter(
-      ([arg]) => arg === 180,
-    ).length;
+    const logoContainer = screen.getByTestId("logo-container");
+
+    advanceAnimation();
+
+    expect(logoContainer).toHaveAnimatedStyle({
+      width: 180,
+      transform: [{ translateY: -55.00000000000001 }, { translateX: 66 }],
+    });
 
     rerender(
       <AuthOverlay triggerAnimation={true}>
@@ -151,12 +145,11 @@ describe("<AuthOverlay />", () => {
       </AuthOverlay>,
     );
 
-    const valuesAfter = reanimatedMock.__getSharedValues().map((s) => s.value);
-    const count180After = reanimatedMock.withSpring.mock.calls.filter(
-      ([arg]) => arg === 180,
-    ).length;
+    advanceAnimation(250);
 
-    expect(valuesAfter).toEqual(valuesBefore);
-    expect(count180After).toBe(count180Before);
+    expect(logoContainer).toHaveAnimatedStyle({
+      width: 180,
+      transform: [{ translateY: -55.00000000000001 }, { translateX: 66 }],
+    });
   });
 });
