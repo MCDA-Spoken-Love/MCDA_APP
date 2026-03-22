@@ -1,7 +1,7 @@
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 
@@ -19,6 +19,15 @@ export const AuthOverlay = ({
   const width = useSharedValue(320);
   const translateYText = useSharedValue<number>(305);
   const translateXText = useSharedValue<number>(-22);
+  const [easterEgg, setEasterEgg] = useState<boolean>(false);
+  const [easterEggCounter, setEasterEggCounter] = useState<number>(0);
+
+  const handleEasterEggPress = () => {
+    setEasterEggCounter((prev) => prev + 1);
+    if (easterEggCounter >= 5) {
+      setEasterEgg(true);
+    }
+  };
 
   const animatedStylesText = useAnimatedStyle(() => ({
     transform: [
@@ -84,27 +93,39 @@ export const AuthOverlay = ({
           />
         </View>
         <Animated.View style={[animatedStylesText, styles.textContainer]}>
-          <View className={"flex-col items-start gap-1 self-stretch"}>
-            <Text className={"text-2xl self-start text-background font-coiny"}>
-              Boas vindas ao:
-            </Text>
-            <Text className={"text-2xl text-background self-start font-coiny"}>
-              <Text className={"text-3xl font-besty color-secondary"}>M</Text>
-              ais
-            </Text>
-            <Text className={"text-2xl text-background self-start font-coiny"}>
-              <Text className={"text-3xl font-besty color-secondary"}>C</Text>
-              arinho e
-            </Text>
-            <Text className={"text-2xl text-background self-start font-coiny"}>
-              <Text className={"text-3xl font-besty color-secondary"}>D</Text>
-              emonstrações de
-            </Text>
-            <Text className={"text-2xl text-background self-start font-coiny"}>
-              <Text className={"text-3xl font-besty color-secondary"}>A</Text>
-              feto
-            </Text>
-          </View>
+          <TouchableOpacity onPress={() => handleEasterEggPress()}>
+            <View className={"flex-col items-start gap-1 self-stretch"}>
+              <Text
+                className={"text-2xl self-start text-background font-coiny"}
+              >
+                Boas vindas ao:
+              </Text>
+              <Text
+                className={"text-2xl text-background self-start font-coiny"}
+              >
+                <Text className={"text-3xl font-besty color-secondary"}>M</Text>
+                {easterEgg ? "arina" : "ais"}
+              </Text>
+              <Text
+                className={"text-2xl text-background self-start font-coiny"}
+              >
+                <Text className={"text-3xl font-besty color-secondary"}>C</Text>
+                {easterEgg ? "osta" : "arinho e"}
+              </Text>
+              <Text
+                className={"text-2xl text-background self-start font-coiny"}
+              >
+                <Text className={"text-3xl font-besty color-secondary"}>D</Text>
+                {easterEgg ? "e" : "emonstrações de"}
+              </Text>
+              <Text
+                className={"text-2xl text-background self-start font-coiny"}
+              >
+                <Text className={"text-3xl font-besty color-secondary"}>A</Text>
+                {easterEgg ? "lencar" : "feto"}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </Animated.View>
         {children}
       </View>
@@ -122,6 +143,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     height: "50%",
+    zIndex: 20,
     position: "absolute",
     alignItems: "center",
     top: "0%",

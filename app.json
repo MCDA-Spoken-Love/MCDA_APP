@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MCDA_APP",
-    "slug": "MCDA_APP",
+    "name": "MCDA",
+    "slug": "MCDA",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -42,6 +42,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0514377e-388c-43b0-aaa3-cbcf36394b47"
+      }
     }
   }
 }

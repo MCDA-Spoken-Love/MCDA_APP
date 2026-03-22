@@ -44,4 +44,6 @@ app-example
 /.idea
 /.vscode
 
+# test generated code
 __snapshots__/
+coverage/
