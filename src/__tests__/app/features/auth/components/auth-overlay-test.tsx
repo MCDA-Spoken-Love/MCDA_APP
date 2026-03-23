@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen } from "@testing-library/react-native";
+import { act, render, screen, userEvent } from "@testing-library/react-native";
 import { Text as RNText } from "react-native";
 
 jest.mock("@/components/ui/text", () => {
@@ -121,6 +121,53 @@ describe("<AuthOverlay />", () => {
       width: 180,
       transform: [{ translateY: -55.00000000000001 }, { translateX: 66 }],
     });
+  });
+
+  it("should NOT show the variant easter egg when text is NOT clicked 5 times", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <AuthOverlay triggerAnimation={true}>
+        <RNText>child</RNText>
+      </AuthOverlay>,
+    );
+
+    const textTouchableOpacity = screen.queryByTestId(
+      "text-container-touchable",
+    );
+
+    await user.press(textTouchableOpacity);
+
+    const textContent = screen.queryByTestId("text-container-content");
+    expect(textContent).toHaveTextContent(
+      "Boas vindas ao:MaisCarinho eDemonstrações deAfeto",
+    );
+  });
+
+  it("should show the variant easter egg when text is  clicked 5 times", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <AuthOverlay triggerAnimation={true}>
+        <RNText>child</RNText>
+      </AuthOverlay>,
+    );
+
+    const textTouchableOpacity = screen.queryByTestId(
+      "text-container-touchable",
+    );
+
+    await user.press(textTouchableOpacity);
+    await user.press(textTouchableOpacity);
+    await user.press(textTouchableOpacity);
+    await user.press(textTouchableOpacity);
+    await user.press(textTouchableOpacity);
+
+    const textContent = screen.queryByTestId("text-container-content");
+
+    expect(textContent).toHaveTextContent(
+      "Boas vindas ao:MarinaCostaDeAlencar",
+    );
   });
 
   it("keeps the same animated style when rerendered with triggerAnimation still true", () => {

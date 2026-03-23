@@ -1,8 +1,4 @@
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { ReactNode, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -28,7 +24,7 @@ export const AuthOverlay = ({
 
   const handleEasterEggPress = () => {
     setEasterEggCounter((prev) => prev + 1);
-    if (easterEggCounter >= 5) {
+    if (easterEggCounter >= 4) {
       setEasterEgg(true);
     }
   };
@@ -101,8 +97,14 @@ export const AuthOverlay = ({
           testID={"text-container"}
           style={[animatedStylesText, styles.textContainer]}
         >
-          <TouchableOpacity onPress={() => handleEasterEggPress()}>
-            <View className={"flex-col items-start gap-1 self-stretch"}>
+          <TouchableOpacity
+            onPress={() => handleEasterEggPress()}
+            testID={"text-container-touchable"}
+          >
+            <View
+              className={"flex-col items-start gap-1 self-stretch"}
+              testID={"text-container-content"}
+            >
               <Text
                 className={"text-2xl self-start text-background font-coiny"}
               >
