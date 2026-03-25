@@ -1,7 +1,11 @@
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 import { ReactNode, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 
@@ -9,6 +13,8 @@ interface LayoutProps {
   children: ReactNode;
   triggerAnimation?: boolean;
 }
+
+const { width } = Dimensions.get("window");
 
 export const AuthOverlay = ({
   children,
@@ -72,6 +78,14 @@ export const AuthOverlay = ({
     <SafeAreaView className={"flex-1 bg-primary"} testID={"auth-overlay"}>
       <View className="flex-1 flex-col">
         <View className={"relative h-1/2"}>
+          <Image
+            className={"flex-1 w-full h-full opacity-30"}
+            alt={"hearts background"}
+            contentFit="fill"
+            loading={"eager"}
+            cachePolicy={"memory-disk"}
+            source={require("@/assets/images/hearts-bg.svg")}
+          />
           <Animated.View
             testID={"logo-container"}
             style={[animatedStyles, { width, ...styles.container }]}
@@ -84,14 +98,6 @@ export const AuthOverlay = ({
               source={require("@/assets/images/logo.svg")}
             />
           </Animated.View>
-          <Image
-            className={"flex-1 w-full h-full opacity-30"}
-            alt={"hearts background"}
-            contentFit="fill"
-            loading={"eager"}
-            cachePolicy={"memory-disk"}
-            source={require("@/assets/images/hearts-bg.svg")}
-          />
         </View>
         <Animated.View
           testID={"text-container"}
@@ -147,16 +153,14 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     position: "absolute",
-    zIndex: 20,
     top: "25%",
     left: 50,
   },
   textContainer: {
     height: "50%",
-    zIndex: 20,
     position: "absolute",
     alignItems: "center",
-    top: "0%",
+    top: width > 400 ? 0 : -35,
     left: 24,
     justifyContent: "space-evenly",
     paddingHorizontal: 24,

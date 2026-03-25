@@ -14,7 +14,9 @@ export function WelcomePage() {
       className={"h-1/2 flex-col items-end  justify-end px-6"}
       testID={"screen-welcome"}
     >
-      <View className={"flex-col items-center gap-6 self-stretch"}>
+      <View
+        className={"flex-col items-center gap-4 md:gap-4 lg:gap-6 self-stretch"}
+      >
         <Button
           variant={"accent"}
           size={"full"}

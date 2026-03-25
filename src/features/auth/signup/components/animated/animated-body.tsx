@@ -11,7 +11,11 @@ import { Text } from "@/components/ui/text";
 const DURATION = 1000;
 const DELAY = 500;
 
-export const AnimatedBody = () => {
+interface AnimatedBodyProps {
+  onAdvance: () => void;
+}
+
+export const AnimatedBody = ({ onAdvance }: AnimatedBodyProps) => {
   const opacity1 = useSharedValue<number>(0);
   const opacity2 = useSharedValue<number>(0);
   const opacity3 = useSharedValue<number>(0);
@@ -30,7 +34,10 @@ export const AnimatedBody = () => {
   }, [show]);
 
   return (
-    <View className={"h-1/2 flex-col justify-evenly px-6"}>
+    <View
+      className={"h-1/2 flex-col justify-evenly px-6"}
+      testID={"animated-body"}
+    >
       <Animated.Text
         className="text-background font-coiny text-lg text-left"
         style={[{ opacity: opacity1 }]}
@@ -45,8 +52,11 @@ export const AnimatedBody = () => {
         Foi feito com amor e esperamos que você e seu parceiro gostem de usá-lo
         tanto quanto gostamos de criá-lo.
       </Animated.Text>
-      <Animated.View style={[{ opacity: opacity3 }]}>
-        <Button variant={"accent"} size={"full"}>
+      <Animated.View
+        style={[{ opacity: opacity3 }]}
+        testID={"animated-body-button"}
+      >
+        <Button variant={"accent"} size={"full"} onPress={() => onAdvance()}>
           <Text className="font-coiny">Avançar</Text>
         </Button>
       </Animated.View>
