@@ -28,8 +28,6 @@ export const genderList = [
   { label: "Homem Trans", value: GenderEnum.TRANSMALE },
   { label: "Mulher Trans", value: GenderEnum.TRANSFEMALE },
   { label: "Não Binário", value: GenderEnum.NONBINARY },
-  { label: "Intersexo", value: GenderEnum.INTERSEX },
-  { label: "Agênero", value: GenderEnum.AGENDER },
   { label: "Outro", value: GenderEnum.OTHER },
   { label: "Prefiro não informar", value: GenderEnum.PREFERNOTTOSAY },
 ];
@@ -40,8 +38,6 @@ export const sexualityList = [
   { label: "Bissexual", value: SexualityEnum.BISEXUAL },
   { label: "Assexual", value: SexualityEnum.ASEXUAL },
   { label: "Pansexual", value: SexualityEnum.PANSEXUAL },
-  { label: "Demissexual", value: SexualityEnum.DEMISEXUAL },
-  { label: "Polissexual", value: SexualityEnum.POLYSEXUAL },
   { label: "Outro", value: SexualityEnum.OTHER },
   { label: "Prefiro não informar", value: SexualityEnum.PREFERNOTTOSAY },
 ];

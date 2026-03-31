@@ -1,5 +1,5 @@
 import { RefObject, useRef } from "react";
-import { Step } from "@/features/auth/signup/components/types";
+import { Step } from "@/features/auth/signup/types";
 import { NameAndUser } from "@/features/auth/signup/components/form/name-and-user";
 import { GenderAndSexuality } from "@/features/auth/signup/components/form/gender-and-sexuality";
 import { MailAndPassword } from "@/features/auth/signup/components/form/mail-and-password";
@@ -7,6 +7,7 @@ import { Sheet } from "@/components/ui/bottom-sheet";
 import { FormStepNav } from "@/features/auth/signup/components/form/form-step-nav";
 import { View } from "react-native";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/src/types";
+import { ProfilePicture } from "@/features/auth/signup/components/form/profile-picture";
 
 interface Props {
   step: Step;
@@ -21,7 +22,7 @@ export const Form = ({ step, onAdvance, onReturn, onSubmit }: Props) => {
   const stepComponents = {
     [Step.NameAndUser]: <NameAndUser />,
     [Step.GenderAndSexuality]: <GenderAndSexuality />,
-    // [Step.ProfilePicture]: <ProfilePicture />,
+    [Step.ProfilePicture]: <ProfilePicture />,
     [Step.MailAndPassword]: <MailAndPassword />,
   };
 

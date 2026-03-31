@@ -5,7 +5,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useMemo, useState } from "react";
-import { Step } from "@/features/auth/signup/components/types";
+import { Step } from "@/features/auth/signup/types";
 
 export const useSignupForm = () => {
   const [step, setStep] = useState<Step>(Step.NameAndUser);
@@ -24,6 +24,7 @@ export const useSignupForm = () => {
     () => ({
       [Step.NameAndUser]: ["first_name", "last_name", "username"],
       [Step.GenderAndSexuality]: ["gender", "sexuality"],
+      [Step.ProfilePicture]: ["profile_picture_uri"],
       [Step.MailAndPassword]: [
         "email",
         "password1",

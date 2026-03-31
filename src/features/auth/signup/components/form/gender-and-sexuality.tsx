@@ -66,7 +66,9 @@ export const GenderAndSexuality = () => {
           )}
         />
 
-        {errors?.gender && <ErrorText errors={errors} fieldName={"gender"} />}
+        {errors?.gender && (
+          <ErrorText error={errors.gender} fieldName={"gender"} />
+        )}
       </View>
 
       <View className={"gap-1 flex-col w-full"}>
@@ -101,7 +103,7 @@ export const GenderAndSexuality = () => {
         />
 
         {errors?.sexuality && (
-          <ErrorText errors={errors} fieldName={"sexuality"} />
+          <ErrorText error={errors.sexuality} fieldName={"sexuality"} />
         )}
       </View>
     </View>

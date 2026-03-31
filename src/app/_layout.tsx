@@ -15,6 +15,8 @@ import { Stack } from "expo-router";
 import { useAuth } from "@/features/auth";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { QueryClient } from "@tanstack/query-core";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -22,6 +24,7 @@ configureReanimatedLogger({
 });
 
 SplashScreen.preventAutoHideAsync();
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const { isLoggedIn } = useAuth();
@@ -45,28 +48,30 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider value={NAV_THEME[resolvedColorScheme]}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Protected guard={!isLoggedIn}>
-              <Stack.Screen name="welcome" options={{ headerShown: false }} />
-            </Stack.Protected>
-            <Stack.Protected guard={!isLoggedIn}>
-              <Stack.Screen
-                name="signin"
-                options={{ headerShown: false, animation: "none" }}
-              />
-            </Stack.Protected>
-            <Stack.Protected guard={!isLoggedIn}>
-              <Stack.Screen
-                name="signup"
-                options={{ headerShown: false, animation: "none" }}
-              />
-            </Stack.Protected>
-            <Stack.Protected guard={isLoggedIn}>
-              <Stack.Screen name="home" options={{ headerShown: false }} />
-            </Stack.Protected>
-          </Stack>
-          <PortalHost />
+          <QueryClientProvider client={queryClient}>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Protected guard={!isLoggedIn}>
+                <Stack.Screen name="welcome" options={{ headerShown: false }} />
+              </Stack.Protected>
+              <Stack.Protected guard={!isLoggedIn}>
+                <Stack.Screen
+                  name="signin"
+                  options={{ headerShown: false, animation: "none" }}
+                />
+              </Stack.Protected>
+              <Stack.Protected guard={!isLoggedIn}>
+                <Stack.Screen
+                  name="signup"
+                  options={{ headerShown: false, animation: "none" }}
+                />
+              </Stack.Protected>
+              <Stack.Protected guard={isLoggedIn}>
+                <Stack.Screen name="home" options={{ headerShown: false }} />
+              </Stack.Protected>
+            </Stack>
+            <PortalHost />
+          </QueryClientProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
