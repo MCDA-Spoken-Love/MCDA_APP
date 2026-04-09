@@ -17,6 +17,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClient } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
+import Toast from "react-native-toast-message";
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
@@ -71,6 +72,7 @@ export default function RootLayout() {
               </Stack.Protected>
             </Stack>
             <PortalHost />
+            <Toast />
           </QueryClientProvider>
         </ThemeProvider>
       </SafeAreaProvider>

@@ -11,7 +11,7 @@ export const SignupSchema = z
     username: z.string({ error: "O nome de usuário é obrigatório" }).min(3, {
       error: "O nome de usuário deve conter pelo menos 3 caracteres",
     }),
-    profile_picture_uri: z.string().optional(),
+    profile_picture: z.string().optional(),
     email: z.email({ error: "Insira um e-mail válido" }),
     password1: z
       .string({ error: "Insira uma senha" })

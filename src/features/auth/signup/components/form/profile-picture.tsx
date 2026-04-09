@@ -27,7 +27,9 @@ export const ProfilePicture = () => {
           cameraRollStatus.status !== "granted" ||
           cameraStatus.status !== "granted"
         ) {
-          alert("Sorry, we need these permissions to make this work!");
+          alert(
+            "Precisamos destas permissões para podermos realizar esta ação!",
+          );
         }
       }
     })();
@@ -39,7 +41,7 @@ export const ProfilePicture = () => {
       aspect: [4, 3],
     });
     setImage(result.assets?.[0].uri as string);
-    setValue("profile_picture_uri", result.assets?.[0].uri as string);
+    setValue("profile_picture", result.assets?.[0].uri as string);
   };
 
   const pickImage = async () => {
@@ -49,7 +51,7 @@ export const ProfilePicture = () => {
       quality: 1,
     });
     setImage(result.assets?.[0].uri as string);
-    setValue("profile_picture_uri", result.assets?.[0].uri as string);
+    setValue("profile_picture", result.assets?.[0].uri as string);
   };
 
   if (!permission) {

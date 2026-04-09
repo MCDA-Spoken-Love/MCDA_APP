@@ -73,7 +73,7 @@ export const MailAndPassword = () => {
                 <Button
                   size={"icon"}
                   variant="outline"
-                  className={"p-1"}
+                  className={"p-1 h-full w-14"}
                   onPress={handleSetIsVisible}
                 >
                   {isVisible ? (
@@ -111,7 +111,7 @@ export const MailAndPassword = () => {
                 <Button
                   size={"icon"}
                   variant="outline"
-                  className={"p-1"}
+                  className={"p-1 h-full w-14"}
                   onPress={handleSetIsVisible}
                 >
                   {isVisible ? (
@@ -131,57 +131,61 @@ export const MailAndPassword = () => {
         <Controller
           control={control}
           name="has_accepted_terms_and_conditions"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <View className="gap-1">
-              <Pressable
-                onPress={() => onChange(!value)}
-                className="flex-row items-start gap-2"
-              >
-                <Checkbox
-                  checked={Boolean(value)}
-                  onCheckedChange={onChange}
-                  className="mt-0.5"
-                />
-                <Text className="text-sm flex-1">
-                  Eu aceito os termos e condições
-                </Text>
-              </Pressable>
-              {error && (
-                <ErrorText
-                  error={error}
-                  fieldName={"has_accepted_terms_and_conditions"}
-                />
-              )}
-            </View>
-          )}
+          render={({ field: { value, onChange }, fieldState: { error } }) => {
+            return (
+              <View className="gap-1">
+                <Pressable
+                  onPress={() => onChange(!value)}
+                  className="flex-row items-center gap-2"
+                >
+                  <Checkbox
+                    checked={value}
+                    onCheckedChange={onChange}
+                    className="mt-0.5"
+                  />
+                  <Text className="text-sm flex-1">
+                    Eu aceito os termos e condições
+                  </Text>
+                </Pressable>
+                {error && (
+                  <ErrorText
+                    error={error}
+                    fieldName={"has_accepted_terms_and_conditions"}
+                  />
+                )}
+              </View>
+            );
+          }}
         />
 
         <Controller
           control={control}
           name="has_accepted_privacy_policy"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <View className="gap-1">
-              <Pressable
-                onPress={() => onChange(!value)}
-                className="flex-row items-start gap-2"
-              >
-                <Checkbox
-                  checked={Boolean(value)}
-                  onCheckedChange={onChange}
-                  className="mt-0.5"
-                />
-                <Text className="text-sm flex-1">
-                  Eu aceito a política de privacidade
-                </Text>
-              </Pressable>
-              {error && (
-                <ErrorText
-                  error={error}
-                  fieldName={"has_accepted_privacy_policy"}
-                />
-              )}
-            </View>
-          )}
+          render={({ field: { value, onChange }, fieldState: { error } }) => {
+            return (
+              <View className="gap-1">
+                <Pressable
+                  onPress={() => onChange(!value)}
+                  className="flex-row items-center gap-2"
+                >
+                  <Checkbox
+                    checked={value}
+                    onCheckedChange={onChange}
+                    className="mt-0.5"
+                  />
+                  <Text className="text-sm flex-1">
+                    Eu aceito a política de privacidade
+                  </Text>
+                </Pressable>
+                {error && (
+                  <ErrorText
+                    error={error}
+                    fieldName={"has_accepted_privacy_policy"}
+                  />
+                )}
+              </View>
+            );
+          }}
         />
       </View>
     </View>

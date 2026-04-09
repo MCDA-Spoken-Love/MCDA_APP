@@ -60,7 +60,8 @@
         {
           "cameraPermission": "Permitir que $(PRODUCT_NAME) acesse sua câmera"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -8,7 +8,6 @@ interface FormStepNavProps {
   isLoading?: boolean;
   onAdvance: () => void;
   onReturn: () => void;
-  onSubmit: () => void;
 }
 
 export const FormStepNav = ({
@@ -16,7 +15,6 @@ export const FormStepNav = ({
   isLoading = false,
   onReturn,
   onAdvance,
-  onSubmit,
 }: FormStepNavProps) => {
   const colorScheme = useTheme();
   const step2And3Component = (
@@ -45,7 +43,7 @@ export const FormStepNav = ({
         <Button variant="outline" size="full" onPress={onReturn}>
           <Text className="font-coiny">Voltar</Text>
         </Button>
-        <Button size="full" onPress={onSubmit}>
+        <Button size="full" onPress={onAdvance}>
           {isLoading ? (
             <ActivityIndicator size="small" color={colorScheme.background} />
           ) : null}
