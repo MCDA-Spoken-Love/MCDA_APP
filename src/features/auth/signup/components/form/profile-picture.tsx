@@ -1,5 +1,5 @@
 import { Platform, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
@@ -14,8 +14,9 @@ export const ProfilePicture = () => {
   const formMethods = useFormContext<SignupSchemaType>();
   const { setValue } = formMethods;
 
-  const [image, setImage] = useState<string>("");
   const [permission, requestPermission] = useCameraPermissions();
+
+  const image = formMethods.watch("profile_picture");
 
   useEffect(() => {
     (async () => {
@@ -40,7 +41,6 @@ export const ProfilePicture = () => {
       mediaTypes: "images",
       aspect: [4, 3],
     });
-    setImage(result.assets?.[0].uri as string);
     setValue("profile_picture", result.assets?.[0].uri as string);
   };
 
@@ -50,7 +50,6 @@ export const ProfilePicture = () => {
       aspect: [4, 3],
       quality: 1,
     });
-    setImage(result.assets?.[0].uri as string);
     setValue("profile_picture", result.assets?.[0].uri as string);
   };
 
