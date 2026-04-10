@@ -70,7 +70,7 @@ export const Form = ({
       hasHandle={false}
       sheetRef={bottomSheetRef as RefObject<BottomSheetMethods>}
     >
-      <View className={"flex-col gap-6"}>
+      <View className={"flex-col gap-6"} testID={"signup-form"}>
         {!isEmpty(imageUploadError) ? (
           <View className={"items-center flex-col gap-6"}>
             <ErrorText

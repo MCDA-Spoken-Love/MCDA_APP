@@ -42,7 +42,13 @@ describe("<AnimatedBody />", () => {
   });
 
   it("Should render correctly with appropriate text", () => {
-    render(<AnimatedBody />);
+    render(
+      <AnimatedBody
+        onAdvance={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />,
+    );
 
     expect(
       screen.getByText(
@@ -58,7 +64,13 @@ describe("<AnimatedBody />", () => {
   });
 
   it("should render animated text after animation delay", () => {
-    render(<AnimatedBody />);
+    render(
+      <AnimatedBody
+        onAdvance={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />,
+    );
 
     const line1 = screen.getByText(
       "Esse aplicativo foi desenvolvido para facilitar a transmissão de um dos 5 tipos de linguagens do amor: palavras de carinho.",
@@ -66,7 +78,7 @@ describe("<AnimatedBody />", () => {
     const line2 = screen.getByText(
       " Foi feito com amor e esperamos que você e seu parceiro gostem de usá-lo tanto quanto gostamos de criá-lo.",
     );
-    const button = screen.getByTestId("animated-body-button");
+    const button = screen.getByTestId("animated-body-button-view");
 
     expect(line1).toHaveAnimatedStyle({ opacity: 0 });
     expect(line2).toHaveAnimatedStyle({ opacity: 0 });

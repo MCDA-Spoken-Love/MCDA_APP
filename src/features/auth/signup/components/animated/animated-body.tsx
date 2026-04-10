@@ -54,9 +54,14 @@ export const AnimatedBody = ({ onAdvance }: AnimatedBodyProps) => {
       </Animated.Text>
       <Animated.View
         style={[{ opacity: opacity3 }]}
-        testID={"animated-body-button"}
+        testID={"animated-body-button-view"}
       >
-        <Button variant={"accent"} size={"full"} onPress={() => onAdvance()}>
+        <Button
+          variant={"accent"}
+          size={"full"}
+          onPress={() => onAdvance()}
+          testID={"animated-body-button"}
+        >
           <Text className="font-coiny">Avançar</Text>
         </Button>
       </Animated.View>
