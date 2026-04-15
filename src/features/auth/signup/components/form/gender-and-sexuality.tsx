@@ -34,7 +34,10 @@ export const GenderAndSexuality = () => {
   };
 
   return (
-    <View className={"flex-col items-center justify-center gap-4"}>
+    <View
+      className={"flex-col items-center justify-center gap-4"}
+      testID={"gender-and-sexuality-step"}
+    >
       <View className={"gap-1 flex-col w-full"}>
         <Label className={"font-coiny text-2xl font-medium"}>
           Sua identidade de gênero
@@ -47,6 +50,7 @@ export const GenderAndSexuality = () => {
             <Select
               value={genderList.find((item) => item.value === value)}
               onValueChange={(option) => onChange(option?.value)}
+              testID={"gender-input"}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione seu gênero" />
@@ -58,6 +62,7 @@ export const GenderAndSexuality = () => {
                       key={item.value}
                       value={item.value}
                       label={item.label}
+                      testID={`gender-option-${item.value}`}
                     />
                   ))}
                 </SelectGroup>
@@ -83,6 +88,7 @@ export const GenderAndSexuality = () => {
             <Select
               value={sexualityList.find((item) => item.value === value)}
               onValueChange={(option) => onChange(option?.value)}
+              testID={"sexuality-input"}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Selecione sua sexualidade" />
@@ -94,6 +100,7 @@ export const GenderAndSexuality = () => {
                       key={item.value}
                       value={item.value}
                       label={item.label}
+                      testID={`sexuality-option-${item.value}`}
                     />
                   ))}
                 </SelectGroup>

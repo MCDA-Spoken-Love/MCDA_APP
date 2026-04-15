@@ -24,6 +24,51 @@ jest.mock("react-native/Libraries/Components/Keyboard/Keyboard", () => ({
   dismiss: jest.fn(),
 }));
 
+jest.mock("react-native-safe-area-context", () => {
+  const mock = require("react-native-safe-area-context/jest/mock").default;
+  return {
+    __esModule: true,
+    ...mock,
+    useSafeAreaInsets: jest.fn(() => ({
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    })),
+  };
+});
+
+jest.mock("lucide-react-native", () => {
+  const React = require("react");
+  const { View } = require("react-native");
+
+  const MockIcon = React.forwardRef((props: any, ref: any) => (
+    <View ref={ref} {...props} />
+  ));
+  MockIcon.displayName = "MockLucideIcon";
+
+  return new Proxy(
+    { __esModule: true },
+    {
+      get: (target, prop) => {
+        if (prop in target) return (target as any)[prop];
+        return MockIcon;
+      },
+    },
+  );
+});
+
+jest.mock("react-native-screens", () => {
+  const React = require("react");
+  const actual = jest.requireActual("react-native-screens");
+  return {
+    ...actual,
+    FullWindowOverlay: ({ children }: { children: React.ReactNode }) => (
+      <>{children}</>
+    ),
+  };
+});
+
 // Mock expo-router globally
 jest.mock("expo-router", () => ({
   router: {
@@ -106,6 +151,7 @@ jest.mock("@gorhom/bottom-sheet", () => {
 
   return {
     __esModule: true,
+    // eslint-disable-next-line react/display-name
     default: React.forwardRef(({ children, ...props }: any, ref: any) => (
       <View {...props} ref={ref}>
         {children}

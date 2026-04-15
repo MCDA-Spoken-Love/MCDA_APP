@@ -92,6 +92,9 @@
   "jest": {
     "preset": "jest-expo",
     "collectCoverage": true,
+    "setupFiles": [
+      "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.tsx"
     ],

@@ -59,7 +59,10 @@ export const ProfilePicture = () => {
 
   if (!permission.granted) {
     return (
-      <View className={"flex-col items-center justify-center gap-4"}>
+      <View
+        className={"flex-col items-center justify-center gap-4"}
+        testID={"profile-pic-step-before-permission"}
+      >
         <Text className={"text-center"}>
           Precisamos da sua permissão para usar a câmera e acessas suas fotos
         </Text>
@@ -71,7 +74,10 @@ export const ProfilePicture = () => {
   }
 
   return (
-    <View className={"flex-col items-center justify-center gap-4"}>
+    <View
+      className={"flex-col items-center justify-center gap-4"}
+      testID={"profile-pic-step-after-permission"}
+    >
       <View className={"gap-1 flex-col w-full"}>
         <Label className={"font-coiny text-2xl font-medium"}>
           Escolha ou tire uma foto para seu perfil
@@ -83,15 +89,26 @@ export const ProfilePicture = () => {
           className={"w-64 h-64 self-center rounded-3xl"}
           contentFit={"cover"}
           alt={"chosen-pic"}
+          testID={"chosen-profile-picture"}
         />
       </View>
       <View>
         <View className={"flex-row gap-2 self-center"}>
-          <Button variant="accent" className="w-[40%]" onPress={pickImage}>
+          <Button
+            variant="accent"
+            className="w-[40%]"
+            testID={"pick-image-button"}
+            onPress={pickImage}
+          >
             <ImageUp />
             <Text>Escolher foto</Text>
           </Button>
-          <Button variant="accent" onPress={takePhoto} className="w-[40%]">
+          <Button
+            variant="accent"
+            testID={"take-image-button"}
+            onPress={takePhoto}
+            className="w-[40%]"
+          >
             <Camera />
             <Text>Tirar foto</Text>
           </Button>

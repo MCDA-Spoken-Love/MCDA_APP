@@ -19,7 +19,7 @@ export const MailAndPassword = () => {
   };
 
   return (
-    <View className={"flex-col gap-4 w-full"}>
+    <View className={"flex-col gap-4 w-full"} testID={"mail-and-password-step"}>
       <View className={"gap-1 flex-col w-full"}>
         <Label className={"font-coiny text-2xl font-medium"}>Email</Label>
 
@@ -40,6 +40,7 @@ export const MailAndPassword = () => {
                 autoComplete="email"
                 placeholder="Endereço de e-mail"
                 aria-label={"email address"}
+                testID={"email-input"}
               />
               {error && <ErrorText error={error} fieldName={"email"} />}
             </View>
@@ -69,6 +70,7 @@ export const MailAndPassword = () => {
                   placeholder="Sua senha"
                   className={"flex-1"}
                   aria-label={"password"}
+                  testID={"password1-input"}
                 />
                 <Button
                   size={"icon"}
@@ -107,6 +109,7 @@ export const MailAndPassword = () => {
                   placeholder="Confirme sua senha"
                   aria-label={"confirm-password"}
                   className={"flex-1"}
+                  testID={"password2-input"}
                 />
                 <Button
                   size={"icon"}
@@ -142,6 +145,7 @@ export const MailAndPassword = () => {
                     checked={value}
                     onCheckedChange={onChange}
                     className="mt-0.5"
+                    testID={"terms-and-conditions-checkbox"}
                   />
                   <Text className="text-sm flex-1">
                     Eu aceito os termos e condições
@@ -172,6 +176,7 @@ export const MailAndPassword = () => {
                     checked={value}
                     onCheckedChange={onChange}
                     className="mt-0.5"
+                    testID={"privacy-policy-checkbox"}
                   />
                   <Text className="text-sm flex-1">
                     Eu aceito a política de privacidade

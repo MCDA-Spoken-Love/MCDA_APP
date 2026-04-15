@@ -9,7 +9,10 @@ export const NameAndUser = () => {
   const formMethods = useFormContext<SignupSchemaType>();
 
   return (
-    <View className={"flex-col items-center justify-center gap-4"}>
+    <View
+      className={"flex-col items-center justify-center gap-4"}
+      testID={"name-and-user-step"}
+    >
       <View className={"gap-1 flex-col w-full"}>
         <Label className={"font-coiny text-2xl font-medium"}>
           Diga seu nome
@@ -32,6 +35,7 @@ export const NameAndUser = () => {
                   autoComplete="given-name"
                   placeholder="Primeiro nome"
                   aria-label={"given name"}
+                  testID={"first-name-input"}
                 />
                 {error && <ErrorText error={error} fieldName={"first_name"} />}
               </View>
@@ -56,6 +60,7 @@ export const NameAndUser = () => {
                   autoComplete="family-name"
                   placeholder="Sobrenome"
                   aria-label={"family name"}
+                  testID={"last-name-input"}
                 />
                 {error && <ErrorText error={error} fieldName={"last_name"} />}
               </View>
@@ -84,6 +89,7 @@ export const NameAndUser = () => {
                 autoComplete="username"
                 placeholder="Nome de usuário"
                 aria-label={"username"}
+                testID={"username-input"}
               />
               {error && <ErrorText error={error} fieldName={"username"} />}
             </View>

@@ -19,10 +19,15 @@ export const FormStepNav = ({
   const colorScheme = useTheme();
   const step2And3Component = (
     <View className={"flex-1 gap-1 w-full"}>
-      <Button variant="outline" size="full" onPress={onReturn}>
+      <Button
+        variant="outline"
+        size="full"
+        onPress={onReturn}
+        testID={"return-input"}
+      >
         <Text className="font-coiny">Voltar</Text>
       </Button>
-      <Button size="full" onPress={onAdvance}>
+      <Button size="full" onPress={onAdvance} testID={"advance-input"}>
         <Text className="font-coiny">Avançar</Text>
       </Button>
     </View>
@@ -31,7 +36,7 @@ export const FormStepNav = ({
   const formStep = {
     1: (
       <View className={"flex-1 justify-between w-full"}>
-        <Button size="full" onPress={onAdvance}>
+        <Button size="full" onPress={onAdvance} testID={"advance-input"}>
           <Text className="font-coiny">Avançar</Text>
         </Button>
       </View>
@@ -40,10 +45,15 @@ export const FormStepNav = ({
     3: step2And3Component,
     4: (
       <View className={"flex-1 gap-1  w-full"}>
-        <Button variant="outline" size="full" onPress={onReturn}>
+        <Button
+          variant="outline"
+          size="full"
+          onPress={onReturn}
+          testID={"return-input"}
+        >
           <Text className="font-coiny">Voltar</Text>
         </Button>
-        <Button size="full" onPress={onAdvance}>
+        <Button size="full" onPress={onAdvance} testID={"advance-input"}>
           {isLoading ? (
             <ActivityIndicator size="small" color={colorScheme.background} />
           ) : null}
