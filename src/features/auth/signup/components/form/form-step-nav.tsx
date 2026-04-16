@@ -53,7 +53,7 @@ export const FormStepNav = ({
         >
           <Text className="font-coiny">Voltar</Text>
         </Button>
-        <Button size="full" onPress={onAdvance} testID={"advance-input"}>
+        <Button size="full" onPress={onAdvance} testID={"submit-input"}>
           {isLoading ? (
             <ActivityIndicator size="small" color={colorScheme.background} />
           ) : null}

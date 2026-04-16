@@ -11,6 +11,7 @@ import { wrapper } from "@/__tests__/test-utils";
 import { SignupSchemaType } from "@/features/auth/signup/constants/schema";
 import * as ImagePicker from "expo-image-picker";
 import { Pressable, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 jest.mock("@/components/ui/icon", () => ({
   Icon: () => null,
@@ -173,12 +174,16 @@ const mockSignupValues: SignupSchemaType = {
   profile_picture: "mock-uri://photo.jpg",
   email: "johndoe@gmail.com",
   password1: "johndoe123@",
-  password2: "johndoes123@",
+  password2: "johndoe123@",
   has_accepted_privacy_policy: true,
   has_accepted_terms_and_conditions: true,
 };
 
 describe("Signup Feature integration Test", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should initially render the AnimatedBody component", () => {
     render(<SignupPage />, { wrapper });
 
@@ -208,6 +213,7 @@ describe("Signup Feature integration Test", () => {
   it("should properly submit the form in the happy case", async () => {
     const user = userEvent.setup();
     render(<SignupPage />, { wrapper });
+
     const button = screen.getByTestId("animated-body-button");
 
     expect(screen.queryByTestId("signup-form")).not.toBeTruthy();
@@ -319,5 +325,21 @@ describe("Signup Feature integration Test", () => {
     const privacyPolicyCheckbox = screen.getByTestId("privacy-policy-checkbox");
     await user.press(privacyPolicyCheckbox);
     expect(privacyPolicyCheckbox.props.accessibilityState.checked).toBe(true);
-  });
+
+    const submitButton = screen.getByTestId("submit-input");
+    await user.press(submitButton);
+
+    await waitFor(
+      () => {
+        expect(Toast.show).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: "success",
+            position: "top",
+            text1: "Cadastro realizado com sucesso!",
+          }),
+        );
+      },
+      { timeout: 5000 },
+    );
+  }, 20000);
 });
