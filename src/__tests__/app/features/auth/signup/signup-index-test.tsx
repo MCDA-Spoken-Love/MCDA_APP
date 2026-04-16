@@ -7,7 +7,7 @@ import {
   userEvent,
   waitFor,
 } from "@testing-library/react-native";
-import { wrapper } from "@/__tests__/test-utils";
+import { wrapper } from "@/test-utils";
 import { SignupSchemaType } from "@/features/auth/signup/constants/schema";
 import * as ImagePicker from "expo-image-picker";
 import { Pressable, View } from "react-native";

@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PortalHost } from "@rn-primitives/portal";
-import { testQueryClient } from "../../../jest.setup";
+import { testQueryClient } from "../../jest.setup";
 
 export const wrapper = ({ children }: { children: ReactNode }) => (
   <SafeAreaProvider
