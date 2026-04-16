@@ -136,7 +136,7 @@ export const useSignupForm = () => {
     onError: (error: AxiosError) => {
       if (error.response?.data) {
         signupMutationErrorHandling(
-          error?.response?.data as AxiosError,
+          error?.response?.data,
           setStep,
           formMethods.setError,
         );

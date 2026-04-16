@@ -8,9 +8,7 @@ jest.mock("@/features/auth", () => ({
 }));
 
 jest.mock("expo-router", () => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require("react");
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { Text } = require("react-native");
 
   const Stack = ({ children }: { children: React.ReactNode }) => (

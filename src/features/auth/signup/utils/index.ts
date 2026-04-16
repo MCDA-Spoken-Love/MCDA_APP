@@ -1,10 +1,9 @@
-import { AxiosError } from "axios";
 import { UseFormSetError } from "react-hook-form";
 import { SignupSchemaType } from "@/features/auth/signup/constants/schema";
 import { Step } from "@/features/auth/signup/types";
 
 export const signupMutationErrorHandling = (
-  error: AxiosError<unknown>,
+  error: object,
   setStep: (arg: number) => void,
   setError: UseFormSetError<SignupSchemaType>,
 ) => {
